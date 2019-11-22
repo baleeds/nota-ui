@@ -1,5 +1,6 @@
 import React from 'react';
+import { Page } from '../components/Page';
 
 export const HomePage: React.FC = () => {
-  return <div>This is a desktop page</div>;
+  return <Page>This is a desktop page</Page>;
 };
