@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { theme } from '../../styles/theme';
 import { BOOK_DETAILS } from '../../base/constants/bookDetails';
 import { NavLink } from 'react-router-dom';
+import { ReactComponent as AngleLeftIcon } from '../../icons/chevron_left-24px.svg';
 
 interface Props {
   isBookActive: boolean;
@@ -40,17 +41,35 @@ const ChapterSelection: React.FC<Props> = ({
 
   return (
     <div>
-      <button type="button" onClick={showBookSelection}>
+      <AllBooksButton type="button" onClick={showBookSelection}>
+        <AngleLeftIcon />
         All books
-      </button>
+      </AllBooksButton>
       <ChapterButtons>{chapterButtons}</ChapterButtons>
     </div>
   );
 };
 
+const AllBooksButton = styled.button`
+  margin-top: 12px;
+  padding: 16px 12px;
+  width: 100%;
+  text-align: left;
+  color: ${theme.secondaryColor};
+  display: flex;
+  align-items: center;
+
+  svg {
+    fill: currentColor;
+    height: 20px;
+    width: 20px;
+    margin-right: 6px;
+  }
+`;
+
 const ChapterButtons = styled.div`
   position: absolute;
-  top: 30px;
+  top: 70px;
   width: 100%;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
