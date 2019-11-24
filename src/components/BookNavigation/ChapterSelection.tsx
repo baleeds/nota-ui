@@ -61,7 +61,7 @@ const ChapterButtons = styled.div`
     text-decoration: none;
     font-size: 20px;
     color: ${theme.secondaryColor};
-    height: 70px;
+    height: 85px;
     padding: 12px;
     border: 1px solid ${theme.secondaryColor};
     display: inline-block;

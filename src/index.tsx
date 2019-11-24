@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import './styles//index.css';
 import './styles/transitions.css';
 import 'normalize.css';
+import './styles/reset.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
