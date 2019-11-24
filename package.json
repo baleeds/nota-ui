@@ -8,7 +8,6 @@
     "@types/react": "16.9.11",
     "@types/react-dom": "16.9.4",
     "lodash.debounce": "^4.0.8",
-    "node-sass": "^4.13.0",
     "normalize.css": "^8.0.1",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
@@ -16,6 +15,7 @@
     "react-router-config": "^5.1.1",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.2.0",
+    "styled-components": "^4.4.1",
     "typescript": "3.7.2"
   },
   "scripts": {
@@ -42,6 +42,7 @@
   "devDependencies": {
     "@types/lodash.debounce": "^4.0.6",
     "@types/react-router-config": "^5.0.1",
-    "@types/react-router-dom": "^5.1.2"
+    "@types/react-router-dom": "^5.1.2",
+    "@types/styled-components": "^4.4.0"
   }
 }
