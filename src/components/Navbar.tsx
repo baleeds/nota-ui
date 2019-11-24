@@ -5,6 +5,7 @@ import { ReactComponent as HomeIcon } from '../icons/home-24px.svg';
 import { ReactComponent as ReadIcon } from '../icons/menu_book-24px.svg';
 import { ReactComponent as CollectionIcon } from '../icons/collections_bookmark-24px.svg';
 import { theme } from '../styles/theme';
+import { Z_INDEX } from '../base/constants/zIndex';
 
 export const Navbar: React.FC = () => {
   return (
@@ -34,7 +35,7 @@ const Container = styled.div`
   background-color: white;
   box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.15);
   padding: 0 12px;
-  z-index: 1;
+  z-index: ${Z_INDEX.NAV};
 
   @media screen and (min-width: 900px) {
     flex-direction: column;

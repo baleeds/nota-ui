@@ -23,6 +23,7 @@ button {
   cursor: pointer;
 }
 
-div {
+div,
+button {
   box-sizing: border-box;
 }
