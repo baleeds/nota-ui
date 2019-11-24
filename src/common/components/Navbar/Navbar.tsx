@@ -9,7 +9,7 @@ export const Navbar: React.FC = () => {
   return (
     <div className={classes.container}>
       <NavLink
-        to="/"
+        to="/home"
         className={classes.navLink}
         activeClassName={classes.active}
       >
