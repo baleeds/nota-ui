@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { CSSTransition } from 'react-transition-group';
-import styled from 'styled-components';
 import ChapterSelection from './ChapterSelection';
 import BookSelection from './BookSelection';
 

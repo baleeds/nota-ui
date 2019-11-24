@@ -17,6 +17,8 @@ export const BookNavigation: React.FC = () => {
 
   const chapterNumber = asInt(chapterId);
 
+  console.log(bookName, chapterNumber);
+
   const open = () => setIsOpen(true);
   const close = () => setIsOpen(false);
 

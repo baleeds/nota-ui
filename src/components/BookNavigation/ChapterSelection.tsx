@@ -68,6 +68,7 @@ const ChapterButtons = styled.div`
     font-weight: bold;
 
     &.active {
+      color: white;
       background-color: ${theme.secondaryColor};
     }
   }

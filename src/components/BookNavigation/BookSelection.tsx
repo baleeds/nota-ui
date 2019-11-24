@@ -31,6 +31,8 @@ export const BookSelection: React.FC<Props> = ({
 const BookButtons = styled.div`
   position: absolute;
   top: 0;
+  width: 100%;
+  padding: 12px 0;
 
   button {
     display: block;
@@ -43,7 +45,8 @@ const BookButtons = styled.div`
     border: none;
 
     &.active {
-      background-color: ${theme.primaryColor};
+      background-color: ${theme.secondaryColor};
+      color: ${theme.blank};
     }
   }
 `;
