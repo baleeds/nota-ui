@@ -5,6 +5,8 @@ import { Z_INDEX } from '../../base/constants/zIndex';
 import { PassageSelector } from './PassageSelector';
 import { useParams } from 'react-router';
 import { asInt } from '../../base/utils/asInt';
+import { theme } from '../../styles/theme';
+import { ReactComponent as AngleRight } from '../../icons/chevron_right-24px.svg';
 
 interface Params {
   bookName?: string;
@@ -25,6 +27,7 @@ export const BookNavigation: React.FC = () => {
       <Container>
         <BookButton type="button" onClick={open}>
           Book
+          <AngleRight />
         </BookButton>
       </Container>
       <CSSTransition
@@ -53,10 +56,31 @@ const Container = styled.div`
   top: 0;
   left: 0;
   right: 0;
+  z-index: ${Z_INDEX.NAV};
+  background-color: ${theme.blank};
+  box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.15);
+
+  button {
+    padding: 18px 16px;
+    display: block;
+    text-align: left;
+    min-width: 80px;
+    display: flex;
+    align-items: center;
+    color: ${theme.primaryColor};
+
+    svg {
+      height: 20px;
+      width: 20px;
+      margin-left: 6px;
+      fill: currentColor;
+    }
+  }
 
   @media screen and (min-width: 900px) {
     position: relative;
-    padding: 12px 0;
+    box-shadow: none;
+    background-color: none;
   }
 `;
 
