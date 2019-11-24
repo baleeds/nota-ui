@@ -70,7 +70,7 @@ const NavButton = styled(NavLink)`
   }
 
   span {
-    font-size: 0.8em;
+    font-size: 0.7em;
     text-decoration: none;
     margin-top: 2px;
   }
