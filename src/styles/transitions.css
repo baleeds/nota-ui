@@ -60,42 +60,42 @@
   transition: all 0.3s ease-out;
 }
 
-.fadeDown-enter .foreground {
+.fadeRight-enter .foreground {
   opacity: 0.01;
-  transform: translateY(-100%);
+  transform: translateX(-100%);
 }
 
-.fadeDown-enter-active .foreground {
+.fadeRight-enter-active .foreground {
   opacity: 1;
-  transform: translateY(0px);
+  transform: translateX(0px);
   transition: all 0.3s ease-out;
 }
 
-.fadeDown-exit .foreground {
+.fadeRight-exit .foreground {
   opacity: 1;
-  transform: translateY(0px);
+  transform: translateX(0px);
 }
 
-.fadeDown-exit-active .foreground {
+.fadeRight-exit-active .foreground {
   opacity: 0;
-  transform: translateY(-100%);
+  transform: translateX(-100%);
   transition: all 0.3s ease-out;
 }
 
-.fadeDown-enter .background {
+.fadeRight-enter .background {
   opacity: 0.01;
 }
 
-.fadeDown-enter-active .background {
+.fadeRight-enter-active .background {
   opacity: 1;
   transition: all 0.3s ease-out;
 }
 
-.fadeDown-exit .background {
+.fadeRight-exit .background {
   opacity: 1;
 }
 
-.fadeDown-exit-active .background {
+.fadeRight-exit-active .background {
   opacity: 0;
   transition: all 0.3s ease-out;
 }

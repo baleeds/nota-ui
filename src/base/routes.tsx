@@ -11,7 +11,7 @@ export const routes = [
     component: HomePage,
   },
   {
-    path: '/read',
+    path: ['/read', '/read/:bookId', '/read/:bookId/:chapterId'],
     exact: true,
     component: ReadPage,
   },
