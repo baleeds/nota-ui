@@ -7,6 +7,7 @@ import { useParams } from 'react-router';
 import { asInt } from '../../base/utils/asInt';
 import { theme } from '../../styles/theme';
 import { ReactComponent as AngleRight } from '../../icons/chevron_right-24px.svg';
+import { BOOK_DETAILS } from '../../base/constants/bookDetails';
 
 interface Params {
   bookName?: string;
@@ -17,6 +18,7 @@ export const BookNavigation: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { bookName, chapterId } = useParams<Params>();
 
+  const book = bookName ? BOOK_DETAILS[bookName] : undefined;
   const chapterNumber = asInt(chapterId);
 
   const open = () => setIsOpen(true);
@@ -26,7 +28,9 @@ export const BookNavigation: React.FC = () => {
     <>
       <Container>
         <BookButton type="button" onClick={open}>
-          Book
+          {book && chapterNumber
+            ? `${book.displayName} ${chapterNumber}`
+            : 'Select a passage'}
           <AngleRight />
         </BookButton>
       </Container>
