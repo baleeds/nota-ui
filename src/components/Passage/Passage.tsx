@@ -49,4 +49,10 @@ export const Passage: React.FC = () => {
 
 const Container = styled.div`
   padding: 80px 16px 100px 16px;
+
+  @media screen and (min-width: 900px) {
+    padding: 12px 24px 100px 24px;
+    max-width: 600px;
+    margin: 0 auto;
+  }
 `;

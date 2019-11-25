@@ -84,7 +84,12 @@ const Container = styled.div`
   @media screen and (min-width: 900px) {
     position: relative;
     box-shadow: none;
-    background-color: none;
+    background-color: transparent;
+    padding: 24px 12px 0 12px;
+
+    button {
+      font-size: 1.3em;
+    }
   }
 `;
 

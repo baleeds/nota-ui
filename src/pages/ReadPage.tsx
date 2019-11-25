@@ -7,8 +7,16 @@ import styled from 'styled-components';
 export const ReadPage: React.FC = () => {
   return (
     <Page>
-      <BookNavigation />
-      <Passage />
+      <Center>
+        <BookNavigation />
+        <Passage />
+      </Center>
     </Page>
   );
 };
+
+const Center = styled.div`
+  @media screen and (min-width: 900px) {
+    margin: 0 auto;
+  }
+`;
