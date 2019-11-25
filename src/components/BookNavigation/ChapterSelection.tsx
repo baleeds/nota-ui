@@ -69,7 +69,7 @@ const AllBooksButton = styled.button`
 
 const ChapterButtons = styled.div`
   position: absolute;
-  top: 70px;
+  /* top: 70px; */
   width: 100%;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;

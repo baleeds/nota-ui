@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './styles//index.css';
+import './styles/index.css';
 import './styles/transitions.css';
 import 'normalize.css';
 import './styles/reset.css';

@@ -24,13 +24,24 @@ html,
 #root {
   height: 100%;
   width: 100%;
+  overscroll-behavior-y: contain;
 }
 
 button {
   cursor: pointer;
 }
 
-div,
-button {
-  box-sizing: border-box;
+@media screen and (max-width: 900px) {
+  ::-webkit-scrollbar {
+    width: 0px;
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: transparent;
+  }
 }
