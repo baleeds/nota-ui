@@ -11,7 +11,12 @@ export const routes = [
     component: HomePage,
   },
   {
-    path: ['/read', '/read/:bookName', '/read/:bookName/:chapterId'],
+    path: [
+      '/read',
+      '/read/:bookName',
+      '/read/:bookName/:chapterId',
+      '/read/:bookName/:chapterId/:verseNumber',
+    ],
     exact: true,
     component: ReadPage,
   },
