@@ -60,7 +60,7 @@ const Container = styled.div`
   top: 0;
   left: 0;
   right: 0;
-  z-index: ${Z_INDEX.NAV};
+  z-index: ${Z_INDEX.READ_NAV};
   background-color: ${theme.blank};
   box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.15);
 
