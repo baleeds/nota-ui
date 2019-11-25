@@ -15,7 +15,7 @@ export const routes = [
       '/read',
       '/read/:bookName',
       '/read/:bookName/:chapterId',
-      '/read/:bookName/:chapterId/:verseNumber',
+      '/read/:bookName/:chapterId/:verseId',
     ],
     exact: true,
     component: ReadPage,

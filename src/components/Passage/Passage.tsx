@@ -10,11 +10,13 @@ import styled from 'styled-components';
 interface Params {
   bookName?: string;
   chapterId?: string;
+  verseId?: string;
 }
 
 export const Passage: React.FC = () => {
-  const { bookName, chapterId } = useParams<Params>();
+  const { bookName, chapterId, verseId } = useParams<Params>();
   const chapterNumber = asInt(chapterId);
+  const verseNumber = asInt(verseId);
   if (!bookName || !chapterNumber) {
     return <ErrorDisplay />;
   }
@@ -37,6 +39,7 @@ export const Passage: React.FC = () => {
             bookName={bookName}
             chapterNumber={chapterNumber}
             verseNumber={index + 1}
+            isActive={verseNumber === index + 1}
           />
         );
       })}

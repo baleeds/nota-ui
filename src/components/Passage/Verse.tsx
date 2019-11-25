@@ -10,6 +10,7 @@ interface Props {
   bookName: string;
   chapterNumber: number;
   verseNumber: number;
+  isActive: boolean;
 }
 
 const lineBreakStyle = { marginBottom: 12 };
@@ -20,9 +21,14 @@ export const Verse: React.FC<Props> = ({
   bookName,
   chapterNumber,
   verseNumber,
+  isActive,
 }) => {
+  console.log(isActive);
   return (
-    <VerseLink to={`/read/${bookName}/${chapterNumber}/${verseNumber}`}>
+    <VerseLink
+      to={`/read/${bookName}/${chapterNumber}/${verseNumber}`}
+      className={isActive ? 'active' : undefined}
+    >
       {verse.map((verseLine, index) => {
         const key = `${verseKey}-${index}`;
         const verseNumberDisplay = (
@@ -74,10 +80,14 @@ const VerseLink = styled(Link)`
     width: 80%;
   }
 
+  .text {
+    padding: 6px 2px;
+  }
+
   &.active {
     .text,
     .quote {
-      background-color: ${theme.secondaryHoverColor};
+      background-color: ${theme.primaryHoverColor};
     }
   }
 
