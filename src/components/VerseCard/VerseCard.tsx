@@ -1,5 +1,5 @@
 import React from 'react';
-import { useParams } from 'react-router';
+// import { useParams } from 'react-router';
 import { useScreen } from '../../hooks/useScreen';
 import { LARGE_SCREEN } from '../../base/constants/breakpoints';
 import { VerseDetails } from '../VerseDetails';

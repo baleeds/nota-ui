@@ -7,11 +7,14 @@
     "@types/node": "12.12.11",
     "@types/react": "16.9.11",
     "@types/react-dom": "16.9.4",
+    "animated": "^0.2.2",
+    "body-scroll-lock": "^2.6.4",
     "lodash.debounce": "^4.0.8",
     "normalize.css": "^8.0.1",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
-    "react-pose": "^4.0.10",
+    "react-interactable": "^0.6.4",
+    "react-panresponder-web": "^1.0.1",
     "react-router": "^5.1.2",
     "react-router-config": "^5.1.1",
     "react-router-dom": "^5.1.2",
@@ -42,6 +45,7 @@
     ]
   },
   "devDependencies": {
+    "@types/body-scroll-lock": "^2.6.1",
     "@types/lodash.debounce": "^4.0.6",
     "@types/react-router-config": "^5.0.1",
     "@types/react-router-dom": "^5.1.2",

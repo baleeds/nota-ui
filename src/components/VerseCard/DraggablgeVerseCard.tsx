@@ -1,69 +1,78 @@
-import React, { useState, useCallback, useMemo } from 'react';
-import posed from 'react-pose';
+import React, { useMemo, useRef, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { theme } from '../../styles/theme';
 import { Z_INDEX } from '../../base/constants/zIndex';
 import { useScreen } from '../../hooks/useScreen';
+import Interactable from 'react-interactable/noNative';
+import { disableBodyScroll, enableBodyScroll } from 'body-scroll-lock';
 
-interface PoseEvent {
-  velocity?: number;
-  to?: number;
-}
+const getIndexById = (items: any[], id: string) =>
+  items.findIndex(item => item.id === id) || 0;
 
 export const DraggableVerseCard: React.FC = ({ children }) => {
+  const [snapPoint, setSnapPoint] = useState<string>('open');
+
   const { height } = useScreen();
-  const restingPoints = {
-    closed: height,
-    open: 0,
-    collapsed: height - 100,
-  };
 
-  const [isLocked, setIsLocked] = useState(false);
-  const [restingPoint, setRestingPoint] = useState(restingPoints.collapsed);
-
-  const calculateRestingPoint = useCallback(
-    ({ velocity, to }: PoseEvent = {}): number => {
-      if (!velocity || !to) return 100;
-
-      const projection = to + velocity * 0.1;
-      if (projection > height / 2) {
-        return restingPoints.collapsed;
-      }
-      return restingPoints.open;
-    },
-    [height, restingPoints]
+  const interactableRef = useRef<any>(null);
+  const snapPoints = useMemo(
+    () => [
+      { id: 'open', y: 0, damping: 0.6, stiffness: 3000 },
+      { id: 'collapsed', y: height - 120, damping: 0.6, stiffness: 3000 },
+      { id: 'closed', y: height, damping: 0.7, stiffness: 2500 },
+    ],
+    [height]
   );
 
-  const DraggableCard = posed.div({
-    draggable: 'y',
-    dragEnd: {
-      transition: (event: any) => {
-        console.log(event);
-        return {
-          type: 'spring',
-          damping: 1000,
-          stiffness: 400,
-          to: calculateRestingPoint(event),
-        };
-      },
-    },
-  });
+  useEffect(() => {
+    const { current } = interactableRef;
+    if (!current) {
+      return;
+    }
+    current.snapTo({ index: getIndexById(snapPoints, snapPoint) });
+    // eslint-disable-next-line
+  }, [height]);
+
+  const bodyContainer = document.querySelector('#PageContainer');
 
   return (
     <Container>
-      <DraggableCard style={{ pointerEvents: isLocked ? 'none' : 'all' }}>
-        <Card>
-          <button onClick={() => setIsLocked(prev => !prev)}>Goo</button>
-          {restingPoint + ''} - {children}
+      <Interactable.View
+        ref={interactableRef}
+        snapPoints={snapPoints}
+        verticalOnly
+        dragToss={0.2}
+        onSnap={({ id }: { id: string }) => setSnapPoint(id)}
+      >
+        <Card
+          onTouchStart={() => bodyContainer && disableBodyScroll(bodyContainer)}
+          onTouchEnd={() => bodyContainer && enableBodyScroll(bodyContainer)}
+        >
+          <button
+            onClick={() => {
+              console.log('do stuff');
+              const { current } = interactableRef;
+              if (!current) {
+                return;
+              }
+
+              current.snapTo({ index: getIndexById(snapPoints, 'open') });
+            }}
+          >
+            Goo
+          </button>
+          {children}
         </Card>
-      </DraggableCard>
+      </Interactable.View>
     </Container>
   );
 };
 
 const Card = styled.div`
   height: 1000px;
+  width: 100%;
   background-color: ${theme.primaryColor};
+  pointer-events: all;
 `;
 
 const Container = styled.div`

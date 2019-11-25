@@ -43,6 +43,7 @@ export const Passage: React.FC = () => {
           />
         );
       })}
+      {/* passage */}
       <VerseCard />
     </Container>
   );

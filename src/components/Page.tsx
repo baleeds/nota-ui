@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 export const Page: React.FC = ({ children }) => {
   return (
-    <Container>
+    <Container id="PageContainer">
       <Navbar />
       {children}
     </Container>
