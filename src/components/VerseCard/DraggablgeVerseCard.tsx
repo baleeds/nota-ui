@@ -7,21 +7,48 @@ import Interactable from 'react-interactable/noNative';
 import { disableBodyScroll, enableBodyScroll } from 'body-scroll-lock';
 import { getIndexById } from '../../base/utils/getIndexById';
 import { getById } from '../../base/utils/getById';
+import { useHistory, useParams } from 'react-router';
+import { RouteParams } from '../../base/routes';
+import { usePrevious } from '../../hooks/usePrevious';
 
 export const DraggableVerseCard: React.FC = ({ children }) => {
-  const [snapPoint, setSnapPoint] = useState<string>('open');
-
+  const history = useHistory();
+  const { bookName, chapterId, verseId } = useParams<RouteParams>();
+  const previousVerseId = usePrevious(verseId);
+  const [snapPoint, setSnapPoint] = useState<string>(
+    verseId ? 'collapsed' : 'closed'
+  );
   const { height } = useScreen();
-
   const interactableRef = useRef<any>(null);
+
   const snapPoints = useMemo(
     () => [
+      { id: 'closed', y: height, damping: 0.7, stiffness: 2500 },
       { id: 'open', y: -12, damping: 0.6, stiffness: 3000 },
       { id: 'collapsed', y: height - 120, damping: 0.6, stiffness: 3000 },
-      { id: 'closed', y: height, damping: 0.7, stiffness: 2500 },
     ],
     [height]
   );
+
+  const initialPosition = useMemo(
+    () => ({
+      y: (getById(snapPoints, snapPoint) || snapPoints[0]).y,
+    }),
+    // eslint-disable-next-line
+    []
+  );
+
+  useEffect(() => {
+    const { current } = interactableRef;
+    if (!current) {
+      return;
+    }
+    if (!verseId && previousVerseId) {
+      current.snapTo({ index: getIndexById(snapPoints, 'closed') });
+    } else if (verseId && !previousVerseId) {
+      current.snapTo({ index: getIndexById(snapPoints, 'collapsed') });
+    }
+  }, [verseId, previousVerseId, interactableRef, snapPoints]);
 
   useEffect(() => {
     const { current } = interactableRef;
@@ -32,13 +59,13 @@ export const DraggableVerseCard: React.FC = ({ children }) => {
     // eslint-disable-next-line
   }, [height]);
 
-  const initialPosition = useMemo(
-    () => ({
-      y: (getById(snapPoints, snapPoint) || snapPoints[0]).y,
-    }),
-    // eslint-disable-next-line
-    []
-  );
+  const handleSnap = ({ id }: { id: string }) => {
+    setSnapPoint(id);
+
+    if (id === 'closed') {
+      history.push(`/read/${bookName}/${chapterId}`);
+    }
+  };
 
   const bodyContainer = document.querySelector('#PageContainer');
 
@@ -50,7 +77,7 @@ export const DraggableVerseCard: React.FC = ({ children }) => {
         snapPoints={snapPoints}
         verticalOnly
         dragToss={0.2}
-        onSnap={({ id }: { id: string }) => setSnapPoint(id)}
+        onSnap={handleSnap}
       >
         <Card
           onTouchStart={() => bodyContainer && disableBodyScroll(bodyContainer)}
