@@ -7,7 +7,10 @@ import Interactable from 'react-interactable/noNative';
 import { disableBodyScroll, enableBodyScroll } from 'body-scroll-lock';
 
 const getIndexById = (items: any[], id: string) =>
-  items.findIndex(item => item.id === id) || 0;
+  items.findIndex(item => item.id === id) || -12;
+
+const getById = (items: any[], id: string) =>
+  items.find(item => item.id === id);
 
 export const DraggableVerseCard: React.FC = ({ children }) => {
   const [snapPoint, setSnapPoint] = useState<string>('open');
@@ -17,7 +20,7 @@ export const DraggableVerseCard: React.FC = ({ children }) => {
   const interactableRef = useRef<any>(null);
   const snapPoints = useMemo(
     () => [
-      { id: 'open', y: 0, damping: 0.6, stiffness: 3000 },
+      { id: 'open', y: -12, damping: 0.6, stiffness: 3000 },
       { id: 'collapsed', y: height - 120, damping: 0.6, stiffness: 3000 },
       { id: 'closed', y: height, damping: 0.7, stiffness: 2500 },
     ],
@@ -33,12 +36,21 @@ export const DraggableVerseCard: React.FC = ({ children }) => {
     // eslint-disable-next-line
   }, [height]);
 
+  const initialPosition = useMemo(
+    () => ({
+      y: (getById(snapPoints, snapPoint) || snapPoints[0]).y,
+    }),
+    // eslint-disable-next-line
+    []
+  );
+
   const bodyContainer = document.querySelector('#PageContainer');
 
   return (
     <Container>
       <Interactable.View
         ref={interactableRef}
+        initialPosition={initialPosition}
         snapPoints={snapPoints}
         verticalOnly
         dragToss={0.2}
@@ -73,6 +85,19 @@ const Card = styled.div`
   width: 100%;
   background-color: ${theme.primaryColor};
   pointer-events: all;
+  border-radius: 12px;
+
+  :after {
+    content: ' ';
+    display: block;
+    width: 24px;
+    height: 3px;
+    border-radius: 10px;
+    margin: 0 auto;
+    background-color: rgba(255, 255, 255, 0.3);
+    position: relative;
+    top: -12px;
+  }
 `;
 
 const Container = styled.div`
