@@ -8,6 +8,7 @@ import { asInt } from '../../base/utils/asInt';
 import { theme } from '../../styles/theme';
 import { ReactComponent as AngleRight } from '../../icons/chevron_right-24px.svg';
 import { BOOK_DETAILS } from '../../base/constants/bookDetails';
+import { disableBodyScroll, enableBodyScroll } from 'body-scroll-lock';
 
 interface Params {
   bookName?: string;
@@ -21,8 +22,15 @@ export const BookNavigation: React.FC = () => {
   const book = bookName ? BOOK_DETAILS[bookName] : undefined;
   const chapterNumber = asInt(chapterId);
 
-  const open = () => setIsOpen(true);
-  const close = () => setIsOpen(false);
+  const bodyContainer = document.querySelector('#PageContainer');
+  const open = () => {
+    bodyContainer && disableBodyScroll(bodyContainer);
+    setIsOpen(true);
+  };
+  const close = () => {
+    bodyContainer && enableBodyScroll(bodyContainer);
+    setIsOpen(false);
+  };
 
   return (
     <>
@@ -60,7 +68,7 @@ const Container = styled.div`
   top: 0;
   left: 0;
   right: 0;
-  z-index: ${Z_INDEX.NAV};
+  z-index: ${Z_INDEX.READ_NAV};
   background-color: ${theme.blank};
   box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.15);
 

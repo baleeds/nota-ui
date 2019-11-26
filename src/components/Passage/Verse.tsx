@@ -23,7 +23,6 @@ export const Verse: React.FC<Props> = ({
   verseNumber,
   isActive,
 }) => {
-  console.log(isActive);
   return (
     <VerseLink
       to={`/read/${bookName}/${chapterNumber}/${verseNumber}`}

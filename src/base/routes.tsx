@@ -4,6 +4,12 @@ import { ReadPage } from '../pages/ReadPage';
 import { HomePage } from '../pages/HomePage';
 import { CollectionPage } from '../pages/CollectionPage';
 
+export interface RouteParams {
+  bookName?: string;
+  chapterId?: string;
+  verseId?: string;
+}
+
 export const routes = [
   {
     path: '/home',

@@ -1,11 +1,11 @@
 import React from 'react';
 import { useParams } from 'react-router';
-import { BOOK_DETAILS } from '../../base/constants/bookDetails';
 import { asInt } from '../../base/utils/asInt';
 import { ErrorDisplay } from '../ErrorDisplay';
 import { bible } from '../../base/constants/bible';
 import { Verse } from './Verse';
 import styled from 'styled-components';
+import { VerseCard } from '../VerseCard';
 
 interface Params {
   bookName?: string;
@@ -43,6 +43,8 @@ export const Passage: React.FC = () => {
           />
         );
       })}
+      {/* passage */}
+      <VerseCard />
     </Container>
   );
 };
