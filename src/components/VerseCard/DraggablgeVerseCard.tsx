@@ -5,12 +5,8 @@ import { Z_INDEX } from '../../base/constants/zIndex';
 import { useScreen } from '../../hooks/useScreen';
 import Interactable from 'react-interactable/noNative';
 import { disableBodyScroll, enableBodyScroll } from 'body-scroll-lock';
-
-const getIndexById = (items: any[], id: string) =>
-  items.findIndex(item => item.id === id) || -12;
-
-const getById = (items: any[], id: string) =>
-  items.find(item => item.id === id);
+import { getIndexById } from '../../base/utils/getIndexById';
+import { getById } from '../../base/utils/getById';
 
 export const DraggableVerseCard: React.FC = ({ children }) => {
   const [snapPoint, setSnapPoint] = useState<string>('open');
@@ -32,7 +28,7 @@ export const DraggableVerseCard: React.FC = ({ children }) => {
     if (!current) {
       return;
     }
-    current.snapTo({ index: getIndexById(snapPoints, snapPoint) });
+    current.snapTo({ index: getIndexById(snapPoints, snapPoint) || 0 });
     // eslint-disable-next-line
   }, [height]);
 
@@ -60,19 +56,6 @@ export const DraggableVerseCard: React.FC = ({ children }) => {
           onTouchStart={() => bodyContainer && disableBodyScroll(bodyContainer)}
           onTouchEnd={() => bodyContainer && enableBodyScroll(bodyContainer)}
         >
-          <button
-            onClick={() => {
-              console.log('do stuff');
-              const { current } = interactableRef;
-              if (!current) {
-                return;
-              }
-
-              current.snapTo({ index: getIndexById(snapPoints, 'open') });
-            }}
-          >
-            Goo
-          </button>
           {children}
         </Card>
       </Interactable.View>
@@ -87,7 +70,7 @@ const Card = styled.div`
   pointer-events: all;
   border-radius: 12px;
 
-  :after {
+  :before {
     content: ' ';
     display: block;
     width: 24px;
@@ -96,7 +79,7 @@ const Card = styled.div`
     margin: 0 auto;
     background-color: rgba(255, 255, 255, 0.3);
     position: relative;
-    top: -12px;
+    top: 8px;
   }
 `;
 
