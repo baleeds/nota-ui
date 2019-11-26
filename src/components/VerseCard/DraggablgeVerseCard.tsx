@@ -25,7 +25,7 @@ export const DraggableVerseCard: React.FC = ({ children }) => {
     () => [
       { id: 'closed', y: height, damping: 0.7, stiffness: 2500 },
       { id: 'open', y: -12, damping: 0.6, stiffness: 3000 },
-      { id: 'collapsed', y: height - 120, damping: 0.6, stiffness: 3000 },
+      { id: 'collapsed', y: height - 128, damping: 0.6, stiffness: 3000 },
     ],
     [height]
   );
@@ -96,6 +96,7 @@ const Card = styled.div`
   background-color: ${theme.primaryColor};
   pointer-events: all;
   border-radius: 12px;
+  box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.5);
 
   :before {
     content: ' ';
