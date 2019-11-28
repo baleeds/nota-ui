@@ -80,6 +80,7 @@ const Header = styled.div`
   h2 {
     font-size: 18px;
     padding: 22px 16px;
+    font-weight: 600;
   }
 `;
 
@@ -94,7 +95,7 @@ const Badge = styled.div`
   display: flex;
   align-items: center;
   font-size: 16px;
-  font-weight: bold;
+  font-weight: 600;
 
   svg {
     fill: currentColor;

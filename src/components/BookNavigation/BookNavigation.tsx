@@ -76,7 +76,7 @@ const Container = styled.div`
     display: flex;
     align-items: center;
     color: ${theme.primaryColor};
-    font-weight: bold;
+    font-weight: 600;
 
     svg {
       height: 20px;
