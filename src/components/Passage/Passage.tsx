@@ -27,7 +27,7 @@ export const Passage: React.FC = () => {
   }
 
   return (
-    <Container>
+    <Container className="fadeIn">
       {chapter.map((verse, index) => {
         const verseKey = `readChapter-${bookName}-${chapterId}-${index}`;
 
