@@ -8,7 +8,11 @@ import { ReactComponent as AnnotationIcon } from '../icons/comment-24px.svg';
 import { ReactComponent as ArticleIcon } from '../icons/description-24px.svg';
 import { ReactComponent as BookmarkOutlineIcon } from '../icons/bookmark_border-24px.svg';
 
-export const VerseDetails: React.FC = () => {
+interface Props {
+  onBodyScroll?: (event: React.UIEvent<HTMLDivElement>) => void;
+}
+
+export const VerseDetails: React.FC<Props> = ({ onBodyScroll }) => {
   const { bookName, chapterId, verseId } = useParams<RouteParams>();
 
   const fallback = (
@@ -27,24 +31,36 @@ export const VerseDetails: React.FC = () => {
   }
 
   return (
-    <Header>
-      <h2>
-        {bookDetails.displayName} {chapterId}:{verseId}
-      </h2>
-      <BadgeContainer>
-        <Badge>
-          <AnnotationIcon />2
-        </Badge>
-        <Badge>
-          <ArticleIcon />4
-        </Badge>
-        <Badge>
-          <BookmarkOutlineIcon />
-        </Badge>
-      </BadgeContainer>
-    </Header>
+    <Container>
+      <Header>
+        <h2>
+          {bookDetails.displayName} {chapterId}:{verseId}
+        </h2>
+        <BadgeContainer>
+          <Badge>
+            <AnnotationIcon />2
+          </Badge>
+          <Badge>
+            <ArticleIcon />4
+          </Badge>
+          <Badge>
+            <BookmarkOutlineIcon />
+          </Badge>
+        </BadgeContainer>
+      </Header>
+      <Body onScroll={onBodyScroll}>
+        This is the body <div style={{ height: 2000 }} />
+      </Body>
+    </Container>
   );
 };
+
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  height: 100vh;
+`;
 
 const Header = styled.div`
   color: ${theme.blank};
@@ -78,4 +94,9 @@ const Badge = styled.div`
     height: auto;
     margin-right: 6px;
   }
+`;
+
+const Body = styled.div`
+  overflow-y: auto;
+  flex: 1;
 `;

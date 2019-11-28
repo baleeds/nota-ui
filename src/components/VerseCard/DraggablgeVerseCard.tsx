@@ -10,6 +10,7 @@ import { getById } from '../../base/utils/getById';
 import { useHistory, useParams } from 'react-router';
 import { RouteParams } from '../../base/routes';
 import { usePrevious } from '../../hooks/usePrevious';
+import { VerseDetails } from '../VerseDetails';
 
 export const DraggableVerseCard: React.FC = ({ children }) => {
   const history = useHistory();
@@ -18,6 +19,7 @@ export const DraggableVerseCard: React.FC = ({ children }) => {
   const [snapPoint, setSnapPoint] = useState<string>(
     verseId ? 'collapsed' : 'closed'
   );
+  const [isLocked, setIsLocked] = useState(false);
   const { height } = useScreen();
   const interactableRef = useRef<any>(null);
 
@@ -67,6 +69,20 @@ export const DraggableVerseCard: React.FC = ({ children }) => {
     }
   };
 
+  const handleBodyScroll = (event: React.UIEvent<HTMLDivElement>) => {
+    if (snapPoint !== 'open' || !event.target) {
+      return;
+    }
+
+    const { scrollTop } = event.currentTarget;
+
+    if (!isLocked && scrollTop > 0) {
+      setIsLocked(true);
+    } else if (isLocked && scrollTop === 0) {
+      setIsLocked(false);
+    }
+  };
+
   const bodyContainer = document.querySelector('#PageContainer');
 
   return (
@@ -78,6 +94,7 @@ export const DraggableVerseCard: React.FC = ({ children }) => {
         verticalOnly
         dragToss={0.2}
         onSnap={handleSnap}
+        dragEnabled={!isLocked}
       >
         <Card
           onTouchStart={() => bodyContainer && disableBodyScroll(bodyContainer)}
@@ -89,7 +106,7 @@ export const DraggableVerseCard: React.FC = ({ children }) => {
             )
           }
         >
-          {children}
+          <VerseDetails onBodyScroll={handleBodyScroll} />
         </Card>
       </Interactable.View>
     </Container>

@@ -11,9 +11,5 @@ export const VerseCard: React.FC = () => {
     return <VerseDetails />;
   }
 
-  return (
-    <DraggableVerseCard>
-      <VerseDetails />
-    </DraggableVerseCard>
-  );
+  return <DraggableVerseCard />;
 };
