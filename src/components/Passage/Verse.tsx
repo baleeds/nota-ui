@@ -53,7 +53,9 @@ export const Verse: React.FC<Props> = ({
             </span>
           );
         } else if ('lineBreak' in verseLine) {
-          return <div key={key} style={lineBreakStyle} />;
+          return (
+            <div key={key} style={lineBreakStyle} className="verseSpacer" />
+          );
         }
 
         return null;

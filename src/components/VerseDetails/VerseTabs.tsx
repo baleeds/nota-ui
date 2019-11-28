@@ -2,15 +2,31 @@ import React from 'react';
 import styled from 'styled-components';
 import { theme } from '../../styles/theme';
 import Sticky from 'react-sticky-el';
+import { VerseTabName } from './types';
 
-interface Props {}
+interface Props {
+  currentTab: VerseTabName;
+  setCurrentTab: (tab: VerseTabName) => void;
+}
 
-export const VerseTabs: React.FC<Props> = ({}) => {
+export const VerseTabs: React.FC<Props> = ({ currentTab, setCurrentTab }) => {
   return (
     <Sticky scrollElement="#VerseDetailsBody" topOffset={10}>
       <Container role="tablist">
-        <Tab className="active">Annotations</Tab>
-        <Tab>Articles</Tab>
+        <Tab
+          type="button"
+          onClick={() => setCurrentTab('annotations')}
+          className={currentTab === 'annotations' ? 'active' : undefined}
+        >
+          Annotations
+        </Tab>
+        <Tab
+          type="button"
+          onClick={() => setCurrentTab('articles')}
+          className={currentTab === 'articles' ? 'active' : undefined}
+        >
+          Articles
+        </Tab>
       </Container>
     </Sticky>
   );

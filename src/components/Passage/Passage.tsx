@@ -5,12 +5,6 @@ import styled from 'styled-components';
 import { VerseCard } from '../VerseCard';
 import { usePassage } from '../../hooks/usePassage';
 
-interface Params {
-  bookName?: string;
-  chapterId?: string;
-  verseId?: string;
-}
-
 export const Passage: React.FC = () => {
   const { chapter, bookName, chapterNumber, verseNumber } = usePassage();
   if (!chapter || !bookName || !chapterNumber) {

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { theme } from '../../styles/theme';
 import { BOOK_DETAILS } from '../../base/constants/bookDetails';
@@ -8,6 +8,7 @@ import { ReactComponent as BookmarkOutlineIcon } from '../../icons/bookmark_bord
 import { usePassage } from '../../hooks/usePassage';
 import { Verse } from '../Passage/Verse';
 import { VerseTabs } from './VerseTabs';
+import { VerseTabName } from './types';
 
 interface Props {
   onBodyScroll?: (event: React.UIEvent<HTMLDivElement>) => void;
@@ -15,6 +16,7 @@ interface Props {
 
 export const VerseDetails: React.FC<Props> = ({ onBodyScroll }) => {
   const { bookName, chapterNumber, verseNumber, verse } = usePassage();
+  const [currentTab, setCurrentTab] = useState<VerseTabName>('annotations');
 
   const bookDetails = BOOK_DETAILS[bookName || ''];
   if (!verse || !bookName || !bookDetails || !chapterNumber || !verseNumber) {
@@ -54,7 +56,7 @@ export const VerseDetails: React.FC<Props> = ({ onBodyScroll }) => {
             isActive={false}
           />
         </VersePreview>
-        <VerseTabs />
+        <VerseTabs currentTab={currentTab} setCurrentTab={setCurrentTab} />
         <div style={{ height: 2000, backgroundColor: 'white' }} />
       </Body>
     </Container>
@@ -117,6 +119,10 @@ const VersePreview = styled.div`
     font-weight: bold;
 
     .verseNumber {
+      display: none;
+    }
+
+    .verseSpacer:last-child {
       display: none;
     }
   }
