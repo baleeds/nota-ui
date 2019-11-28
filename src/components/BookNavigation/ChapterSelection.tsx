@@ -58,6 +58,7 @@ const AllBooksButton = styled.button`
   color: ${theme.secondaryColor};
   display: flex;
   align-items: center;
+  font-weight: bold;
 
   svg {
     fill: currentColor;

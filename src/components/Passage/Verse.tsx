@@ -65,7 +65,7 @@ export const Verse: React.FC<Props> = ({
 const VerseLink = styled(Link)`
   text-decoration: none;
   color: ${theme.primaryTextColor};
-  text-decoration: none;
+  font-family: 'Open Sans', sans-serif;
   color: #585858;
   line-height: 1.7em;
   padding: 2px 4px;

@@ -1,11 +1,9 @@
 import React from 'react';
-import { useParams } from 'react-router';
-import { asInt } from '../../base/utils/asInt';
 import { ErrorDisplay } from '../ErrorDisplay';
-import { bible } from '../../base/constants/bible';
 import { Verse } from './Verse';
 import styled from 'styled-components';
 import { VerseCard } from '../VerseCard';
+import { usePassage } from '../../hooks/usePassage';
 
 interface Params {
   bookName?: string;
@@ -14,22 +12,15 @@ interface Params {
 }
 
 export const Passage: React.FC = () => {
-  const { bookName, chapterId, verseId } = useParams<Params>();
-  const chapterNumber = asInt(chapterId);
-  const verseNumber = asInt(verseId);
-  if (!bookName || !chapterNumber) {
-    return <ErrorDisplay />;
-  }
-
-  const chapter = bible[bookName].chapters[chapterNumber - 1];
-  if (!chapter) {
+  const { chapter, bookName, chapterNumber, verseNumber } = usePassage();
+  if (!chapter || !bookName || !chapterNumber) {
     return <ErrorDisplay />;
   }
 
   return (
     <Container className="fadeIn">
       {chapter.map((verse, index) => {
-        const verseKey = `readChapter-${bookName}-${chapterId}-${index}`;
+        const verseKey = `readChapter-${bookName}-${chapterNumber}-${index}`;
 
         return (
           <Verse

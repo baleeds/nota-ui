@@ -2,7 +2,7 @@ interface BookDetails {
   [key: string]: BookDetail;
 }
 
-interface BookDetail {
+export interface BookDetail {
   id: number;
   displayName: string;
   numberOfChapters: number;

@@ -19,6 +19,7 @@
     "react-router-config": "^5.1.1",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.2.0",
+    "react-sticky-el": "^1.1.0",
     "react-transition-group": "^4.3.0",
     "styled-components": "^4.4.1",
     "typescript": "3.7.2"
@@ -49,6 +50,8 @@
     "@types/lodash.debounce": "^4.0.6",
     "@types/react-router-config": "^5.0.1",
     "@types/react-router-dom": "^5.1.2",
+    "@types/react-sticky-el": "^1.0.2",
+    "@types/react-stickynode": "^1.4.0",
     "@types/react-transition-group": "^4.2.3",
     "@types/styled-components": "^4.4.0"
   }
