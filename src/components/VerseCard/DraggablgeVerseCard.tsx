@@ -81,7 +81,13 @@ export const DraggableVerseCard: React.FC = ({ children }) => {
       >
         <Card
           onTouchStart={() => bodyContainer && disableBodyScroll(bodyContainer)}
-          onTouchEnd={() => bodyContainer && enableBodyScroll(bodyContainer)}
+          // delay to prevent scrolling of the background on drag end
+          onTouchEnd={() =>
+            setTimeout(
+              () => bodyContainer && enableBodyScroll(bodyContainer),
+              300
+            )
+          }
         >
           {children}
         </Card>
