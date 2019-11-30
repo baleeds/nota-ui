@@ -3,6 +3,7 @@ import { Redirect } from 'react-router';
 import { ReadPage } from '../pages/ReadPage';
 import { HomePage } from '../pages/HomePage';
 import { CollectionPage } from '../pages/CollectionPage';
+import { LoginPage } from '../pages/LoginPage';
 
 export interface RouteParams {
   bookName?: string;
@@ -30,6 +31,11 @@ export const routes = [
     path: '/collection',
     exact: true,
     component: CollectionPage,
+  },
+  {
+    path: '/login',
+    exact: true,
+    component: LoginPage,
   },
   {
     path: '*',
