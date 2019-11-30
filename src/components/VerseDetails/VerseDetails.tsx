@@ -9,13 +9,20 @@ import { usePassage } from '../../hooks/usePassage';
 import { Verse } from '../Passage/Verse';
 import { VerseTabs } from './VerseTabs';
 import { VerseTabName } from './types';
+import { Annotations } from '../Annotations';
 
 interface Props {
   onBodyScroll?: (event: React.UIEvent<HTMLDivElement>) => void;
 }
 
 export const VerseDetails: React.FC<Props> = ({ onBodyScroll }) => {
-  const { bookName, chapterNumber, verseNumber, verse } = usePassage();
+  const {
+    bookName,
+    chapterNumber,
+    verseNumber,
+    verse,
+    passageId,
+  } = usePassage();
   const [currentTab, setCurrentTab] = useState<VerseTabName>('annotations');
 
   const bookDetails = BOOK_DETAILS[bookName || ''];
@@ -57,7 +64,13 @@ export const VerseDetails: React.FC<Props> = ({ onBodyScroll }) => {
           />
         </VersePreview>
         <VerseTabs currentTab={currentTab} setCurrentTab={setCurrentTab} />
-        <div style={{ height: 2000, backgroundColor: 'white' }} />
+        <ContentContainer>
+          {currentTab === 'annotations' ? (
+            <Annotations passageId={passageId} />
+          ) : (
+            'Articles'
+          )}
+        </ContentContainer>
       </Body>
     </Container>
   );
@@ -127,4 +140,9 @@ const VersePreview = styled.div`
       display: none;
     }
   }
+`;
+
+const ContentContainer = styled.div`
+  background-color: ${theme.blank};
+  min-height: 100vh;
 `;

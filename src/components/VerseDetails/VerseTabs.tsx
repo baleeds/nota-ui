@@ -41,7 +41,7 @@ const Container = styled.nav`
 const Tab = styled.button<{ active?: boolean }>`
   color: white;
   padding: 8px 12px 16px 12px;
-  font-weight: 500;
+  font-weight: 400;
   opacity: 0.7;
 
   flex: 1;

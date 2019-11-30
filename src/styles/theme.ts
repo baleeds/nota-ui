@@ -6,4 +6,5 @@ export const theme = {
   successColor: '#1cbf6c',
   secondaryHoverColor: 'rgba(82, 146, 255, 0.1)',
   primaryHoverColor: '#f2edfa',
+  borderColor: '#eee',
 } as const;
