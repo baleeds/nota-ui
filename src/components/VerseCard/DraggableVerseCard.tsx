@@ -20,6 +20,7 @@ export const DraggableVerseCard: React.FC = () => {
     verseId ? 'collapsed' : 'closed'
   );
   const [isLocked, setIsLocked] = useState(false);
+  const [showAddButton, setShowAddButton] = useState(false);
   const { height } = useScreen();
   const interactableRef = useRef<any>(null);
 
@@ -66,6 +67,12 @@ export const DraggableVerseCard: React.FC = () => {
 
     if (id === 'closed') {
       history.push(`/read/${bookName}/${chapterId}`);
+    }
+
+    if (id === 'open') {
+      setTimeout(() => setShowAddButton(true), 300);
+    } else {
+      setShowAddButton(false);
     }
   };
 
@@ -122,6 +129,7 @@ export const DraggableVerseCard: React.FC = () => {
           <VerseDetails
             onBodyScroll={handleBodyScroll}
             onToggle={handleToggle}
+            showAddButton={showAddButton}
           />
         </Card>
       </Interactable.View>
@@ -130,7 +138,6 @@ export const DraggableVerseCard: React.FC = () => {
 };
 
 const Card = styled.div`
-  height: 1000px;
   width: 100%;
   background-color: ${theme.primaryColor};
   pointer-events: all;

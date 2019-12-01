@@ -5,18 +5,25 @@ import { BOOK_DETAILS } from '../../base/constants/bookDetails';
 import { ReactComponent as AnnotationIcon } from '../../icons/comment-24px.svg';
 import { ReactComponent as ArticleIcon } from '../../icons/description-24px.svg';
 import { ReactComponent as BookmarkOutlineIcon } from '../../icons/bookmark_border-24px.svg';
+import { ReactComponent as EditIcon } from '../../icons/edit-24px.svg';
 import { usePassage } from '../../hooks/usePassage';
 import { Verse } from '../Passage/Verse';
 import { VerseTabs } from './VerseTabs';
 import { VerseTabName } from './types';
 import { Annotations } from '../Annotations';
+import { CSSTransition } from 'react-transition-group';
 
 interface Props {
   onBodyScroll?: (event: React.UIEvent<HTMLDivElement>) => void;
   onToggle?: () => void;
+  showAddButton?: boolean;
 }
 
-export const VerseDetails: React.FC<Props> = ({ onBodyScroll, onToggle }) => {
+export const VerseDetails: React.FC<Props> = ({
+  onBodyScroll,
+  onToggle,
+  showAddButton = true,
+}) => {
   const {
     bookName,
     chapterNumber,
@@ -74,10 +81,20 @@ export const VerseDetails: React.FC<Props> = ({ onBodyScroll, onToggle }) => {
             'Articles'
           )}
         </ContentContainer>
-        <AddButton type="button" onClick={console.log}>
-          Add {currentTab === 'annotations' ? 'annotation' : 'article'}
-        </AddButton>
       </Body>
+      <AddButtonContainer>
+        <CSSTransition
+          in={showAddButton}
+          classNames="addButton"
+          timeout={200}
+          unmountOnExit
+        >
+          <AddButton type="button" onClick={console.log}>
+            <EditIcon />
+            Create {currentTab === 'annotations' ? 'annotation' : 'article'}
+          </AddButton>
+        </CSSTransition>
+      </AddButtonContainer>
     </Container>
   );
 };
@@ -157,16 +174,32 @@ const ContentContainer = styled.div`
   min-height: 100vh;
 `;
 
+const AddButtonContainer = styled.div`
+  position: fixed;
+  bottom: 64px;
+  pointer-events: none;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+`;
+
 const AddButton = styled.button`
+  margin: 0 auto;
   border-radius: 100px;
+  pointer-events: all;
   background-color: ${theme.secondaryColor};
   padding: 8px 24px;
   color: ${theme.blank};
-  position: fixed;
-  bottom: 60px;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
   font-size: 0.9em;
   font-style: italic;
-  left: calc(50% - 83px);
-  bottom: 250px;
+  display: flex;
+  align-items: center;
+
+  svg {
+    fill: currentColor;
+    margin-right: 6px;
+    width: 20px;
+    height: auto;
+  }
 `;
