@@ -6,6 +6,27 @@ import { ReactComponent as ReadIcon } from '../icons/menu_book-24px.svg';
 import { ReactComponent as CollectionIcon } from '../icons/collections_bookmark-24px.svg';
 import { theme } from '../styles/theme';
 import { Z_INDEX } from '../base/constants/zIndex';
+import {
+  BOOK_ID_KEY,
+  CHAPTER_ID_KEY,
+  VERSE_ID_KEY,
+} from '../base/constants/localStorageKeys';
+
+const getReadLink = () => {
+  const bookName = localStorage.getItem(BOOK_ID_KEY);
+  const chapterId = localStorage.getItem(CHAPTER_ID_KEY);
+  const verseId = localStorage.getItem(VERSE_ID_KEY);
+
+  if (!bookName || !chapterId) {
+    return '/read';
+  }
+
+  if (!verseId) {
+    return `/read/${bookName}/${chapterId}`;
+  }
+
+  return `/read/${bookName}/${chapterId}/${verseId}`;
+};
 
 export const Navbar: React.FC = () => {
   return (
@@ -14,7 +35,7 @@ export const Navbar: React.FC = () => {
         <HomeIcon />
         <span>Home</span>
       </NavButton>
-      <NavButton to="/read">
+      <NavButton to={getReadLink()}>
         <ReadIcon />
         <span>Read</span>
       </NavButton>
