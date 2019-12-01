@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import styled from 'styled-components';
 import { CSSTransition } from 'react-transition-group';
 import { Z_INDEX } from '../../base/constants/zIndex';
@@ -17,6 +17,7 @@ interface Params {
 export const BookNavigation: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { bookName, chapterId } = useParams<Params>();
+  const navContainerRef = useRef<HTMLDivElement>(null);
 
   const book = bookName ? BOOK_DETAILS[bookName] : undefined;
   const chapterNumber = asInt(chapterId);
@@ -26,6 +27,15 @@ export const BookNavigation: React.FC = () => {
   };
   const close = () => {
     setIsOpen(false);
+  };
+
+  const handleSetScroll = (scrollTop: number) => {
+    const { current } = navContainerRef;
+    if (!current) {
+      return;
+    }
+
+    current.scrollTop = scrollTop;
   };
 
   return (
@@ -46,11 +56,12 @@ export const BookNavigation: React.FC = () => {
       >
         <div>
           <Backdrop className="background" onClick={close} />
-          <NavigationContainer className="foreground">
+          <NavigationContainer className="foreground" ref={navContainerRef}>
             <PassageSelector
               close={close}
               chapterNumber={chapterNumber}
               bookName={bookName}
+              setScroll={handleSetScroll}
             />
           </NavigationContainer>
         </div>

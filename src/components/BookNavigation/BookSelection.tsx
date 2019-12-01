@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { BOOK_DETAILS } from '../../base/constants/bookDetails';
 import styled from 'styled-components';
 import { theme } from '../../styles/theme';
@@ -6,19 +6,29 @@ import { theme } from '../../styles/theme';
 interface Props {
   bookName?: string;
   handleBookSelection: (bookKey: string) => void;
+  setScroll: (scrollTop: number) => void;
 }
 
 export const BookSelection: React.FC<Props> = ({
   bookName,
   handleBookSelection,
+  setScroll,
 }) => {
+  const bookKeys = Object.keys(BOOK_DETAILS);
+  const currentIndex = bookKeys.findIndex(key => key === bookName);
+
+  useEffect(() => {
+    setScroll(currentIndex * 51 - 200);
+    /* eslint-disable */
+  }, []);
+
   return (
     <BookButtons>
-      {Object.keys(BOOK_DETAILS).map(bookKey => (
+      {bookKeys.map((bookKey, index) => (
         <button
           key={`${bookKey}-navigationButton`}
           type="button"
-          className={bookName === bookKey ? 'active' : undefined}
+          className={index === currentIndex ? 'active' : undefined}
           onClick={() => handleBookSelection(bookKey)}
         >
           {BOOK_DETAILS[bookKey].displayName}

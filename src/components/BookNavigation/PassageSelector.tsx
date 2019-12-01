@@ -7,12 +7,14 @@ interface Props {
   bookName?: string;
   chapterNumber?: number;
   close: () => void;
+  setScroll: (scrollTop: number) => void;
 }
 
 export const PassageSelector: React.FC<Props> = ({
   bookName,
   chapterNumber,
   close,
+  setScroll,
 }) => {
   const [selectedBookName, setSelectedBookName] = useState(bookName);
   const [showChapterSelection, setShowChapterSelection] = useState(
@@ -51,6 +53,7 @@ export const PassageSelector: React.FC<Props> = ({
         <BookSelection
           bookName={bookName}
           handleBookSelection={handleBookSelection}
+          setScroll={setScroll}
         />
       </CSSTransition>
     </>

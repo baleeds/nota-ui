@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Page } from '../components/Page';
 import { BookNavigation } from '../components/BookNavigation';
 import { Passage } from '../components/Passage';
