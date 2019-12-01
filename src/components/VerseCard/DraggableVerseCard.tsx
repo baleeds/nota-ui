@@ -83,6 +83,19 @@ export const DraggableVerseCard: React.FC = ({ children }) => {
     }
   };
 
+  const handleToggle = () => {
+    const { current } = interactableRef;
+    if (!current) {
+      return;
+    }
+
+    if (snapPoint !== 'open') {
+      current.snapTo({ index: getIndexById(snapPoints, 'open') || 0 });
+    } else {
+      current.snapTo({ index: getIndexById(snapPoints, 'collapsed') || 0 });
+    }
+  };
+
   const bodyContainer = document.querySelector('#PageContainer');
 
   return (
@@ -106,7 +119,10 @@ export const DraggableVerseCard: React.FC = ({ children }) => {
             )
           }
         >
-          <VerseDetails onBodyScroll={handleBodyScroll} />
+          <VerseDetails
+            onBodyScroll={handleBodyScroll}
+            onToggle={handleToggle}
+          />
         </Card>
       </Interactable.View>
     </Container>

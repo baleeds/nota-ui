@@ -13,9 +13,10 @@ import { Annotations } from '../Annotations';
 
 interface Props {
   onBodyScroll?: (event: React.UIEvent<HTMLDivElement>) => void;
+  onToggle?: () => void;
 }
 
-export const VerseDetails: React.FC<Props> = ({ onBodyScroll }) => {
+export const VerseDetails: React.FC<Props> = ({ onBodyScroll, onToggle }) => {
   const {
     bookName,
     chapterNumber,
@@ -37,9 +38,11 @@ export const VerseDetails: React.FC<Props> = ({ onBodyScroll }) => {
   return (
     <Container>
       <Header>
-        <h2>
-          {bookDetails.displayName} {chapterNumber}:{verseNumber}
-        </h2>
+        <HeaderButton type="button" onClick={onToggle}>
+          <h2>
+            {bookDetails.displayName} {chapterNumber}:{verseNumber}
+          </h2>
+        </HeaderButton>
         <BadgeContainer>
           <Badge>
             <AnnotationIcon />2
@@ -71,6 +74,9 @@ export const VerseDetails: React.FC<Props> = ({ onBodyScroll }) => {
             'Articles'
           )}
         </ContentContainer>
+        <AddButton type="button" onClick={console.log}>
+          Add {currentTab === 'annotations' ? 'annotation' : 'article'}
+        </AddButton>
       </Body>
     </Container>
   );
@@ -89,10 +95,14 @@ const Header = styled.div`
   justify-content: space-between;
   padding: 4px 0;
   pointer-events: none;
+`;
+
+const HeaderButton = styled.button`
+  padding: 22px 16px;
+  pointer-events: all;
 
   h2 {
     font-size: 18px;
-    padding: 22px 16px;
     font-weight: 600;
   }
 `;
@@ -145,4 +155,18 @@ const VersePreview = styled.div`
 const ContentContainer = styled.div`
   background-color: ${theme.blank};
   min-height: 100vh;
+`;
+
+const AddButton = styled.button`
+  border-radius: 100px;
+  background-color: ${theme.secondaryColor};
+  padding: 8px 24px;
+  color: ${theme.blank};
+  position: fixed;
+  bottom: 60px;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+  font-size: 0.9em;
+  font-style: italic;
+  left: calc(50% - 83px);
+  bottom: 250px;
 `;
