@@ -12,7 +12,7 @@ import { RouteParams } from '../../base/routes';
 import { usePrevious } from '../../hooks/usePrevious';
 import { VerseDetails } from '../VerseDetails';
 
-export const DraggableVerseCard: React.FC = ({ children }) => {
+export const DraggableVerseCard: React.FC = () => {
   const history = useHistory();
   const { bookName, chapterId, verseId } = useParams<RouteParams>();
   const previousVerseId = usePrevious(verseId);
