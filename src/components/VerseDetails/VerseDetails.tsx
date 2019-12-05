@@ -84,14 +84,25 @@ export const VerseDetails: React.FC<Props> = ({
       </Body>
       <AddButtonContainer>
         <CSSTransition
-          in={showAddButton}
+          in={showAddButton && currentTab === 'annotations'}
           classNames="addButton"
           timeout={200}
           unmountOnExit
         >
           <AddButton type="button" onClick={console.log}>
             <EditIcon />
-            Create {currentTab === 'annotations' ? 'annotation' : 'article'}
+            Create annotation
+          </AddButton>
+        </CSSTransition>
+        <CSSTransition
+          in={showAddButton && currentTab === 'articles'}
+          classNames="addButton"
+          timeout={200}
+          unmountOnExit
+        >
+          <AddButton type="button" onClick={console.log}>
+            <EditIcon />
+            Create article
           </AddButton>
         </CSSTransition>
       </AddButtonContainer>
@@ -195,6 +206,8 @@ const AddButton = styled.button`
   font-style: italic;
   display: flex;
   align-items: center;
+  position: absolute;
+  bottom: 0;
 
   svg {
     fill: currentColor;
