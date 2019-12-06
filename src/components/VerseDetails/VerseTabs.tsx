@@ -3,13 +3,19 @@ import styled from 'styled-components';
 import { theme } from '../../styles/theme';
 import Sticky from 'react-sticky-el';
 import { VerseTabName } from './types';
+import { useHistory } from 'react-router';
 
 interface Props {
   currentTab: VerseTabName;
-  setCurrentTab: (tab: VerseTabName) => void;
 }
 
-export const VerseTabs: React.FC<Props> = ({ currentTab, setCurrentTab }) => {
+export const VerseTabs: React.FC<Props> = ({ currentTab }) => {
+  const history = useHistory();
+
+  const setCurrentTab = (newTab: VerseTabName) => {
+    history.push(history.location.pathname.replace(currentTab, newTab));
+  };
+
   return (
     <Sticky scrollElement="#VerseDetailsBody" topOffset={10}>
       <Container role="tablist">

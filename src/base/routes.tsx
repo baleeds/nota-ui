@@ -23,6 +23,8 @@ export const routes = [
       '/read/:bookName',
       '/read/:bookName/:chapterId',
       '/read/:bookName/:chapterId/:verseId',
+      '/read/:bookName/:chapterId/:verseId/annotations',
+      '/read/:bookName/:chapterId/:verseId/articles',
     ],
     exact: true,
     component: ReadPage,

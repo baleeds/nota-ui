@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { theme } from '../../styles/theme';
 import { BOOK_DETAILS } from '../../base/constants/bookDetails';
@@ -12,12 +12,24 @@ import { VerseTabs } from './VerseTabs';
 import { VerseTabName } from './types';
 import { Annotations } from '../Annotations';
 import { CSSTransition } from 'react-transition-group';
+import { useLocation } from 'react-router';
 
 interface Props {
   onBodyScroll?: (event: React.UIEvent<HTMLDivElement>) => void;
   onToggle?: () => void;
   showAddButton?: boolean;
 }
+
+const getCurrentTab = (pathname: string): VerseTabName => {
+  if (pathname.includes('articles')) {
+    return 'articles';
+  }
+  if (pathname.includes('annotations')) {
+    return 'annotations';
+  }
+  // TODO: add localstorage support for last open tab
+  return 'annotations';
+};
 
 export const VerseDetails: React.FC<Props> = ({
   onBodyScroll,
@@ -31,8 +43,8 @@ export const VerseDetails: React.FC<Props> = ({
     verse,
     passageId,
   } = usePassage();
-  const [currentTab, setCurrentTab] = useState<VerseTabName>('annotations');
-
+  const { pathname } = useLocation();
+  const currentTab: VerseTabName = getCurrentTab(pathname);
   const bookDetails = BOOK_DETAILS[bookName || ''];
   if (!verse || !bookName || !bookDetails || !chapterNumber || !verseNumber) {
     return (
@@ -73,7 +85,7 @@ export const VerseDetails: React.FC<Props> = ({
             isActive={false}
           />
         </VersePreview>
-        <VerseTabs currentTab={currentTab} setCurrentTab={setCurrentTab} />
+        <VerseTabs currentTab={currentTab} />
         <ContentContainer>
           {currentTab === 'annotations' ? (
             <Annotations passageId={passageId} />

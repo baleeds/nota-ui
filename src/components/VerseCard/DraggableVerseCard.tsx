@@ -9,22 +9,47 @@ import { getIndexById } from '../../base/utils/getIndexById';
 import { getById } from '../../base/utils/getById';
 import { useHistory, useParams } from 'react-router';
 import { RouteParams } from '../../base/routes';
-import { usePrevious } from '../../hooks/usePrevious';
 import { VerseDetails } from '../VerseDetails';
+
+type SnapPointId = 'open' | 'collapsed' | 'closed';
+
+interface SnapPoint {
+  id: SnapPointId;
+  y: number;
+  damping: number;
+  stiffness: number;
+}
+
+const CLOSED_INDEX = 0;
+const OPEN_INDEX = 1;
+const COLLAPSED_INDEX = 2;
 
 export const DraggableVerseCard: React.FC = () => {
   const history = useHistory();
+  const { pathname } = history.location;
   const { bookName, chapterId, verseId } = useParams<RouteParams>();
-  const previousVerseId = usePrevious(verseId);
-  const [snapPoint, setSnapPoint] = useState<string>(
-    verseId ? 'collapsed' : 'closed'
+
+  const isOpen =
+    pathname.includes('annotations') || pathname.includes('articles');
+  const isCollapsed = !!verseId;
+
+  const [snapPoint, setSnapPoint] = useState<SnapPointId>(
+    isOpen ? 'open' : isCollapsed ? 'collapsed' : 'closed'
   );
+
   const [isLocked, setIsLocked] = useState(false);
-  const [showAddButton, setShowAddButton] = useState(false);
+  const [showAddButton, setShowAddButton] = useState(isOpen ? true : false);
+
   const { height } = useScreen();
   const interactableRef = useRef<any>(null);
 
-  const snapPoints = useMemo(
+  const ensurePathname = (target: string) => {
+    if (pathname !== target) {
+      history.push(target);
+    }
+  };
+
+  const snapPoints: SnapPoint[] = useMemo(
     () => [
       { id: 'closed', y: height, damping: 0.7, stiffness: 2500 },
       { id: 'open', y: -12, damping: 0.6, stiffness: 3000 },
@@ -41,18 +66,30 @@ export const DraggableVerseCard: React.FC = () => {
     []
   );
 
+  // Snap to positions when the url changes
   useEffect(() => {
     const { current } = interactableRef;
     if (!current) {
       return;
     }
-    if (!verseId && previousVerseId) {
-      current.snapTo({ index: getIndexById(snapPoints, 'closed') });
-    } else if (verseId && !previousVerseId) {
-      current.snapTo({ index: getIndexById(snapPoints, 'collapsed') });
-    }
-  }, [verseId, previousVerseId, interactableRef, snapPoints]);
+    console.table({ isOpen, isCollapsed });
 
+    if (isOpen) {
+      if (snapPoint !== 'open') {
+        current.snapTo({ index: OPEN_INDEX });
+      }
+    } else if (isCollapsed) {
+      if (snapPoint !== 'collapsed') {
+        current.snapTo({ index: COLLAPSED_INDEX });
+      }
+    } else if (!isCollapsed) {
+      if (snapPoint !== 'closed') {
+        current.snapTo({ index: CLOSED_INDEX });
+      }
+    }
+  }, [isCollapsed, interactableRef, isOpen]);
+
+  // Reposition the card when the screen height changes
   useEffect(() => {
     const { current } = interactableRef;
     if (!current) {
@@ -62,14 +99,22 @@ export const DraggableVerseCard: React.FC = () => {
     // eslint-disable-next-line
   }, [height]);
 
-  const handleSnap = ({ id }: { id: string }) => {
-    setSnapPoint(id);
-
-    if (id === 'closed') {
-      history.push(`/read/${bookName}/${chapterId}`);
+  // Called after snapping
+  const handleSnap = ({ id }: { id: SnapPointId }) => {
+    // bail if the snap point is already correct
+    if (id === snapPoint) {
+      return;
     }
+    setSnapPoint(id);
+  };
 
-    if (id === 'open') {
+  const handleStop = () => {
+    if (snapPoint === 'closed') {
+      ensurePathname(`/read/${bookName}/${chapterId}`);
+    } else if (snapPoint === 'collapsed') {
+      ensurePathname(`/read/${bookName}/${chapterId}/${verseId}`);
+    } else if (snapPoint === 'open') {
+      ensurePathname(`/read/${bookName}/${chapterId}/${verseId}/annotations`);
       setTimeout(() => setShowAddButton(true), 300);
     } else {
       setShowAddButton(false);
@@ -114,6 +159,7 @@ export const DraggableVerseCard: React.FC = () => {
         verticalOnly
         dragToss={0.2}
         onSnap={handleSnap}
+        onStop={handleStop}
         dragEnabled={!isLocked}
       >
         <Card
