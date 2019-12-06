@@ -17,7 +17,6 @@ interface Params {
 export const BookNavigation: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { bookName, chapterId } = useParams<Params>();
-  const navContainerRef = useRef<HTMLDivElement>(null);
 
   const book = bookName ? BOOK_DETAILS[bookName] : undefined;
   const chapterNumber = asInt(chapterId);
@@ -27,15 +26,6 @@ export const BookNavigation: React.FC = () => {
   };
   const close = () => {
     setIsOpen(false);
-  };
-
-  const handleSetScroll = (scrollTop: number) => {
-    const { current } = navContainerRef;
-    if (!current) {
-      return;
-    }
-
-    current.scrollTop = scrollTop;
   };
 
   return (
@@ -56,12 +46,11 @@ export const BookNavigation: React.FC = () => {
       >
         <div>
           <Backdrop className="background" onClick={close} />
-          <NavigationContainer className="foreground" ref={navContainerRef}>
+          <NavigationContainer className="foreground">
             <PassageSelector
               close={close}
               chapterNumber={chapterNumber}
               bookName={bookName}
-              setScroll={handleSetScroll}
             />
           </NavigationContainer>
         </div>
@@ -119,7 +108,7 @@ const NavigationContainer = styled.div`
   background-color: white;
   z-index: ${Z_INDEX.BOOK_NAV};
   box-shadow: 0 0 24px 2px rgba(0, 0, 0, 0.3);
-  overflow-y: auto;
+  overflow: hidden;
 `;
 
 const Backdrop = styled.div`
