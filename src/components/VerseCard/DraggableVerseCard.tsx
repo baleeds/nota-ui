@@ -105,6 +105,12 @@ export const DraggableVerseCard: React.FC = () => {
     if (id === snapPoint) {
       return;
     }
+
+    if (id === 'open') {
+      setTimeout(() => setShowAddButton(true), 400);
+    } else {
+      setShowAddButton(false);
+    }
     setSnapPoint(id);
   };
 
@@ -115,9 +121,6 @@ export const DraggableVerseCard: React.FC = () => {
       ensurePathname(`/read/${bookName}/${chapterId}/${verseId}`);
     } else if (snapPoint === 'open') {
       ensurePathname(`/read/${bookName}/${chapterId}/${verseId}/annotations`);
-      setTimeout(() => setShowAddButton(true), 300);
-    } else {
-      setShowAddButton(false);
     }
   };
 
