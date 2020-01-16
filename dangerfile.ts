@@ -33,9 +33,9 @@ spellcheck({
   codeSpellCheck: ['src/**/*.ts', 'src/**/*.tsx', 'src/**/*.js', '*.md'],
 });
 
-// // Setup
-// const modified = danger.git.modified_files;
-// const pr = danger.github.pr;
+// Setup
+const modified = danger.git.modified_files;
+const pr = danger.github.pr;
 
 // // PR should have a description
 // if (pr.body.length === 0) {
@@ -64,3 +64,46 @@ spellcheck({
 //   const idea = 'Perhaps you need to run `yarn install`?';
 //   warn(`${message} - <i>${idea}</i>`);
 // }
+
+// @see https://stackoverflow.com/questions/15900485/correct-way-to-convert-size-in-bytes-to-kb-mb-gb-in-javascript
+function formatBytes(bytes, decimals = 2) {
+  if (bytes === 0) return '0 Bytes';
+
+  const k = 1024;
+  const dm = decimals < 0 ? 0 : decimals;
+  const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+
+  const i = Math.floor(Math.log(bytes) / Math.log(k));
+
+  return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
+}
+
+// Check for additional packages
+if (modified.includes('package.json')) {
+  danger.git.JSONDiffForFile('package.json').then(diff => {
+    const { added } = diff?.dependencies;
+    if (added) {
+      // for each new dep, fetch and output bundlephobia info
+      added.forEach(newDepName => {
+        const version = diff.dependencies.after[newDepName];
+
+        fetch(
+          `https://bundlephobia.com/api/size?package=${newDepName}@${version}`
+        )
+          .then(response => response.json())
+          .then(body => {
+            const { gzip, repository } = body;
+            if (!gzip || !repository) {
+              return;
+            }
+
+            warn(
+              `:package New dependency: [${newDepName}@${version}](${repository}) - ${formatBytes(
+                gzip
+              )} (gzip)`
+            );
+          });
+      });
+    }
+  });
+}
