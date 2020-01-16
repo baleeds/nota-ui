@@ -72,7 +72,6 @@ export const DraggableVerseCard: React.FC = () => {
     if (!current) {
       return;
     }
-    console.table({ isOpen, isCollapsed });
 
     if (isOpen) {
       if (snapPoint !== 'open') {
