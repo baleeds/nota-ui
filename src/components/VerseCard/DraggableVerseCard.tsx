@@ -87,7 +87,7 @@ export const DraggableVerseCard: React.FC = () => {
         current.snapTo({ index: CLOSED_INDEX });
       }
     }
-  }, [isCollapsed, interactableRef, isOpen]);
+  }, [isCollapsed, interactableRef, isOpen, snapPoint]);
 
   // Reposition the card when the screen height changes
   useEffect(() => {

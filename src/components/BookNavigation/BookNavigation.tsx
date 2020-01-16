@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { CSSTransition } from 'react-transition-group';
 import { Z_INDEX } from '../../base/constants/zIndex';

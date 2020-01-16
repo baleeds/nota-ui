@@ -40,7 +40,7 @@ const ChapterSelection: React.FC<Props> = ({
     }
 
     return buttons;
-  }, [numberOfChapters, isBookActive, chapterNumber, bookName]);
+  }, [numberOfChapters, isBookActive, chapterNumber, bookName, close]);
 
   return (
     <Container>

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState, useMemo } from 'react';
+import React, { useEffect, useRef, useMemo } from 'react';
 import { BOOK_DETAILS } from '../../base/constants/bookDetails';
 import styled from 'styled-components';
 import { theme } from '../../styles/theme';
@@ -17,7 +17,7 @@ export const BookSelection: React.FC<Props> = ({
   const containerRef = useRef<HTMLDivElement>(null);
   const currentIndex = useMemo(
     () => bookKeys.findIndex(key => key === bookName),
-    [bookKeys, bookName]
+    [bookName]
   );
 
   const { current } = containerRef;
@@ -26,7 +26,7 @@ export const BookSelection: React.FC<Props> = ({
       return;
     }
     current.scrollTop = currentIndex * 51 - 200;
-  }, [current]);
+  }, [current, currentIndex]);
 
   return (
     <BookButtons ref={containerRef}>
