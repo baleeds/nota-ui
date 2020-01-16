@@ -8,7 +8,7 @@ import { usePassage } from '../../hooks/usePassage';
 export const Passage: React.FC = () => {
   const { chapter, bookName, chapterNumber, verseNumber } = usePassage();
   if (!chapter || !bookName || !chapterNumber) {
-    return <ErrorDisplay />;
+    return <ErrorDisplay message="We could not find this passage" />;
   }
 
   return (

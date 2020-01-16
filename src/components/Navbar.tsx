@@ -18,7 +18,7 @@ const getReadLink = () => {
   const verseId = localStorage.getItem(VERSE_ID_KEY);
 
   if (!bookName || !chapterId) {
-    return '/read';
+    return '/read/genesis/1';
   }
 
   if (!verseId) {
