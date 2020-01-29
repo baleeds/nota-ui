@@ -1,6 +1,5 @@
 import React from 'react';
 import { Page } from '../components/Page';
-import { BookNavigation } from '../components/BookNavigation';
 import { Passage } from '../components/Passage';
 import styled from 'styled-components';
 import { useParams } from 'react-router';
@@ -10,6 +9,7 @@ import {
   VERSE_ID_KEY,
   CHAPTER_ID_KEY,
 } from '../base/constants/localStorageKeys';
+import { VerseCard } from '../components/VerseCard';
 
 const syncLocalStorage = (key: string, value: string | undefined) => {
   if (value) {
@@ -29,10 +29,12 @@ export const ReadPage: React.FC = () => {
 
   return (
     <Page>
-      <Center>
-        <BookNavigation />
-        <Passage />
-      </Center>
+      <PassageContainer>
+        <Center>
+          <Passage />
+        </Center>
+        <VerseCard />
+      </PassageContainer>
     </Page>
   );
 };
@@ -40,5 +42,13 @@ export const ReadPage: React.FC = () => {
 const Center = styled.div`
   @media screen and (min-width: 900px) {
     margin: 0 auto;
+    overflow-y: auto;
+    height: 100vh;
+  }
+`;
+
+const PassageContainer = styled.div`
+  @media screen and (min-width: 900px) {
+    display: flex;
   }
 `;
