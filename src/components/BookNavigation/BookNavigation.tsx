@@ -90,7 +90,7 @@ const Container = styled.div`
     position: relative;
     box-shadow: none;
     background-color: transparent;
-    padding: 24px 12px 0 12px;
+    margin: 0 -16px;
 
     button {
       font-size: 1.3em;

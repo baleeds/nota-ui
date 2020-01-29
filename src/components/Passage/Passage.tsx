@@ -2,8 +2,8 @@ import React from 'react';
 import { ErrorDisplay } from '../ErrorDisplay';
 import { Verse } from './Verse';
 import styled from 'styled-components';
-import { VerseCard } from '../VerseCard';
 import { usePassage } from '../../hooks/usePassage';
+import { BookNavigation } from '../BookNavigation';
 
 export const Passage: React.FC = () => {
   const { chapter, bookName, chapterNumber, verseNumber } = usePassage();
@@ -13,6 +13,8 @@ export const Passage: React.FC = () => {
 
   return (
     <Container className="fadeIn">
+      <BookNavigation />
+
       {chapter.map((verse, index) => {
         const verseKey = `readChapter-${bookName}-${chapterNumber}-${index}`;
 
@@ -28,8 +30,6 @@ export const Passage: React.FC = () => {
           />
         );
       })}
-      {/* passage */}
-      <VerseCard />
     </Container>
   );
 };

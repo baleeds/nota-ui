@@ -127,6 +127,13 @@ const Container = styled.div`
   flex-direction: column;
   flex: 1;
   height: 100vh;
+
+  @media screen and (min-width: 900px) {
+    max-width: 600px;
+    min-width: 350px;
+    box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.15);
+    background-color: ${theme.primaryColor};
+  }
 `;
 
 const Header = styled.div`
