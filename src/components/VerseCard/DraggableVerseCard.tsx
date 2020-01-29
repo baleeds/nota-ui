@@ -86,7 +86,7 @@ export const DraggableVerseCard: React.FC = () => {
         current.snapTo({ index: CLOSED_INDEX });
       }
     }
-  }, [isCollapsed, interactableRef, isOpen, snapPoint]);
+  }, [isCollapsed, interactableRef, isOpen]); // eslint-disable-line
 
   // Reposition the card when the screen height changes
   useEffect(() => {
