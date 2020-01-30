@@ -11,8 +11,9 @@ import {
   CHAPTER_ID_KEY,
   VERSE_ID_KEY,
 } from '../base/constants/localStorageKeys';
+import { useScreen } from '../hooks/useScreen';
 
-const getReadLink = () => {
+const getReadLink = (isMobile: boolean) => {
   const bookName = localStorage.getItem(BOOK_ID_KEY);
   const chapterId = localStorage.getItem(CHAPTER_ID_KEY);
   const verseId = localStorage.getItem(VERSE_ID_KEY);
@@ -25,17 +26,21 @@ const getReadLink = () => {
     return `/read/${bookName}/${chapterId}`;
   }
 
-  return `/read/${bookName}/${chapterId}/${verseId}`;
+  return `/read/${bookName}/${chapterId}/${verseId}${
+    !isMobile ? '/annotations' : undefined
+  }`;
 };
 
 export const Navbar: React.FC = () => {
+  const { width } = useScreen();
+
   return (
     <Container>
       <NavButton to="/home">
         <HomeIcon />
         <span>Home</span>
       </NavButton>
-      <NavButton to={getReadLink()}>
+      <NavButton to={getReadLink(width < 900)}>
         <ReadIcon />
         <span>Read</span>
       </NavButton>

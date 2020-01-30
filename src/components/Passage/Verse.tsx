@@ -3,6 +3,8 @@ import { BibleVerse } from '../../base/constants/bible';
 import { theme } from '../../styles/theme';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import { useScreen } from '../../hooks/useScreen';
+import { LARGE_SCREEN } from '../../base/constants/breakpoints';
 
 interface Props {
   verse: BibleVerse;
@@ -23,9 +25,13 @@ export const Verse: React.FC<Props> = ({
   verseNumber,
   isActive,
 }) => {
+  const { width } = useScreen();
+
   return (
     <VerseLink
-      to={`/read/${bookName}/${chapterNumber}/${verseNumber}`}
+      to={`/read/${bookName}/${chapterNumber}/${verseNumber}${
+        width > LARGE_SCREEN ? '/annotations' : ''
+      }`}
       className={isActive ? 'active' : undefined}
     >
       {verse.map((verseLine, index) => {
