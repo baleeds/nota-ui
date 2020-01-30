@@ -1,35 +1,22 @@
 import React from 'react';
-import { useParams } from 'react-router';
-import { asInt } from '../../base/utils/asInt';
 import { ErrorDisplay } from '../ErrorDisplay';
-import { bible } from '../../base/constants/bible';
 import { Verse } from './Verse';
 import styled from 'styled-components';
-import { VerseCard } from '../VerseCard';
-
-interface Params {
-  bookName?: string;
-  chapterId?: string;
-  verseId?: string;
-}
+import { usePassage } from '../../hooks/usePassage';
+import { BookNavigation } from '../BookNavigation';
 
 export const Passage: React.FC = () => {
-  const { bookName, chapterId, verseId } = useParams<Params>();
-  const chapterNumber = asInt(chapterId);
-  const verseNumber = asInt(verseId);
-  if (!bookName || !chapterNumber) {
-    return <ErrorDisplay />;
-  }
-
-  const chapter = bible[bookName].chapters[chapterNumber - 1];
-  if (!chapter) {
-    return <ErrorDisplay />;
+  const { chapter, bookName, chapterNumber, verseNumber } = usePassage();
+  if (!chapter || !bookName || !chapterNumber) {
+    return <ErrorDisplay message="We could not find this passage" />;
   }
 
   return (
     <Container className="fadeIn">
+      <BookNavigation />
+
       {chapter.map((verse, index) => {
-        const verseKey = `readChapter-${bookName}-${chapterId}-${index}`;
+        const verseKey = `readChapter-${bookName}-${chapterNumber}-${index}`;
 
         return (
           <Verse
@@ -43,8 +30,6 @@ export const Passage: React.FC = () => {
           />
         );
       })}
-      {/* passage */}
-      <VerseCard />
     </Container>
   );
 };

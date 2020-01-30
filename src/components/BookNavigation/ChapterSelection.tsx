@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import styled from 'styled-components';
 import { theme } from '../../styles/theme';
 import { BOOK_DETAILS } from '../../base/constants/bookDetails';
@@ -20,44 +20,56 @@ const ChapterSelection: React.FC<Props> = ({
   showBookSelection,
   close,
 }) => {
-  if (!bookName) return null;
-  const { numberOfChapters } = BOOK_DETAILS[bookName] || {};
-  if (!numberOfChapters) return null;
+  const { numberOfChapters = 0, displayName = 'Unknown book' } =
+    BOOK_DETAILS[bookName || ''] || {};
 
-  const chapterButtons = [];
+  const chapterButtons = useMemo(() => {
+    const buttons = [];
 
-  for (let i = 1; i <= numberOfChapters; i += 1) {
-    chapterButtons.push(
-      <NavLink
-        key={`${bookName}-${i}-navigationButton`}
-        isActive={() => isBookActive && chapterNumber === i}
-        onClick={close}
-        to={`/read/${bookName}/${i}`}
-      >
-        {i}
-      </NavLink>
-    );
-  }
+    for (let i = 1; i <= numberOfChapters; i += 1) {
+      buttons.push(
+        <NavLink
+          key={`${bookName}-${i}-navigationButton`}
+          isActive={() => isBookActive && chapterNumber === i}
+          onClick={close}
+          to={`/read/${bookName}/${i}`}
+        >
+          {i}
+        </NavLink>
+      );
+    }
+
+    return buttons;
+  }, [numberOfChapters, isBookActive, chapterNumber, bookName, close]);
 
   return (
-    <div>
+    <Container>
       <AllBooksButton type="button" onClick={showBookSelection}>
         <AngleLeftIcon />
-        All books
+        {displayName}
       </AllBooksButton>
       <ChapterButtons>{chapterButtons}</ChapterButtons>
-    </div>
+    </Container>
   );
 };
 
+const Container = styled.div`
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  overflow-y: scroll;
+  width: 100%;
+  padding-top: 8px;
+`;
+
 const AllBooksButton = styled.button`
-  margin-top: 12px;
   padding: 16px 12px;
   width: 100%;
   text-align: left;
   color: ${theme.secondaryColor};
   display: flex;
   align-items: center;
+  font-weight: bold;
 
   svg {
     fill: currentColor;
@@ -68,7 +80,6 @@ const AllBooksButton = styled.button`
 `;
 
 const ChapterButtons = styled.div`
-  position: absolute;
   /* top: 70px; */
   width: 100%;
   display: grid;

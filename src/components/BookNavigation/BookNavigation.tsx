@@ -31,12 +31,12 @@ export const BookNavigation: React.FC = () => {
   return (
     <>
       <Container>
-        <BookButton type="button" onClick={open}>
+        <button type="button" onClick={open}>
           {book && chapterNumber
             ? `${book.displayName} ${chapterNumber}`
             : 'Select a passage'}
           <AngleRight />
-        </BookButton>
+        </button>
       </Container>
       <CSSTransition
         in={isOpen}
@@ -76,6 +76,7 @@ const Container = styled.div`
     display: flex;
     align-items: center;
     color: ${theme.primaryColor};
+    font-weight: 600;
 
     svg {
       height: 20px;
@@ -89,15 +90,13 @@ const Container = styled.div`
     position: relative;
     box-shadow: none;
     background-color: transparent;
-    padding: 24px 12px 0 12px;
+    margin: 0 -16px;
 
     button {
       font-size: 1.3em;
     }
   }
 `;
-
-const BookButton = styled.button``;
 
 const NavigationContainer = styled.div`
   position: fixed;
@@ -109,7 +108,7 @@ const NavigationContainer = styled.div`
   background-color: white;
   z-index: ${Z_INDEX.BOOK_NAV};
   box-shadow: 0 0 24px 2px rgba(0, 0, 0, 0.3);
-  overflow-y: auto;
+  overflow: hidden;
 `;
 
 const Backdrop = styled.div`

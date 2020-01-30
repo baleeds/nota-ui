@@ -46,7 +46,7 @@
 .fadeUp-enter-active {
   opacity: 1;
   transform: translateY(0px);
-  transition: all 0.2s ease-out;
+  transition: all 0.3s ease-out;
 }
 
 .fadeUp-exit {
@@ -115,5 +115,27 @@
 
 .slideRight-exit-active {
   transform: translateX(-100%);
+  transition: all 0.2s ease-out;
+}
+
+.addButton-enter {
+  opacity: 0;
+  transform: translateY(100px);
+}
+
+.addButton-enter-active {
+  opacity: 1;
+  transform: translateY(0px);
+  transition: all 0.2s ease-out;
+}
+
+.addButton-exit {
+  opacity: 1;
+  transform: translateY(0px);
+}
+
+.addButton-exit-active {
+  opacity: 0;
+  transform: translateY(100px);
   transition: all 0.2s ease-out;
 }
