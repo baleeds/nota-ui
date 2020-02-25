@@ -4,11 +4,14 @@ import { renderRoutes } from 'react-router-config';
 import { routes } from './base/routes';
 import { ApolloProvider } from 'react-apollo';
 import { client } from './base/apollo';
+import { AuthProvider } from './components/AuthProvider';
 
 const App: React.FC = () => {
   return (
     <ApolloProvider client={client}>
-      <Router>{renderRoutes(routes)}</Router>
+      <AuthProvider>
+        <Router>{renderRoutes(routes)}</Router>
+      </AuthProvider>
     </ApolloProvider>
   );
 };

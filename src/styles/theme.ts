@@ -8,4 +8,5 @@ export const theme = {
   primaryHoverColor: '#f2edfa',
   lightTextColor: '#A6A6A6',
   borderColor: '#eee',
+  fancyFont: 'Museo Sans, sans-serif',
 } as const;

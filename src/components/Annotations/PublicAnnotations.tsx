@@ -1,6 +1,10 @@
 import React from 'react';
-import { usePublicAnnotationsQuery } from '../../api/__generated__/apollo-graphql';
+import {
+  usePublicAnnotationsQuery,
+  PublicAnnotationFragment,
+} from '../../api/__generated__/apollo-graphql';
 import { Annotation } from './Annotation';
+import { extractNodes } from '../../base/utils/extractNodes';
 
 interface Props {
   passageId: string;
@@ -17,8 +21,11 @@ export const PublicAnnotations: React.FC<Props> = ({ passageId }) => {
     return <>Loading</>;
   }
 
-  const annotations =
-    data && data.publicAnnotations ? data.publicAnnotations : [];
+  // const annotations =
+  //   data && data.annotations? data.annotations : [];
+  const annotations = data?.annotations
+    ? extractNodes<PublicAnnotationFragment>(data.annotations.edges)
+    : [];
 
   if (error || !annotations) {
     return <>Error</>;

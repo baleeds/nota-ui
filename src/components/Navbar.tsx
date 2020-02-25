@@ -12,6 +12,7 @@ import {
   VERSE_ID_KEY,
 } from '../base/constants/localStorageKeys';
 import { useScreen } from '../hooks/useScreen';
+import { LARGE_SCREEN } from '../base/constants/breakpoints';
 
 const getReadLink = (isMobile: boolean) => {
   const bookName = localStorage.getItem(BOOK_ID_KEY);
@@ -31,53 +32,87 @@ const getReadLink = (isMobile: boolean) => {
   }`;
 };
 
+const DesktopNavbar: React.FC = () => (
+  <DesktopContainer>
+    <InnerContainer>
+      <div>
+        <NavButton to="/home">
+          <HomeIcon />
+          <div>Home</div>
+        </NavButton>
+      </div>
+      <div style={{ display: 'flex' }}>
+        <NavButton to={getReadLink(false)}>
+          <ReadIcon />
+          <div>Read</div>
+        </NavButton>
+        <NavButton to="/collection">
+          <CollectionIcon />
+          <div>Collection</div>
+        </NavButton>
+      </div>
+    </InnerContainer>
+  </DesktopContainer>
+);
+
+const MobileNavbar: React.FC = () => (
+  <MobileContainer>
+    <NavButton to="/home">
+      <HomeIcon />
+      <div>Home</div>
+    </NavButton>
+    <NavButton to={getReadLink(true)}>
+      <ReadIcon />
+      <div>Read</div>
+    </NavButton>
+    <NavButton to="/collection">
+      <CollectionIcon />
+      <div>Collection</div>
+    </NavButton>
+  </MobileContainer>
+);
+
 export const Navbar: React.FC = () => {
   const { width } = useScreen();
-
-  return (
-    <Container>
-      <NavButton to="/home">
-        <HomeIcon />
-        <span>Home</span>
-      </NavButton>
-      <NavButton to={getReadLink(width < 900)}>
-        <ReadIcon />
-        <span>Read</span>
-      </NavButton>
-      <NavButton to="/collection">
-        <CollectionIcon />
-        <span>Collection</span>
-      </NavButton>
-    </Container>
-  );
+  if (width < LARGE_SCREEN) return <MobileNavbar />;
+  return <DesktopNavbar />;
 };
 
 const Container = styled.div`
+  background-color: white;
+  box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.15);
+  z-index: ${Z_INDEX.NAV};
+  height: 60px;
+`;
+
+const DesktopContainer = styled(Container)`
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+`;
+
+const MobileContainer = styled(Container)`
   display: flex;
   position: fixed;
   bottom: 0px;
   left: 0px;
   right: 0px;
-  background-color: white;
-  box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.15);
   padding: 0 12px;
-  z-index: ${Z_INDEX.NAV};
+`;
 
-  @media screen and (min-width: 900px) {
-    flex-direction: column;
-    padding: 0;
-    position: fixed;
-    top: 0px;
-    left: 0px;
-    bottom: 0px;
-    width: 80px;
-  }
+const InnerContainer = styled.div`
+  max-width: 1000px;
+  height: 60px;
+  display: flex;
+  justify-content: space-between;
+  margin: 0 auto;
 `;
 
 const NavButton = styled(NavLink)`
   flex: 1;
   text-align: center;
-  max-height: 60px;
+  height: 60px;
   display: flex;
   flex-direction: column;
   padding: 8px 12px;
@@ -93,15 +128,30 @@ const NavButton = styled(NavLink)`
 
   svg {
     fill: currentColor;
+    flex-shrink: 0;
   }
 
-  span {
+  div {
     font-size: 0.7em;
     text-decoration: none;
     margin-top: 2px;
+    font-family: ${theme.fancyFont};
   }
 
   &.active {
     color: ${theme.secondaryColor};
+  }
+
+  @media screen and (min-width: ${LARGE_SCREEN}px) {
+    flex-direction: row;
+    padding: 0 16px;
+
+    svg {
+      margin-right: 8px;
+    }
+
+    div {
+      font-size: 1em;
+    }
   }
 `;
