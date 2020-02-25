@@ -1,1 +1,1 @@
-{"__schema":{"types":[]}}
+{"__schema":{"types":[{"kind":"INTERFACE","name":"ActiveRecord","possibleTypes":[{"name":"Annotation"},{"name":"User"},{"name":"Verse"}]}]}}

@@ -2,9 +2,13 @@ import gql from 'graphql-tag';
 import { publicAnnotationFragment } from '../fragments/publicAnnotation.fragment';
 
 export const publicAnnotationsQuery = gql`
-  query PublicAnnotations($verseId: ID!) {
-    publicAnnotations(verseId: $verseId) {
-      ...PublicAnnotation
+  query PublicAnnotations($first: Int, $verseId: ID!) {
+    annotations(first: $first, verseId: $verseId) {
+      edges {
+        node {
+          ...PublicAnnotation
+        }
+      }
     }
   }
   ${publicAnnotationFragment}
