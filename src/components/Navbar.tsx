@@ -36,15 +36,15 @@ const DesktopNavbar: React.FC = () => (
   <DesktopContainer>
     <InnerContainer>
       <div>
-        <NavButton to="/home">
-          <HomeIcon />
-          <div>Home</div>
-        </NavButton>
-      </div>
-      <div style={{ display: 'flex' }}>
         <NavButton to={getReadLink(false)}>
           <ReadIcon />
           <div>Read</div>
+        </NavButton>
+      </div>
+      <div style={{ display: 'flex' }}>
+        <NavButton to="/home">
+          <HomeIcon />
+          <div>Home</div>
         </NavButton>
         <NavButton to="/collection">
           <CollectionIcon />
@@ -103,6 +103,7 @@ const MobileContainer = styled(Container)`
 
 const InnerContainer = styled.div`
   max-width: 1000px;
+  margin: 0 -12px;
   height: 60px;
   display: flex;
   justify-content: space-between;
@@ -135,7 +136,6 @@ const NavButton = styled(NavLink)`
     font-size: 0.7em;
     text-decoration: none;
     margin-top: 2px;
-    font-family: ${theme.fancyFont};
   }
 
   &.active {

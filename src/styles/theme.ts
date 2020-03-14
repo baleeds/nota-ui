@@ -7,6 +7,8 @@ export const theme = {
   secondaryHoverColor: 'rgba(82, 146, 255, 0.1)',
   primaryHoverColor: '#f2edfa',
   lightTextColor: '#A6A6A6',
-  borderColor: '#eee',
-  fancyFont: 'Museo Sans, sans-serif',
+  borderColor: '#e4e4e4',
+  subtleBorderColor: '#F0F0F0',
+  borderRadiusLarge: '8px',
+  borderRadius: '4px',
 } as const;

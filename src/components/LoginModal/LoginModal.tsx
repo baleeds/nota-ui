@@ -1,10 +1,10 @@
-import React, { useState, useReducer } from 'react';
+import React, { useReducer } from 'react';
 import {
   useSignInUserMutation,
   SignInUserMutation,
 } from '../../api/__generated__/apollo-graphql';
 import { attempt } from '../../base/utils/attempt';
-import { normalize } from 'path';
+// import { normalize } from 'path';
 import { normalizeErrors } from '../../base/utils/normalizeErrors';
 import { UNKNOWN_ERROR } from '../../base/constants/messages';
 import { useAuth } from '../AuthProvider';
