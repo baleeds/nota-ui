@@ -5,8 +5,7 @@ import * as Yup from 'yup';
 const meFragmentSchema = Yup.object().shape({
   id: Yup.string().required(),
   email: Yup.string().required(),
-  isAdmin: Yup.boolean().required(),
-  otpEnabled: Yup.boolean().required(),
+  // isAdmin: Yup.boolean().required(),
 });
 
 export const getUserFromLocalStorage = (): MeFragment | undefined => {

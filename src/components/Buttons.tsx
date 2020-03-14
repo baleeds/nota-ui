@@ -6,6 +6,10 @@ export const BaseButton = styled.button`
   border: none;
   background: transparent;
   outline: none;
+
+  :disabled {
+    opacity: 0.5;
+  }
 `;
 
 export const PrimaryButton = styled(BaseButton)`
