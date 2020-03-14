@@ -19,14 +19,6 @@ code {
     monospace;
 }
 
-body,
-html,
-#root {
-  height: 100%;
-  width: 100%;
-  overscroll-behavior-y: contain;
-}
-
 button {
   cursor: pointer;
 }

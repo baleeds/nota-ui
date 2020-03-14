@@ -5,19 +5,27 @@ import { Card } from './Card';
 import { theme } from '../styles/theme';
 import { Block } from './Block';
 import { LARGE_SCREEN } from '../base/constants/breakpoints';
+import { useHistory } from 'react-router';
 
 interface Props {
   message: String;
 }
 
 export const LoginBanner: React.FC<Props> = ({ message }) => {
+  const history = useHistory();
+
   return (
     <Block>
       <LoginCard>
         <div>{message}</div>
         <ButtonGroup>
-          <GhostButton type="button">Create an account</GhostButton>
-          <OutlineButtonContrast type="button" onClick={console.log}>
+          <GhostButton type="button" onClick={() => history.push('/register')}>
+            Create an account
+          </GhostButton>
+          <OutlineButtonContrast
+            type="button"
+            onClick={() => history.push('/login')}
+          >
             Sign in
           </OutlineButtonContrast>
         </ButtonGroup>

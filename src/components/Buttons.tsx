@@ -42,6 +42,17 @@ export const OutlineButton = styled(BaseButton)`
   }
 `;
 
+export const OutlineButtonLarge = styled(OutlineButton)`
+  height: 48px;
+  font-size: 18px;
+  border-color: ${theme.primaryColor};
+
+  &:hover,
+  &:focus {
+    background: ${theme.primaryTint};
+  }
+`;
+
 export const OutlineButtonContrast = styled(OutlineButton)`
   border-color: ${theme.blank};
   color: ${theme.blank};

@@ -3,7 +3,7 @@ import { Redirect } from 'react-router';
 import { ReadPage } from '../pages/ReadPage';
 import { HomePage } from '../pages/HomePage';
 import { CollectionPage } from '../pages/CollectionPage';
-import { LoginPage } from '../pages/LoginPage';
+import { LoginPage } from '../pages/LoginPage/LoginPage';
 
 export interface RouteParams {
   bookName?: string;
@@ -35,7 +35,7 @@ export const routes = [
     component: CollectionPage,
   },
   {
-    path: '/login',
+    path: ['/login', '/register'],
     exact: true,
     component: LoginPage,
   },
