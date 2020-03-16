@@ -1,16 +1,20 @@
 import React from 'react';
 import styled from 'styled-components';
-import { LARGE_SCREEN } from '../../base/constants/breakpoints';
-import { Link, useHistory } from 'react-router-dom';
-import { OutlineButtonLarge } from '../../components/Buttons';
-import { theme } from '../../styles/theme';
-import { LoginForm } from './LoginForm';
-import { ReactComponent as LogoIcon } from '../../icons/menu_book-24px.svg';
+import { LARGE_SCREEN } from '../base/constants/breakpoints';
+import { Link } from 'react-router-dom';
+import { theme } from '../styles/theme';
+import { ReactComponent as LogoIcon } from '../icons/menu_book-24px.svg';
 
-export const LoginPage: React.FC = () => {
-  const history = useHistory();
-  const isRegister = history.location.pathname === '/register';
+interface Props {
+  footerMessage?: string;
+  FooterButton?: React.ReactNode;
+}
 
+export const AuthPage: React.FC<Props> = ({
+  children,
+  footerMessage,
+  FooterButton,
+}) => {
   return (
     <Container>
       <LogoContainer>
@@ -19,30 +23,10 @@ export const LoginPage: React.FC = () => {
           Bible Nota
         </Logo>
       </LogoContainer>
-      <FormContainer>
-        <LoginForm />
-      </FormContainer>
+      <FormContainer>{children}</FormContainer>
       <FooterContainer>
-        <FooterMessage>
-          {isRegister ? 'Already have an account?' : 'Need an account?'}
-        </FooterMessage>
-        {isRegister ? (
-          <OutlineButtonLarge
-            key="sign-in-button"
-            type="button"
-            onClick={() => history.push('/login')}
-          >
-            Sign in
-          </OutlineButtonLarge>
-        ) : (
-          <OutlineButtonLarge
-            key="create-account-button"
-            type="button"
-            onClick={() => history.push('/register')}
-          >
-            Create an account
-          </OutlineButtonLarge>
-        )}
+        <FooterMessage>{footerMessage && footerMessage}</FooterMessage>
+        {FooterButton && FooterButton}
       </FooterContainer>
     </Container>
   );

@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { theme } from '../styles/theme';
 
-export const FormGroup = styled.div`
+export const FieldGroup = styled.div`
   margin-bottom: 20px;
 
   label {
