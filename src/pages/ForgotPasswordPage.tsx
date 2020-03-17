@@ -1,22 +1,22 @@
 import React, { useState, useEffect } from 'react';
-import { AuthPage } from '../../components/AuthPage';
-import { PrimaryButtonLarge } from '../../components/Buttons';
-import { Link } from '../../components/Link';
-import { FieldGroup } from '../../components/FieldGroup';
+import { AuthPage } from '../components/AuthPage';
+import { PrimaryButtonLarge } from '../components/Buttons';
+import { Link } from '../components/Link';
+import { FieldGroup } from '../components/FieldGroup';
 import {
   useSendResetPasswordMutation,
   SendResetPasswordMutation,
-} from '../../api/__generated__/apollo-graphql';
-import { attempt } from '../../base/utils/attempt';
-import { normalizeErrors } from '../../base/utils/normalizeErrors';
-import { UNKNOWN_ERROR } from '../../base/constants/messages';
-import { useAuth } from '../../components/AuthProvider';
+} from '../api/__generated__/apollo-graphql';
+import { attempt } from '../base/utils/attempt';
+import { normalizeErrors } from '../base/utils/normalizeErrors';
+import { UNKNOWN_ERROR } from '../base/constants/messages';
+import { useAuth } from '../components/AuthProvider';
 import { useHistory } from 'react-router';
-import { FormErrorDisplay } from '../../components/FormErrorDisplay';
+import { FormErrorDisplay } from '../components/FormErrorDisplay';
 import { Field, Formik, FormikConfig } from 'formik';
 import * as Yup from 'yup';
-import { isRequired, mustBeValid } from '../../base/utils/errorMessages';
-import { SuccessMessage } from './SuccessMessage';
+import { isRequired, mustBeValid } from '../base/utils/errorMessages';
+import { P } from '../components/Typography';
 
 interface Values {
   email: string;
@@ -42,7 +42,7 @@ export const ForgotPasswordPage: React.FC = () => {
     if (user) {
       history.push('/home');
     }
-  }, []);
+  }, [history, user]);
 
   const handleSendLink: FormikConfig<Values>['onSubmit'] = async (
     values: Values,
@@ -76,6 +76,13 @@ export const ForgotPasswordPage: React.FC = () => {
 
     setSuccess(true);
   };
+
+  const SuccessMessage = () => (
+    <P>
+      Please check your email for a link to reset your password.{' '}
+      <Link to="/login">Back to login</Link>
+    </P>
+  );
 
   return (
     <AuthPage>
