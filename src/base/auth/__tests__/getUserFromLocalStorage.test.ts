@@ -1,5 +1,5 @@
-import { CURRENT_USER_KEY } from '../../constants';
 import { getUserFromLocalStorage } from '../getUserFromLocalStorage';
+import { CURRENT_USER_KEY } from '../../constants/localStorageKeys';
 
 afterEach(() => {
   localStorage.clear();
