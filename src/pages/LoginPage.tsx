@@ -16,6 +16,7 @@ import { useHistory } from 'react-router';
 import { FormErrorDisplay } from '../components/FormErrorDisplay';
 import { Formik, FormikConfig, Field } from 'formik';
 import * as Yup from 'yup';
+import { isRequired, mustBeValid } from '../base/utils/errorMessages';
 
 interface Values {
   email: string;
@@ -28,8 +29,10 @@ const initialValues: Values = {
 };
 
 const validationSchema = Yup.object().shape({
-  email: Yup.string().required(),
-  password: Yup.string().required(),
+  email: Yup.string()
+    .required(isRequired('Email'))
+    .matches(/@/, mustBeValid('Email')),
+  password: Yup.string().required(isRequired('Password')),
 });
 
 export const LoginPage: React.FC = () => {
@@ -63,10 +66,8 @@ export const LoginPage: React.FC = () => {
     if (hasError || !accessToken || !refreshToken || !user) {
       if (fields) {
         setErrors(fields);
-      } else if (base) {
-        setStatus(base);
       } else {
-        setStatus(UNKNOWN_ERROR);
+        setStatus(base || UNKNOWN_ERROR);
       }
 
       setSubmitting(false);
@@ -95,10 +96,11 @@ export const LoginPage: React.FC = () => {
         initialValues={initialValues}
         validationSchema={validationSchema}
       >
-        {({ handleSubmit, isSubmitting, errors, status }) => (
+        {({ handleSubmit, isSubmitting, errors, status, submitCount }) => (
           <form onSubmit={handleSubmit} noValidate>
             <FormErrorDisplay
-              possibleErrors={[status, errors.email, errors.password]}
+              possibleErrors={[errors.email, errors.password, status]}
+              submitCount={submitCount}
             />
             <FieldGroup>
               <label htmlFor="email">Email</label>

@@ -7,6 +7,7 @@ export const Link = styled(RouterLink)`
   color: ${theme.secondaryColor};
   font-weight: bold;
   outline: none;
+  line-height: 1.3em;
 
   &:hover,
   &:focus {

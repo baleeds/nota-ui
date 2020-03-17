@@ -4,6 +4,7 @@ import { ReadPage } from '../pages/ReadPage';
 import { HomePage } from '../pages/HomePage';
 import { CollectionPage } from '../pages/CollectionPage';
 import { LoginPage } from '../pages/LoginPage';
+import { ForgotPasswordPage } from '../pages/ForgotPasswordPage';
 
 export interface RouteParams {
   bookName?: string;
@@ -39,16 +40,11 @@ export const routes = [
     exact: true,
     component: LoginPage,
   },
-  // {
-  //   path: '/register',
-  //   exact: true,
-  //   component: RegisterPage,
-  // },
-  // {
-  //   path: '/forgot-password',
-  //   exact: true,
-  //   component: ForgotPasswordPage,
-  // },
+  {
+    path: '/forgot-password',
+    exact: true,
+    component: ForgotPasswordPage,
+  },
   {
     path: '*',
     component: () => <Redirect to="/home" />,
