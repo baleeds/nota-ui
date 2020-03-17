@@ -54,18 +54,28 @@ export const ReadPage: React.FC = () => {
 
   if (isMobile) {
     if (annotationId) {
-      return <MobileAnnotationPage annotationId={annotationId} />;
+      return (
+        <Page>
+          <MobileAnnotationPage annotationId={annotationId} />
+        </Page>
+      );
     }
     if (verseId) {
       return (
-        <MobileVersePage
-          bookName={bookName}
-          chapterId={chapterId}
-          verseId={verseId}
-        />
+        <Page>
+          <MobileVersePage
+            bookName={bookName}
+            chapterId={chapterId}
+            verseId={verseId}
+          />
+        </Page>
       );
     }
-    return <MobileReadPage bookName={bookName} chapterId={chapterId} />;
+    return (
+      <Page>
+        <MobileReadPage bookName={bookName} chapterId={chapterId} />
+      </Page>
+    );
   }
 
   return (
