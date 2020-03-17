@@ -4,12 +4,10 @@ export const publicAnnotationFragment = gql`
   fragment PublicAnnotation on Annotation {
     id
     text
-    verseId
-    insertedAt
+    createdAt
     user {
       id
-      firstName
-      lastName
+      email
     }
   }
 `;

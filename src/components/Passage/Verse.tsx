@@ -94,7 +94,7 @@ const VerseLink = styled(Link)`
   &.active {
     .text,
     .quote {
-      background-color: ${theme.primaryHoverColor};
+      background-color: ${theme.primaryTint};
     }
   }
 

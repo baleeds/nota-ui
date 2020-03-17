@@ -13,9 +13,10 @@ export const Annotation: React.FC<Props> = ({ annotation }) => {
     <Container>
       <HeaderContainer>
         <a href="/">
-          {annotation.user.firstName} {annotation.user.lastName}
+          {/* {annotation.user.firstName} {annotation.user.lastName} */}
+          {annotation.user.email}
         </a>
-        <Date>{toSimpleDate(annotation.insertedAt)}</Date>
+        <Date>{toSimpleDate(annotation.createdAt)}</Date>
       </HeaderContainer>
       <TextContainer dangerouslySetInnerHTML={{ __html: annotation.text }} />
     </Container>

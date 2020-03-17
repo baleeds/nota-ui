@@ -4,6 +4,8 @@ import { ReadPage } from '../pages/ReadPage';
 import { HomePage } from '../pages/HomePage';
 import { CollectionPage } from '../pages/CollectionPage';
 import { LoginPage } from '../pages/LoginPage';
+import { ForgotPasswordPage } from '../pages/ForgotPasswordPage';
+import { ResetPasswordPage } from '../pages/ResetPasswordPage';
 
 export interface RouteParams {
   bookName?: string;
@@ -35,9 +37,19 @@ export const routes = [
     component: CollectionPage,
   },
   {
-    path: '/login',
+    path: ['/login', '/register'],
     exact: true,
     component: LoginPage,
+  },
+  {
+    path: '/forgot-password',
+    exact: true,
+    component: ForgotPasswordPage,
+  },
+  {
+    path: '/reset-password',
+    exact: true,
+    component: ResetPasswordPage,
   },
   {
     path: '*',

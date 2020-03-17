@@ -6,7 +6,7 @@ export const Page: React.FC = ({ children }) => {
   return (
     <Container id="PageContainer">
       <Navbar />
-      {children}
+      <BodyContainer>{children}</BodyContainer>
     </Container>
   );
 };
@@ -14,11 +14,17 @@ export const Page: React.FC = ({ children }) => {
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 0 0 80px 0;
+  padding: 12px 0 80px 0;
 
   @media screen and (min-width: 900px) {
     display: flex;
     width: 100%;
-    padding: 0 0 0 80px;
+    padding: 80px 0 0 0;
   }
+`;
+
+const BodyContainer = styled.div`
+  max-width: 1000px;
+  width: 100%;
+  margin: 0 auto;
 `;
