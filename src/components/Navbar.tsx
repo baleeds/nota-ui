@@ -6,37 +6,14 @@ import { ReactComponent as ReadIcon } from '../icons/menu_book-24px.svg';
 import { ReactComponent as CollectionIcon } from '../icons/collections_bookmark-24px.svg';
 import { theme } from '../styles/theme';
 import { Z_INDEX } from '../base/constants/zIndex';
-import {
-  BOOK_ID_KEY,
-  CHAPTER_ID_KEY,
-  VERSE_ID_KEY,
-} from '../base/constants/localStorageKeys';
 import { useScreen } from '../hooks/useScreen';
 import { LARGE_SCREEN } from '../base/constants/breakpoints';
-
-const getReadLink = (isMobile: boolean) => {
-  const bookName = localStorage.getItem(BOOK_ID_KEY);
-  const chapterId = localStorage.getItem(CHAPTER_ID_KEY);
-  const verseId = localStorage.getItem(VERSE_ID_KEY);
-
-  if (!bookName || !chapterId) {
-    return '/read/genesis/1';
-  }
-
-  if (!verseId) {
-    return `/read/${bookName}/${chapterId}`;
-  }
-
-  return `/read/${bookName}/${chapterId}/${verseId}${
-    !isMobile ? '/annotations' : undefined
-  }`;
-};
 
 const DesktopNavbar: React.FC = () => (
   <DesktopContainer>
     <InnerContainer>
       <div>
-        <NavButton to={getReadLink(false)}>
+        <NavButton to="/read">
           <ReadIcon />
           <div>Read</div>
         </NavButton>
@@ -61,7 +38,7 @@ const MobileNavbar: React.FC = () => (
       <HomeIcon />
       <div>Home</div>
     </NavButton>
-    <NavButton to={getReadLink(true)}>
+    <NavButton to="/read">
       <ReadIcon />
       <div>Read</div>
     </NavButton>

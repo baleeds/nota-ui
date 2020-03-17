@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import debounce from 'lodash.debounce';
+import { LARGE_SCREEN } from '../base/constants/breakpoints';
 
 export type Orientation = 'landscape' | 'portrait';
 
@@ -7,6 +8,7 @@ export interface Screen {
   height: number;
   width: number;
   orientation: Orientation;
+  isMobile: boolean;
 }
 
 const getScreen = (): Screen => {
@@ -17,6 +19,7 @@ const getScreen = (): Screen => {
     width,
     height,
     orientation,
+    isMobile: width < LARGE_SCREEN,
   };
 };
 
