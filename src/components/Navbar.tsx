@@ -111,7 +111,8 @@ const InnerContainer = styled.div`
 `;
 
 /**
- * These styles are used for two different styled components.
+ * These styles are used for two different styled components,
+ * since we need identical links and buttons.
  */
 const navButtonStyles = `
   flex: 1;
