@@ -22,11 +22,19 @@ const BookNavigationContext = React.createContext<IBookNavigationContext>({
   title: '',
 });
 
+/**
+ * Easily use the context without two imports.
+ */
 export const useBookNavigation = () => {
   const context = useContext(BookNavigationContext);
   return context;
 };
 
+/**
+ * Provides the navigation component and the ability to open, close,
+ * and show the title.
+ * @param Props
+ */
 export const BookNavigationProvider: React.FC = ({ children }) => {
   const [isOpen, setIsOpen] = useState(false);
   const { bookName, chapterId } = useParams<RouteParams>();
