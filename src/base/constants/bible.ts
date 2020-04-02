@@ -15,13 +15,11 @@ export type BibleChapter = BibleVerse[];
 
 export type BibleVerse = BibleBlock[];
 
-export type BibleBlock = BibleTextBlock | BibleQuoteBlock | BibleBreakBlock;
-
-export type BibleTextBlock = { text: string };
-
-export type BibleQuoteBlock = { quote: string };
-
-export type BibleBreakBlock = { lineBreak: true };
+export type BibleBlock = {
+  text?: string;
+  quote?: string;
+  lineBreak?: true;
+};
 
 const bible = bibleJson as Bible;
 

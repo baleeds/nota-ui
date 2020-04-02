@@ -5,7 +5,7 @@ import { BookDetail, BOOK_DETAILS } from '../base/constants/bookDetails';
 import { BibleChapter, BibleVerse, bible } from '../base/constants/bible';
 import { useMemo } from 'react';
 
-interface PassageContext {
+export interface PassageContext {
   bookName?: string;
   chapterNumber?: number;
   verseNumber?: number;

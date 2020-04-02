@@ -10,9 +10,9 @@ import {
   CHAPTER_ID_KEY,
 } from '../../base/constants/localStorageKeys';
 import { useScreen } from '../../hooks/useScreen';
-import { MobileVersePage } from '../MobileVersePage';
-import { MobileAnnotationPage } from '../MobileAnnotationPage';
-import { MobileReadPage } from '../MobileReadPage';
+import { MobileVersePage } from './MobileVersePage';
+import { MobileAnnotationPage } from './MobileAnnotationPage';
+import { MobileReadPage } from './MobileReadPage';
 import { Block } from '../../components/Block';
 
 const getReadLink = (

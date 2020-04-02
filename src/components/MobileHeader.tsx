@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 import { Z_INDEX } from '../base/constants/zIndex';
 import { theme } from '../styles/theme';
+import { BaseButton } from './Buttons';
+import { Link } from 'react-router-dom';
 
 export const MobileHeader = styled.div`
   position: fixed;
@@ -13,4 +15,31 @@ export const MobileHeader = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+`;
+
+const navButtonStyles = `
+  padding: 0px 16px;
+  display: block;
+  text-align: left;
+  min-width: 80px;
+  display: flex;
+  align-items: center;
+  color: ${theme.primaryColor};
+  font-weight: 600;
+  height: 60px;
+  text-decoration: none;
+
+  svg {
+    height: 20px;
+    width: 20px;
+    fill: currentColor;
+  }
+`;
+
+export const MobileHeaderNavButton = styled(BaseButton)`
+  ${navButtonStyles}
+`;
+
+export const MobileHeaderNavLink = styled(Link)`
+  ${navButtonStyles}
 `;

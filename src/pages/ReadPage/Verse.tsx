@@ -28,31 +28,27 @@ export const Verse: React.FC<Props> = ({
       to={`/read/${bookName}/${chapterNumber}/${verseNumber}`}
       className={isActive ? 'active' : undefined}
     >
-      {verse.map((verseLine, index) => {
+      {verse.map(({ text, quote, lineBreak }, index) => {
         const key = `${verseKey}-${index}`;
         const verseNumberDisplay = (
           <span className="verseNumber">{verseNumber}</span>
         );
 
-        if ('text' in verseLine) {
-          const { text } = verseLine;
-
+        if (text) {
           return (
             <span className="text" key={key}>
               {verseNumber && index === 0 && verseNumberDisplay}
               {text}
             </span>
           );
-        } else if ('quote' in verseLine) {
-          const { quote } = verseLine;
-
+        } else if (quote) {
           return (
             <span className="quote" key={key}>
               {verseNumber && index === 0 && verseNumberDisplay}
               {quote}
             </span>
           );
-        } else if ('lineBreak' in verseLine) {
+        } else if (lineBreak) {
           return (
             <div key={key} style={lineBreakStyle} className="verseSpacer" />
           );
