@@ -125,6 +125,7 @@ const navButtonStyles = `
   color: ${theme.primaryTextColor};
   text-decoration: none;
   background-color: white;
+  transition: background-color .2s ease-in-out;
 
   &:hover {
     background-color: ${theme.secondaryHoverColor};
@@ -148,6 +149,9 @@ const navButtonStyles = `
   @media screen and (min-width: ${LARGE_SCREEN}px) {
     flex-direction: row;
     padding: 0 16px;
+    height: 44px;
+    margin-top: 8px;
+    border-radius: ${theme.borderRadius};
 
     svg {
       margin-right: 8px;

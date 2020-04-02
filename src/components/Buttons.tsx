@@ -6,6 +6,7 @@ export const BaseButton = styled.button`
   border: none;
   background: transparent;
   outline: none;
+  transition: background-color 0.2s ease-in-out;
 
   :disabled {
     opacity: 0.5;
