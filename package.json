@@ -7,6 +7,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
+    "lint": "yarn eslint src/**/*.{ts,tsx}",
     "client:codegen": "graphql-codegen -r dotenv/config",
     "client:fragments": "node -r dotenv/config ./src/api/fetch-fragments.js",
     "client:regen": "yarn client:codegen && yarn client:fragments"
@@ -69,6 +70,7 @@
     "@types/react-transition-group": "^4.2.3",
     "@types/styled-components": "^4.4.0",
     "@types/yup": "^0.26.32",
+    "eslint-plugin-prettier": "^3.1.2",
     "react-test-renderer": "^16.13.0"
   },
   "eslintConfig": {

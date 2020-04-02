@@ -1,0 +1,4 @@
+ignore:
+  - src/api
+  - src/icons
+  - src/types
