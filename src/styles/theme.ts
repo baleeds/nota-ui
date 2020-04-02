@@ -15,3 +15,5 @@ export const theme = {
   borderRadius: '4px',
   inputBackgroundColor: '#F7F7F7',
 } as const;
+
+export type Theme = typeof theme;

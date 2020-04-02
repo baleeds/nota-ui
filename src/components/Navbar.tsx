@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import { ReactComponent as HomeIcon } from '../icons/home-24px.svg';
 import { ReactComponent as ReadIcon } from '../icons/menu_book-24px.svg';
@@ -8,49 +8,72 @@ import { theme } from '../styles/theme';
 import { Z_INDEX } from '../base/constants/zIndex';
 import { useScreen } from '../hooks/useScreen';
 import { LARGE_SCREEN } from '../base/constants/breakpoints';
+import { useBookNavigation } from './BookNavigationProvider';
+import { BaseButton } from './Buttons';
 
-const DesktopNavbar: React.FC = () => (
-  <DesktopContainer>
-    <InnerContainer>
-      <div>
-        <NavButton to="/read">
-          <ReadIcon />
-          <div>Read</div>
-        </NavButton>
-      </div>
-      <div style={{ display: 'flex' }}>
-        <NavButton to="/home">
-          <HomeIcon />
-          <div>Home</div>
-        </NavButton>
-        <NavButton to="/collection">
-          <CollectionIcon />
-          <div>Collection</div>
-        </NavButton>
-      </div>
-    </InnerContainer>
-  </DesktopContainer>
-);
+const DesktopNavbar: React.FC = () => {
+  const { pathname } = useLocation();
+  const { open, title } = useBookNavigation();
+
+  /**
+   * The read button on the desktop navbar acts as the link
+   * to /read and the read navigation toggle, when on the /read
+   * route.
+   */
+  const ReadButton = () =>
+    pathname.startsWith('/read') ? (
+      <NavButton onClick={open} className="active">
+        <ReadIcon />
+        <div>{title || 'Read'}</div>
+      </NavButton>
+    ) : (
+      <NavLinkButton to="/read">
+        <ReadIcon />
+        <div>Read</div>
+      </NavLinkButton>
+    );
+
+  return (
+    <DesktopContainer>
+      <InnerContainer>
+        <div>
+          <ReadButton />
+        </div>
+        <div style={{ display: 'flex' }}>
+          <NavLinkButton to="/home">
+            <HomeIcon />
+            <div>Home</div>
+          </NavLinkButton>
+          <NavLinkButton to="/collection">
+            <CollectionIcon />
+            <div>Collection</div>
+          </NavLinkButton>
+        </div>
+      </InnerContainer>
+    </DesktopContainer>
+  );
+};
 
 const MobileNavbar: React.FC = () => (
   <MobileContainer>
-    <NavButton to="/home">
+    <NavLinkButton to="/home">
       <HomeIcon />
       <div>Home</div>
-    </NavButton>
-    <NavButton to="/read">
+    </NavLinkButton>
+    <NavLinkButton to="/read">
       <ReadIcon />
       <div>Read</div>
-    </NavButton>
-    <NavButton to="/collection">
+    </NavLinkButton>
+    <NavLinkButton to="/collection">
       <CollectionIcon />
       <div>Collection</div>
-    </NavButton>
+    </NavLinkButton>
   </MobileContainer>
 );
 
 export const Navbar: React.FC = () => {
   const { width } = useScreen();
+
   if (width < LARGE_SCREEN) return <MobileNavbar />;
   return <DesktopNavbar />;
 };
@@ -87,7 +110,10 @@ const InnerContainer = styled.div`
   margin: 0 auto;
 `;
 
-const NavButton = styled(NavLink)`
+/**
+ * These styles are used for two different styled components.
+ */
+const navButtonStyles = `
   flex: 1;
   text-align: center;
   height: 60px;
@@ -129,6 +155,15 @@ const NavButton = styled(NavLink)`
 
     div {
       font-size: 1em;
+      margin-top: 0px;
     }
   }
+`;
+
+const NavButton = styled(BaseButton)`
+  ${navButtonStyles}
+`;
+
+const NavLinkButton = styled(NavLink)`
+  ${navButtonStyles}
 `;
