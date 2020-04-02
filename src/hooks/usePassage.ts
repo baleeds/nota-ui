@@ -24,7 +24,7 @@ export function usePassage(): PassageContext {
     const bookDetails = bookName ? BOOK_DETAILS[bookName] : undefined;
     const chapter =
       bookName && chapterNumber && bible[bookName]
-        ? bible[bookName].chapters[chapterNumber]
+        ? bible[bookName].chapters[chapterNumber - 1]
         : undefined;
     const verse = verseNumber && chapter ? chapter[verseNumber - 1] : undefined;
 
