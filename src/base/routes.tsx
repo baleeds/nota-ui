@@ -11,6 +11,7 @@ export interface RouteParams {
   bookName?: string;
   chapterId?: string;
   verseId?: string;
+  annotationId?: string;
 }
 
 export const routes = [
@@ -25,8 +26,7 @@ export const routes = [
       '/read/:bookName',
       '/read/:bookName/:chapterId',
       '/read/:bookName/:chapterId/:verseId',
-      '/read/:bookName/:chapterId/:verseId/annotations',
-      '/read/:bookName/:chapterId/:verseId/articles',
+      '/read/:bookName/:chapterId/:verseId/:annotationId',
     ],
     exact: true,
     component: ReadPage,

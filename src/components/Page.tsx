@@ -1,13 +1,16 @@
 import React from 'react';
 import { Navbar } from './Navbar';
 import styled from 'styled-components';
+import { BookNavigationProvider } from './BookNavigationProvider';
 
 export const Page: React.FC = ({ children }) => {
   return (
-    <Container id="PageContainer">
-      <Navbar />
-      <BodyContainer>{children}</BodyContainer>
-    </Container>
+    <BookNavigationProvider>
+      <Container id="PageContainer">
+        <Navbar />
+        <BodyContainer>{children}</BodyContainer>
+      </Container>
+    </BookNavigationProvider>
   );
 };
 

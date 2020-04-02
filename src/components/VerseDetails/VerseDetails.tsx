@@ -7,7 +7,7 @@ import { ReactComponent as ArticleIcon } from '../../icons/description-24px.svg'
 import { ReactComponent as BookmarkOutlineIcon } from '../../icons/bookmark_border-24px.svg';
 import { ReactComponent as EditIcon } from '../../icons/edit-24px.svg';
 import { usePassage } from '../../hooks/usePassage';
-import { Verse } from '../Passage/Verse';
+import { Verse } from '../../pages/ReadPage/Verse';
 import { VerseTabs } from './VerseTabs';
 import { VerseTabName } from './types';
 import { Annotations } from '../Annotations';

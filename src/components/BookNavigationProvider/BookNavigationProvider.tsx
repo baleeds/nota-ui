@@ -1,43 +1,68 @@
-import React, { useState } from 'react';
+import React, { useState, useContext, useMemo, useCallback } from 'react';
 import styled from 'styled-components';
 import { CSSTransition } from 'react-transition-group';
 import { Z_INDEX } from '../../base/constants/zIndex';
 import { PassageSelector } from './PassageSelector';
 import { useParams } from 'react-router';
 import { asInt } from '../../base/utils/asInt';
-import { theme } from '../../styles/theme';
-import { ReactComponent as AngleRight } from '../../icons/chevron_right-24px.svg';
 import { BOOK_DETAILS } from '../../base/constants/bookDetails';
+import { RouteParams } from '../../base/routes';
 
-interface Params {
-  bookName?: string;
-  chapterId?: string;
+interface IBookNavigationContext {
+  open: () => void;
+  close: () => void;
+  isOpen: boolean;
+  title: string;
 }
 
-export const BookNavigation: React.FC = () => {
+const BookNavigationContext = React.createContext<IBookNavigationContext>({
+  open: () => console.log('default'),
+  close: () => {},
+  isOpen: false,
+  title: '',
+});
+
+/**
+ * Easily use the context without two imports.
+ */
+export const useBookNavigation = () => {
+  const context = useContext(BookNavigationContext);
+  return context;
+};
+
+/**
+ * Provides the navigation component and the ability to open, close,
+ * and show the title.
+ * @param Props
+ */
+export const BookNavigationProvider: React.FC = ({ children }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const { bookName, chapterId } = useParams<Params>();
+  const { bookName, chapterId } = useParams<RouteParams>();
 
   const book = bookName ? BOOK_DETAILS[bookName] : undefined;
   const chapterNumber = asInt(chapterId);
 
-  const open = () => {
+  const open = useCallback(() => {
     setIsOpen(true);
-  };
-  const close = () => {
+  }, [setIsOpen]);
+
+  const close = useCallback(() => {
     setIsOpen(false);
-  };
+  }, [setIsOpen]);
+
+  const contextValue = useMemo(
+    () => ({
+      open,
+      close,
+      isOpen,
+      title: `${book?.displayName} ${chapterNumber}`,
+    }),
+    [book, chapterNumber, open, close, isOpen]
+  );
 
   return (
-    <>
-      <Container>
-        <button type="button" onClick={open}>
-          {book && chapterNumber
-            ? `${book.displayName} ${chapterNumber}`
-            : 'Select a passage'}
-          <AngleRight />
-        </button>
-      </Container>
+    <BookNavigationContext.Provider value={contextValue}>
+      {children}
       <CSSTransition
         in={isOpen}
         classNames="fadeRight"
@@ -55,48 +80,9 @@ export const BookNavigation: React.FC = () => {
           </NavigationContainer>
         </div>
       </CSSTransition>
-    </>
+    </BookNavigationContext.Provider>
   );
 };
-
-const Container = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: ${Z_INDEX.READ_NAV};
-  background-color: ${theme.blank};
-  box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.15);
-
-  button {
-    padding: 18px 16px;
-    display: block;
-    text-align: left;
-    min-width: 80px;
-    display: flex;
-    align-items: center;
-    color: ${theme.primaryColor};
-    font-weight: 600;
-
-    svg {
-      height: 20px;
-      width: 20px;
-      margin-left: 6px;
-      fill: currentColor;
-    }
-  }
-
-  @media screen and (min-width: 900px) {
-    position: relative;
-    box-shadow: none;
-    background-color: transparent;
-    margin: 0 -16px;
-
-    button {
-      font-size: 1.3em;
-    }
-  }
-`;
 
 const NavigationContainer = styled.div`
   position: fixed;
