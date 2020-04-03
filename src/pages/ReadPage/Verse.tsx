@@ -71,6 +71,10 @@ const VerseLink = styled(Link)`
   -webkit-tap-highlight-color: ${theme.secondaryHoverColor};
   margin-right: 2px;
 
+  &:hover {
+    color: ${theme.primaryColor};
+  }
+
   .quote {
     display: inline-block;
     margin: 0 10%;
