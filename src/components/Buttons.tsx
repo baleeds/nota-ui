@@ -34,7 +34,7 @@ export const PrimaryButtonLarge = styled(PrimaryButton)`
 `;
 
 export const OutlineButton = styled(BaseButton)`
-  border: 1px solid ${theme.subtleBorderColor};
+  border: 1px solid ${theme.borderColor};
   height: 38px;
   font-style: italic;
   color: ${theme.primaryColor};
@@ -43,7 +43,7 @@ export const OutlineButton = styled(BaseButton)`
 
   &:hover,
   &:focus {
-    background: ${theme.subtleBorderColor};
+    background: ${theme.borderColor};
   }
 `;
 
