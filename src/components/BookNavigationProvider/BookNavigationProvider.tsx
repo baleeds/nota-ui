@@ -90,7 +90,7 @@ const NavigationContainer = styled.div`
   left: 0;
   bottom: 0;
   width: 80%;
-  max-width: 400px;
+  max-width: 350px;
   background-color: white;
   z-index: ${Z_INDEX.BOOK_NAV};
   box-shadow: 0 0 24px 2px rgba(0, 0, 0, 0.3);

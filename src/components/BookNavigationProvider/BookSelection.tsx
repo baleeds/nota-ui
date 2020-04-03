@@ -61,6 +61,11 @@ const BookButtons = styled.div`
     text-align: left;
     background-color: white;
     border: none;
+    transition: background-color 0.2s ease-in-out;
+
+    &:hover {
+      background-color: ${theme.secondaryHoverColor};
+    }
 
     &.active {
       background-color: ${theme.secondaryColor};
