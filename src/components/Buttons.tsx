@@ -6,7 +6,7 @@ export const BaseButton = styled.button`
   border: none;
   background: transparent;
   outline: none;
-  transition: background-color 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
 
   :disabled {
     opacity: 0.5;
@@ -36,14 +36,15 @@ export const PrimaryButtonLarge = styled(PrimaryButton)`
 export const OutlineButton = styled(BaseButton)`
   border: 1px solid ${theme.borderColor};
   height: 38px;
-  font-style: italic;
   color: ${theme.primaryColor};
   border-radius: ${theme.borderRadius};
   padding: 0 20px;
 
   &:hover,
   &:focus {
-    background: ${theme.borderColor};
+    background: ${theme.primaryColor};
+    border-color: ${theme.primaryColor};
+    color: ${theme.blank};
   }
 `;
 
@@ -65,12 +66,12 @@ export const OutlineButtonContrast = styled(OutlineButton)`
   &:hover,
   &:focus {
     background: rgba(255, 255, 255, 0.1);
+    border-color: ${theme.blank};
   }
 `;
 
 export const GhostButton = styled(BaseButton)`
   height: 38px;
-  font-style: italic;
   padding: 0 20px;
   border-radius: ${theme.borderRadius};
 
