@@ -87,9 +87,9 @@ export const ReadPage: React.FC = () => {
             <Passage />
           </Block>
         </PassageContainer>
-        <Block style={{ width: 400 }}>
+        <SidecarContainer>
           <DesktopSidecar />
-        </Block>
+        </SidecarContainer>
       </Center>
     </Page>
   );
@@ -101,5 +101,10 @@ const Center = styled.div`
 `;
 
 const PassageContainer = styled.div`
-  flex: 1;
+  flex: 3;
+`;
+
+const SidecarContainer = styled(Block)`
+  flex: 2;
+  min-width: 400px;
 `;
