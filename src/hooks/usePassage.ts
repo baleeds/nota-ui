@@ -13,6 +13,7 @@ export interface PassageContext {
   chapter?: BibleChapter;
   verse?: BibleVerse;
   passageId?: string;
+  fullName?: string;
 }
 
 export function usePassage(): PassageContext {
@@ -32,6 +33,11 @@ export function usePassage(): PassageContext {
     const paddedChapterId = `${chapterId}`.padStart(3, '0');
     const paddedVerseId = `${verseId}`.padStart(3, '0');
     const passageId = `${bookId}${paddedChapterId}${paddedVerseId}`;
+    const fullName = bookDetails
+      ? `${bookDetails.displayName}${chapterNumber ? ` ${chapterNumber}` : ''}${
+          verseNumber ? `:${verseNumber}` : ''
+        }`
+      : undefined;
 
     return {
       bookName,
@@ -41,6 +47,7 @@ export function usePassage(): PassageContext {
       chapter,
       verse,
       passageId,
+      fullName,
     };
   }, [bookName, chapterId, verseId]);
 
