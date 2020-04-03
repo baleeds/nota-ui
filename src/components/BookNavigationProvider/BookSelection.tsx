@@ -54,9 +54,9 @@ const BookButtons = styled.div`
 
   button {
     display: block;
-    padding: 12px 16px;
+    padding: 16px;
     text-decoration: none;
-    font-size: 20px;
+    font-size: 18px;
     width: 100%;
     text-align: left;
     background-color: white;
