@@ -4,6 +4,7 @@ import { usePassage } from '../../hooks/usePassage';
 import { Block } from '../../components/Block';
 import { H3 } from '../../components/Typography';
 import { Separator } from '../../components/Separator';
+import { OutlineButton } from '../../components/Buttons';
 
 export const DesktopSidecar: React.FC = () => {
   const { verseNumber, fullName } = usePassage();
@@ -20,6 +21,14 @@ export const DesktopSidecar: React.FC = () => {
         </TopContainer>
       </Block>
       <Separator />
+      <Block>
+        <OutlineButton
+          style={{ display: 'block', width: '100%', margin: '24px 0' }}
+          type="button"
+        >
+          Write annotation
+        </OutlineButton>
+      </Block>
     </Container>
   );
 };
