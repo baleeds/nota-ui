@@ -102,7 +102,7 @@ const MobileContainer = styled(Container)`
 `;
 
 const InnerContainer = styled.div`
-  max-width: 1000px;
+  max-width: 1100px;
   margin: 0 -12px;
   height: 60px;
   display: flex;

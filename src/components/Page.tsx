@@ -27,7 +27,7 @@ export const Container = styled.div`
 `;
 
 const BodyContainer = styled.div`
-  max-width: 1000px;
+  max-width: 1100px;
   width: 100%;
   margin: 0 auto;
 `;
