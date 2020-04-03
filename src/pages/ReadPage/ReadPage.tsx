@@ -14,6 +14,7 @@ import { MobileVersePage } from './MobileVersePage';
 import { MobileAnnotationPage } from './MobileAnnotationPage';
 import { MobileReadPage } from './MobileReadPage';
 import { Block } from '../../components/Block';
+import { DesktopSidecar } from './DesktopSidecar';
 
 const getReadLink = (
   bookName: string | undefined,
@@ -86,8 +87,8 @@ export const ReadPage: React.FC = () => {
             <Passage />
           </Block>
         </PassageContainer>
-        <Block>
-          <Sidebar>Sidebar</Sidebar>
+        <Block style={{ width: 400 }}>
+          <DesktopSidecar />
         </Block>
       </Center>
     </Page>
@@ -101,13 +102,4 @@ const Center = styled.div`
 
 const PassageContainer = styled.div`
   flex: 1;
-`;
-
-const Sidebar = styled.div`
-  width: 400px;
-  min-height: 100px;
-  border-radius: 8px;
-  box-shadow: 0px 1px 8px 0px rgba(0, 0, 0, 0.08);
-  display: flex;
-  flex-direction: column;
 `;

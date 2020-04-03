@@ -5,3 +5,8 @@ export const P = styled.p`
   color: ${theme.primaryTextColor};
   line-height: 1.3em;
 `;
+
+export const H3 = styled.h3`
+  font-size: 18px;
+  font-weight: bold;
+`;
