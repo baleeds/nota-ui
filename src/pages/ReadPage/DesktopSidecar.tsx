@@ -5,9 +5,10 @@ import { Block } from '../../components/Block';
 import { H3 } from '../../components/Typography';
 import { Separator } from '../../components/Separator';
 import { OutlineButton } from '../../components/Buttons';
+import { PublicAnnotations } from '../../components/Annotations/PublicAnnotations';
 
 export const DesktopSidecar: React.FC = () => {
-  const { verseNumber, fullName } = usePassage();
+  const { verseNumber, fullName, passageId } = usePassage();
 
   if (!verseNumber || !fullName) {
     return null;
@@ -29,6 +30,7 @@ export const DesktopSidecar: React.FC = () => {
           Write annotation
         </OutlineButton>
       </Block>
+      <Block>{passageId && <PublicAnnotations passageId={passageId} />}</Block>
     </Container>
   );
 };

@@ -32,7 +32,7 @@ export function usePassage(): PassageContext {
     const { id: bookId } = bookDetails || {};
     const paddedChapterId = `${chapterId}`.padStart(3, '0');
     const paddedVerseId = `${verseId}`.padStart(3, '0');
-    const passageId = `${bookId}${paddedChapterId}${paddedVerseId}`;
+    const passageId = `verse${bookId}${paddedChapterId}${paddedVerseId}`;
     const fullName = bookDetails
       ? `${bookDetails.displayName}${chapterNumber ? ` ${chapterNumber}` : ''}${
           verseNumber ? `:${verseNumber}` : ''

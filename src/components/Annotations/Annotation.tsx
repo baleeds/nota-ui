@@ -10,7 +10,7 @@ interface Props {
 
 export const Annotation: React.FC<Props> = ({ annotation }) => {
   return (
-    <Container>
+    <div>
       <HeaderContainer>
         <a href="/">
           {/* {annotation.user.firstName} {annotation.user.lastName} */}
@@ -19,13 +19,9 @@ export const Annotation: React.FC<Props> = ({ annotation }) => {
         <Date>{toSimpleDate(annotation.createdAt)}</Date>
       </HeaderContainer>
       <TextContainer dangerouslySetInnerHTML={{ __html: annotation.text }} />
-    </Container>
+    </div>
   );
 };
-
-const Container = styled.div`
-  padding: 12px 24px;
-`;
 
 const HeaderContainer = styled.div`
   margin-bottom: 8px;
@@ -49,4 +45,5 @@ const Date = styled.div`
 const TextContainer = styled.div`
   color: ${theme.primaryTextColor};
   font-size: 0.9em;
+  line-height: 1.3;
 `;
