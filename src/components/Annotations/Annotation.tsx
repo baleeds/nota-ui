@@ -3,6 +3,7 @@ import { PublicAnnotationFragment } from '../../api/__generated__/apollo-graphql
 import styled from 'styled-components';
 import { toSimpleDate } from '../../base/utils/dates';
 import { theme } from '../../styles/theme';
+import { Flex } from '../Flex';
 
 interface Props {
   annotation: PublicAnnotationFragment;
@@ -11,28 +12,22 @@ interface Props {
 export const Annotation: React.FC<Props> = ({ annotation }) => {
   return (
     <div>
-      <HeaderContainer>
-        <a href="/">
+      <Flex margin={{ b: 8 }} alignItems="center">
+        <AuthorLink href="/">
           {/* {annotation.user.firstName} {annotation.user.lastName} */}
           {annotation.user.email}
-        </a>
+        </AuthorLink>
         <Date>{toSimpleDate(annotation.createdAt)}</Date>
-      </HeaderContainer>
+      </Flex>
       <TextContainer dangerouslySetInnerHTML={{ __html: annotation.text }} />
     </div>
   );
 };
 
-const HeaderContainer = styled.div`
-  margin-bottom: 8px;
-  display: flex;
-  align-items: center;
-
-  a {
-    color: ${theme.secondaryColor};
-    font-weight: 600;
-    text-decoration: none;
-  }
+const AuthorLink = styled.a`
+  color: ${theme.secondaryColor};
+  font-weight: 600;
+  text-decoration: none;
 `;
 
 const Date = styled.div`
