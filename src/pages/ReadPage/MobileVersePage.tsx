@@ -11,10 +11,8 @@ import { usePassage } from '../../hooks/usePassage';
 import styled from 'styled-components';
 import { UNKNOWN_TEXT } from '../../base/constants/messages';
 import { BibleVerse } from '../../base/constants/bible';
-import { Separator } from '../../components/Separator';
-import { OutlineButton } from '../../components/Buttons';
-import { PublicAnnotations } from '../../components/Annotations/PublicAnnotations';
 import { ReactComponent as QuoteIcon } from '../../icons/left-quote.svg';
+import { VerseDetailsContent } from './VerseDetailsContent';
 
 interface Props {
   bookName: string;
@@ -44,7 +42,7 @@ export const MobileVersePage: React.FC<Props> = ({
   verseId,
 }) => {
   const { title } = useBookNavigation();
-  const { verse, passageId } = usePassage();
+  const { verse } = usePassage();
 
   const verseText = buildVerseText(verse);
 
@@ -60,16 +58,7 @@ export const MobileVersePage: React.FC<Props> = ({
         <Quote />
         <VerseParagraph>{verseText}</VerseParagraph>
       </Block>
-      <Separator />
-      <Block>
-        <OutlineButton
-          style={{ display: 'block', width: '100%', margin: '24px 0' }}
-          type="button"
-        >
-          Write annotation
-        </OutlineButton>
-        {passageId && <PublicAnnotations passageId={passageId} />}
-      </Block>
+      <VerseDetailsContent />
     </>
   );
 };
