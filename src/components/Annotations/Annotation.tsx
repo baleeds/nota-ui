@@ -4,9 +4,10 @@ import styled from 'styled-components';
 import { toSimpleDate } from '../../base/utils/dates';
 import { theme } from '../../styles/theme';
 import { Flex } from '../Flex';
+import Skeleton from 'react-loading-skeleton';
 
 interface Props {
-  annotation: PublicAnnotationFragment;
+  annotation?: PublicAnnotationFragment;
 }
 
 export const Annotation: React.FC<Props> = ({ annotation }) => {
@@ -15,11 +16,17 @@ export const Annotation: React.FC<Props> = ({ annotation }) => {
       <Flex margin={{ b: 8 }} alignItems="center">
         <AuthorLink href="/">
           {/* {annotation.user.firstName} {annotation.user.lastName} */}
-          {annotation.user.email}
+          {annotation?.user.email || <Skeleton width={120} />}
         </AuthorLink>
-        <Date>{toSimpleDate(annotation.createdAt)}</Date>
+        {annotation && <Date>{toSimpleDate(annotation?.createdAt)}</Date>}
       </Flex>
-      <TextContainer dangerouslySetInnerHTML={{ __html: annotation.text }} />
+      {annotation?.text ? (
+        <TextContainer dangerouslySetInnerHTML={{ __html: annotation.text }} />
+      ) : (
+        <TextContainer>
+          <Skeleton count={3} />
+        </TextContainer>
+      )}
     </div>
   );
 };

@@ -22,8 +22,12 @@ export const PublicAnnotations: React.FC<Props> = ({ passageId }) => {
   });
 
   const renderAnnotations = () => {
-    if (loading && !data) {
-      return <>Loading</>;
+    if (loading) {
+      return new Array(3).fill(null).map((_item, index) => (
+        <Box key={`loading-annotation-${index}`}>
+          <Annotation />
+        </Box>
+      ));
     }
 
     const annotations = data?.annotations
@@ -46,7 +50,7 @@ export const PublicAnnotations: React.FC<Props> = ({ passageId }) => {
   };
 
   return (
-    <Flex column gutter={24}>
+    <Flex column gutter={24} padding={{ b: 24 }}>
       {renderAnnotations()}
     </Flex>
   );
