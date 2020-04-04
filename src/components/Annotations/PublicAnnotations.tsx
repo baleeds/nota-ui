@@ -7,6 +7,8 @@ import { Annotation } from './Annotation';
 import { extractNodes } from '../../base/utils/extractNodes';
 import { Flex } from '../Flex';
 import { Box } from '../Box';
+import { PageError } from '../PageError';
+import { NothingHere } from '../NothingHere';
 
 interface Props {
   passageId: string;
@@ -19,29 +21,33 @@ export const PublicAnnotations: React.FC<Props> = ({ passageId }) => {
     },
   });
 
-  if (loading && !data) {
-    return <>Loading</>;
-  }
+  const renderAnnotations = () => {
+    if (loading && !data) {
+      return <>Loading</>;
+    }
 
-  // const annotations =
-  //   data && data.annotations? data.annotations : [];
-  const annotations = data?.annotations
-    ? extractNodes<PublicAnnotationFragment>(data.annotations.edges)
-    : [];
+    const annotations = data?.annotations
+      ? extractNodes<PublicAnnotationFragment>(data.annotations.edges)
+      : [];
 
-  if (error || !annotations) {
-    return <>Error</>;
-  }
+    if (error || !annotations) {
+      return <PageError />;
+    }
+
+    if (!annotations.length) {
+      return <NothingHere />;
+    }
+
+    return annotations.map(annotation => (
+      <Box key={annotation.id}>
+        <Annotation annotation={annotation} />
+      </Box>
+    ));
+  };
 
   return (
     <Flex column gutter={24}>
-      {annotations.length === 0
-        ? 'No public annotations'
-        : annotations.map(annotation => (
-            <Box key={annotation.id}>
-              <Annotation annotation={annotation} />
-            </Box>
-          ))}
+      {renderAnnotations()}
     </Flex>
   );
 };
