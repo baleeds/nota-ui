@@ -42,10 +42,10 @@ test('extractNodes removes null values', () => {
 
 test('extractNodes handles undefined argument', () => {
   const newArray = extractNodes(undefined);
-  expect(newArray).toMatchObject([]);
+  expect(newArray).toBe(undefined);
 });
 
 test('extractNodes handles null argument', () => {
   const newArray = extractNodes(null);
-  expect(newArray).toMatchObject([]);
+  expect(newArray).toBe(undefined);
 });

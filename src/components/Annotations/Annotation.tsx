@@ -1,5 +1,5 @@
 import React from 'react';
-import { PublicAnnotationFragment } from '../../api/__generated__/apollo-graphql';
+import { AnnotationListFragment } from '../../api/__generated__/apollo-graphql';
 import styled from 'styled-components';
 import { toSimpleDate } from '../../base/utils/dates';
 import { theme } from '../../styles/theme';
@@ -7,7 +7,7 @@ import { Flex } from '../layout/Flex';
 import Skeleton from 'react-loading-skeleton';
 
 interface Props {
-  annotation?: PublicAnnotationFragment;
+  annotation?: AnnotationListFragment;
 }
 
 export const Annotation: React.FC<Props> = ({ annotation }) => {

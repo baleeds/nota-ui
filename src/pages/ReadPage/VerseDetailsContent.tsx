@@ -2,7 +2,7 @@ import React from 'react';
 import { Separator } from '../../components/Separator';
 import { Block } from '../../components/Block';
 import { OutlineButton } from '../../components/Buttons';
-import { PublicAnnotations } from '../../components/Annotations/PublicAnnotations';
+import { Annotations } from '../../components/Annotations';
 import { usePassage } from '../../hooks/usePassage';
 
 export const VerseDetailsContent: React.FC = () => {
@@ -20,9 +20,7 @@ export const VerseDetailsContent: React.FC = () => {
         </OutlineButton>
       </Block>
       <Block>
-        {passageId && (
-          <PublicAnnotations key={passageId} passageId={passageId} />
-        )}
+        {passageId && <Annotations key={passageId} passageId={passageId} />}
       </Block>
     </>
   );
