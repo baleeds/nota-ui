@@ -38,7 +38,6 @@ const AuthorLink = styled.a`
 `;
 
 const Date = styled.div`
-  margin-top: 2px;
   margin-left: 12px;
   font-size: 0.8rem;
   color: ${theme.lightTextColor};
