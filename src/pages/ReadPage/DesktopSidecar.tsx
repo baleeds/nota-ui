@@ -1,19 +1,24 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import styled from 'styled-components';
 import { usePassage } from '../../hooks/usePassage';
 import { Block } from '../../components/Block';
 import { H3 } from '../../components/Typography';
 import { VerseDetailsContent } from './VerseDetailsContent';
 
-export const DesktopSidecar: React.FC = () => {
+interface Props {
+  passageKey: string;
+}
+
+export const DesktopSidecar: React.FC<Props> = ({ passageKey }) => {
   const { verseNumber, fullName } = usePassage();
+  const top = useMemo(() => window.scrollY, [passageKey]); // eslint-disable-line
 
   if (!verseNumber || !fullName) {
     return null;
   }
 
   return (
-    <Container>
+    <Container style={{ transform: `translateY(${top}px)` }}>
       <Block>
         <TopContainer>
           <H3>{fullName}</H3>
@@ -31,6 +36,7 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   margin-bottom: 48px;
+  transition: transform 0.1s ease-in-out;
 `;
 
 const TopContainer = styled.div`

@@ -88,7 +88,7 @@ export const ReadPage: React.FC = () => {
           </Block>
         </PassageContainer>
         <SidecarContainer>
-          <DesktopSidecar />
+          <DesktopSidecar passageKey={`${bookName}${chapterId}${verseId}`} />
         </SidecarContainer>
       </Center>
     </Page>
