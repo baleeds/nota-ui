@@ -16,10 +16,14 @@ export const VerseDetailsContent: React.FC = () => {
           style={{ display: 'block', width: '100%', margin: '24px 0' }}
           type="button"
         >
-          Write annotation
+          Write an annotation
         </OutlineButton>
       </Block>
-      <Block>{passageId && <PublicAnnotations passageId={passageId} />}</Block>
+      <Block>
+        {passageId && (
+          <PublicAnnotations key={passageId} passageId={passageId} />
+        )}
+      </Block>
     </>
   );
 };
