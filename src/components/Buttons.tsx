@@ -16,7 +16,7 @@ export const BaseButton = styled.button`
 export const PrimaryButton = styled(BaseButton)`
   border-radius: ${theme.borderRadius};
   background: ${theme.primaryColor};
-  font-size: 15px;
+  font-size: 0.9rem;
   height: 38px;
   font-style: italic;
   color: ${theme.blank};
@@ -29,7 +29,7 @@ export const PrimaryButton = styled(BaseButton)`
 `;
 
 export const PrimaryButtonLarge = styled(PrimaryButton)`
-  font-size: 18px;
+  font-size: 1.125rem;
   height: 48px;
 `;
 
@@ -50,7 +50,7 @@ export const OutlineButton = styled(BaseButton)`
 
 export const OutlineButtonLarge = styled(OutlineButton)`
   height: 48px;
-  font-size: 18px;
+  font-size: 1.125rem;
   border-color: ${theme.primaryColor};
 
   &:hover,

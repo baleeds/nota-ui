@@ -33,18 +33,19 @@ export const Annotation: React.FC<Props> = ({ annotation }) => {
 const AuthorLink = styled.a`
   color: ${theme.secondaryColor};
   font-weight: 600;
+  font-size: 0.9rem;
   text-decoration: none;
 `;
 
 const Date = styled.div`
   margin-top: 2px;
   margin-left: 12px;
-  font-size: 0.8em;
+  font-size: 0.8rem;
   color: ${theme.lightTextColor};
 `;
 
 const TextContainer = styled.div`
   color: ${theme.primaryTextColor};
-  font-size: 0.9em;
   line-height: 1.3;
+  font-size: 0.9rem;
 `;

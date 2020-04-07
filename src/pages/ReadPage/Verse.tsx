@@ -67,7 +67,7 @@ const VerseLink = styled(Link)`
   color: #585858;
   line-height: 1.7em;
   padding: 2px 4px;
-  font-size: 18px;
+  font-size: 1.125rem;
   -webkit-tap-highlight-color: ${theme.secondaryHoverColor};
   margin-right: 2px;
 
@@ -97,7 +97,7 @@ const VerseLink = styled(Link)`
   }
 
   .verseNumber {
-    font-size: 0.8em;
+    font-size: 0.8rem;
     font-weight: bold;
     margin-right: 6px;
     position: relative;

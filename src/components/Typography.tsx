@@ -7,6 +7,6 @@ export const P = styled.p`
 `;
 
 export const H3 = styled.h3`
-  font-size: 18px;
+  font-size: 1.125rem;
   font-weight: bold;
 `;
