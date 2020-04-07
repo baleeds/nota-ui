@@ -7,7 +7,8 @@ export const publicAnnotationFragment = gql`
     createdAt
     user {
       id
-      email
+      username
+      displayName
     }
   }
 `;

@@ -62,6 +62,8 @@ export type CreateAnnotationPayload = {
 export type CreateUserInput = {
   email: Scalars['String'],
   isAdmin: Scalars['Boolean'],
+  username: Scalars['String'],
+  displayName: Scalars['String'],
   clientMutationId?: Maybe<Scalars['String']>,
 };
 
@@ -345,11 +347,13 @@ export type UpdatePasswordPayload = {
 export type User = ActiveRecord & {
    __typename?: 'User',
   createdAt: Scalars['ISO8601DateTime'],
+  displayName: Scalars['String'],
   email: Scalars['String'],
   id: Scalars['ID'],
   isActive: Scalars['Boolean'],
   isAdmin: Scalars['Boolean'],
   updatedAt: Scalars['ISO8601DateTime'],
+  username: Scalars['String'],
 };
 
 export type UserConnection = {
@@ -384,7 +388,7 @@ export type PublicAnnotationFragment = (
   & Pick<Annotation, 'id' | 'text' | 'createdAt'>
   & { user: (
     { __typename?: 'User' }
-    & Pick<User, 'id' | 'email'>
+    & Pick<User, 'id' | 'username' | 'displayName'>
   ) }
 );
 
@@ -474,7 +478,8 @@ export const PublicAnnotationFragmentDoc = gql`
   createdAt
   user {
     id
-    email
+    username
+    displayName
   }
 }
     `;

@@ -15,8 +15,7 @@ export const Annotation: React.FC<Props> = ({ annotation }) => {
     <div>
       <Flex margin={{ b: 8 }} alignItems="center">
         <AuthorLink href="/">
-          {/* {annotation.user.firstName} {annotation.user.lastName} */}
-          {annotation?.user.email || <Skeleton width={120} />}
+          {annotation?.user.displayName || <Skeleton width={120} />}
         </AuthorLink>
         {annotation && <Date>{toSimpleDate(annotation?.createdAt)}</Date>}
       </Flex>
