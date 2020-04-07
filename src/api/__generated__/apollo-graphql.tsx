@@ -447,6 +447,7 @@ export type SignInUserMutation = (
 
 export type PublicAnnotationsQueryVariables = {
   first?: Maybe<Scalars['Int']>,
+  after?: Maybe<Scalars['String']>,
   verseId: Scalars['ID']
 };
 
@@ -461,7 +462,10 @@ export type PublicAnnotationsQuery = (
         { __typename?: 'Annotation' }
         & PublicAnnotationFragment
       )> }
-    )>>> }
+    )>>>, pageInfo: (
+      { __typename?: 'PageInfo' }
+      & Pick<PageInfo, 'startCursor' | 'endCursor' | 'hasNextPage' | 'hasPreviousPage'>
+    ) }
   ) }
 );
 
@@ -596,12 +600,18 @@ export type SignInUserMutationHookResult = ReturnType<typeof useSignInUserMutati
 export type SignInUserMutationResult = ApolloReactCommon.MutationResult<SignInUserMutation>;
 export type SignInUserMutationOptions = ApolloReactCommon.BaseMutationOptions<SignInUserMutation, SignInUserMutationVariables>;
 export const PublicAnnotationsDocument = gql`
-    query PublicAnnotations($first: Int, $verseId: ID!) {
-  annotations(first: $first, verseId: $verseId) {
+    query PublicAnnotations($first: Int, $after: String, $verseId: ID!) {
+  annotations(first: $first, after: $after, verseId: $verseId) {
     edges {
       node {
         ...PublicAnnotation
       }
+    }
+    pageInfo {
+      startCursor
+      endCursor
+      hasNextPage
+      hasPreviousPage
     }
   }
 }
@@ -620,6 +630,7 @@ export const PublicAnnotationsDocument = gql`
  * const { data, loading, error } = usePublicAnnotationsQuery({
  *   variables: {
  *      first: // value for 'first'
+ *      after: // value for 'after'
  *      verseId: // value for 'verseId'
  *   },
  * });

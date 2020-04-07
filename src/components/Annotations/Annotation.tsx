@@ -3,7 +3,7 @@ import { PublicAnnotationFragment } from '../../api/__generated__/apollo-graphql
 import styled from 'styled-components';
 import { toSimpleDate } from '../../base/utils/dates';
 import { theme } from '../../styles/theme';
-import { Flex } from '../Flex';
+import { Flex } from '../layout/Flex';
 import Skeleton from 'react-loading-skeleton';
 
 interface Props {
