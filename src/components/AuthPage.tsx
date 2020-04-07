@@ -57,7 +57,7 @@ const LogoContainer = styled.div`
 const Logo = styled(Link)`
   display: flex;
   align-items: center;
-  font-size: 28px;
+  font-size: 1.75rem;
   font-weight: 700;
   color: ${theme.primaryTextColor};
   text-decoration: none;
@@ -88,7 +88,7 @@ const FooterContainer = styled.div`
 
 const FooterMessage = styled.div`
   text-align: center;
-  font-size: 15px;
+  font-size: 0.9rem;
   color: ${theme.lightTextColor};
   margin-bottom: 16px;
 `;

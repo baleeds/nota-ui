@@ -62,6 +62,8 @@ export type CreateAnnotationPayload = {
 export type CreateUserInput = {
   email: Scalars['String'],
   isAdmin: Scalars['Boolean'],
+  username: Scalars['String'],
+  displayName: Scalars['String'],
   clientMutationId?: Maybe<Scalars['String']>,
 };
 
@@ -205,7 +207,8 @@ export type QueryAnnotationArgs = {
 
 
 export type QueryAnnotationsArgs = {
-  verseId: Scalars['ID'],
+  verseId?: Maybe<Scalars['ID']>,
+  userId?: Maybe<Scalars['ID']>,
   after?: Maybe<Scalars['String']>,
   before?: Maybe<Scalars['String']>,
   first?: Maybe<Scalars['Int']>,
@@ -345,11 +348,13 @@ export type UpdatePasswordPayload = {
 export type User = ActiveRecord & {
    __typename?: 'User',
   createdAt: Scalars['ISO8601DateTime'],
+  displayName: Scalars['String'],
   email: Scalars['String'],
   id: Scalars['ID'],
   isActive: Scalars['Boolean'],
   isAdmin: Scalars['Boolean'],
   updatedAt: Scalars['ISO8601DateTime'],
+  username: Scalars['String'],
 };
 
 export type UserConnection = {
@@ -374,18 +379,18 @@ export type Verse = ActiveRecord & {
   updatedAt: Scalars['ISO8601DateTime'],
 };
 
-export type MeFragment = (
-  { __typename?: 'User' }
-  & Pick<User, 'id' | 'email'>
-);
-
-export type PublicAnnotationFragment = (
+export type AnnotationListFragment = (
   { __typename?: 'Annotation' }
   & Pick<Annotation, 'id' | 'text' | 'createdAt'>
   & { user: (
     { __typename?: 'User' }
-    & Pick<User, 'id' | 'email'>
+    & Pick<User, 'id' | 'username' | 'displayName'>
   ) }
+);
+
+export type MeFragment = (
+  { __typename?: 'User' }
+  & Pick<User, 'id' | 'email'>
 );
 
 export type ResetPasswordMutationVariables = {
@@ -441,41 +446,66 @@ export type SignInUserMutation = (
   )> }
 );
 
-export type PublicAnnotationsQueryVariables = {
-  first?: Maybe<Scalars['Int']>,
-  verseId: Scalars['ID']
+export type MyVerseAnnotationsQueryVariables = {
+  verseId: Scalars['ID'],
+  userId: Scalars['ID']
 };
 
 
-export type PublicAnnotationsQuery = (
+export type MyVerseAnnotationsQuery = (
   { __typename?: 'Query' }
-  & { annotations: (
+  & { myAnnotations: (
     { __typename?: 'AnnotationConnection' }
     & { edges: Maybe<Array<Maybe<(
       { __typename?: 'AnnotationEdge' }
       & { node: Maybe<(
         { __typename?: 'Annotation' }
-        & PublicAnnotationFragment
+        & AnnotationListFragment
       )> }
     )>>> }
   ) }
 );
 
-export const MeFragmentDoc = gql`
-    fragment Me on User {
-  id
-  email
-}
-    `;
-export const PublicAnnotationFragmentDoc = gql`
-    fragment PublicAnnotation on Annotation {
+export type VerseAnnotationsQueryVariables = {
+  first?: Maybe<Scalars['Int']>,
+  after?: Maybe<Scalars['String']>,
+  verseId: Scalars['ID']
+};
+
+
+export type VerseAnnotationsQuery = (
+  { __typename?: 'Query' }
+  & { publicAnnotations: (
+    { __typename?: 'AnnotationConnection' }
+    & { edges: Maybe<Array<Maybe<(
+      { __typename?: 'AnnotationEdge' }
+      & { node: Maybe<(
+        { __typename?: 'Annotation' }
+        & AnnotationListFragment
+      )> }
+    )>>>, pageInfo: (
+      { __typename?: 'PageInfo' }
+      & Pick<PageInfo, 'startCursor' | 'endCursor' | 'hasNextPage' | 'hasPreviousPage'>
+    ) }
+  ) }
+);
+
+export const AnnotationListFragmentDoc = gql`
+    fragment AnnotationList on Annotation {
   id
   text
   createdAt
   user {
     id
-    email
+    username
+    displayName
   }
+}
+    `;
+export const MeFragmentDoc = gql`
+    fragment Me on User {
+  id
+  email
 }
     `;
 export const ResetPasswordDocument = gql`
@@ -590,41 +620,86 @@ export function useSignInUserMutation(baseOptions?: ApolloReactHooks.MutationHoo
 export type SignInUserMutationHookResult = ReturnType<typeof useSignInUserMutation>;
 export type SignInUserMutationResult = ApolloReactCommon.MutationResult<SignInUserMutation>;
 export type SignInUserMutationOptions = ApolloReactCommon.BaseMutationOptions<SignInUserMutation, SignInUserMutationVariables>;
-export const PublicAnnotationsDocument = gql`
-    query PublicAnnotations($first: Int, $verseId: ID!) {
-  annotations(first: $first, verseId: $verseId) {
+export const MyVerseAnnotationsDocument = gql`
+    query MyVerseAnnotations($verseId: ID!, $userId: ID!) {
+  myAnnotations: annotations(userId: $userId, verseId: $verseId) {
     edges {
       node {
-        ...PublicAnnotation
+        ...AnnotationList
       }
     }
   }
 }
-    ${PublicAnnotationFragmentDoc}`;
+    ${AnnotationListFragmentDoc}`;
 
 /**
- * __usePublicAnnotationsQuery__
+ * __useMyVerseAnnotationsQuery__
  *
- * To run a query within a React component, call `usePublicAnnotationsQuery` and pass it any options that fit your needs.
- * When your component renders, `usePublicAnnotationsQuery` returns an object from Apollo Client that contains loading, error, and data properties 
+ * To run a query within a React component, call `useMyVerseAnnotationsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useMyVerseAnnotationsQuery` returns an object from Apollo Client that contains loading, error, and data properties 
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = usePublicAnnotationsQuery({
+ * const { data, loading, error } = useMyVerseAnnotationsQuery({
+ *   variables: {
+ *      verseId: // value for 'verseId'
+ *      userId: // value for 'userId'
+ *   },
+ * });
+ */
+export function useMyVerseAnnotationsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<MyVerseAnnotationsQuery, MyVerseAnnotationsQueryVariables>) {
+        return ApolloReactHooks.useQuery<MyVerseAnnotationsQuery, MyVerseAnnotationsQueryVariables>(MyVerseAnnotationsDocument, baseOptions);
+      }
+export function useMyVerseAnnotationsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<MyVerseAnnotationsQuery, MyVerseAnnotationsQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<MyVerseAnnotationsQuery, MyVerseAnnotationsQueryVariables>(MyVerseAnnotationsDocument, baseOptions);
+        }
+export type MyVerseAnnotationsQueryHookResult = ReturnType<typeof useMyVerseAnnotationsQuery>;
+export type MyVerseAnnotationsLazyQueryHookResult = ReturnType<typeof useMyVerseAnnotationsLazyQuery>;
+export type MyVerseAnnotationsQueryResult = ApolloReactCommon.QueryResult<MyVerseAnnotationsQuery, MyVerseAnnotationsQueryVariables>;
+export const VerseAnnotationsDocument = gql`
+    query VerseAnnotations($first: Int, $after: String, $verseId: ID!) {
+  publicAnnotations: annotations(first: $first, after: $after, verseId: $verseId) {
+    edges {
+      node {
+        ...AnnotationList
+      }
+    }
+    pageInfo {
+      startCursor
+      endCursor
+      hasNextPage
+      hasPreviousPage
+    }
+  }
+}
+    ${AnnotationListFragmentDoc}`;
+
+/**
+ * __useVerseAnnotationsQuery__
+ *
+ * To run a query within a React component, call `useVerseAnnotationsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useVerseAnnotationsQuery` returns an object from Apollo Client that contains loading, error, and data properties 
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useVerseAnnotationsQuery({
  *   variables: {
  *      first: // value for 'first'
+ *      after: // value for 'after'
  *      verseId: // value for 'verseId'
  *   },
  * });
  */
-export function usePublicAnnotationsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<PublicAnnotationsQuery, PublicAnnotationsQueryVariables>) {
-        return ApolloReactHooks.useQuery<PublicAnnotationsQuery, PublicAnnotationsQueryVariables>(PublicAnnotationsDocument, baseOptions);
+export function useVerseAnnotationsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<VerseAnnotationsQuery, VerseAnnotationsQueryVariables>) {
+        return ApolloReactHooks.useQuery<VerseAnnotationsQuery, VerseAnnotationsQueryVariables>(VerseAnnotationsDocument, baseOptions);
       }
-export function usePublicAnnotationsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<PublicAnnotationsQuery, PublicAnnotationsQueryVariables>) {
-          return ApolloReactHooks.useLazyQuery<PublicAnnotationsQuery, PublicAnnotationsQueryVariables>(PublicAnnotationsDocument, baseOptions);
+export function useVerseAnnotationsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<VerseAnnotationsQuery, VerseAnnotationsQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<VerseAnnotationsQuery, VerseAnnotationsQueryVariables>(VerseAnnotationsDocument, baseOptions);
         }
-export type PublicAnnotationsQueryHookResult = ReturnType<typeof usePublicAnnotationsQuery>;
-export type PublicAnnotationsLazyQueryHookResult = ReturnType<typeof usePublicAnnotationsLazyQuery>;
-export type PublicAnnotationsQueryResult = ApolloReactCommon.QueryResult<PublicAnnotationsQuery, PublicAnnotationsQueryVariables>;
+export type VerseAnnotationsQueryHookResult = ReturnType<typeof useVerseAnnotationsQuery>;
+export type VerseAnnotationsLazyQueryHookResult = ReturnType<typeof useVerseAnnotationsLazyQuery>;
+export type VerseAnnotationsQueryResult = ApolloReactCommon.QueryResult<VerseAnnotationsQuery, VerseAnnotationsQueryVariables>;

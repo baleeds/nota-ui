@@ -1,5 +1,5 @@
 import React from 'react';
-import { ErrorDisplay } from '../../components/ErrorDisplay';
+import { ErrorMessage } from '../../components/ErrorMessage';
 import { Verse } from './Verse';
 import styled from 'styled-components';
 import { usePassage } from '../../hooks/usePassage';
@@ -7,7 +7,7 @@ import { usePassage } from '../../hooks/usePassage';
 export const Passage: React.FC = () => {
   const { chapter, bookName, chapterNumber, verseNumber } = usePassage();
   if (!chapter || !bookName || !chapterNumber) {
-    return <ErrorDisplay message="We could not find this passage" />;
+    return <ErrorMessage message="We could not find this passage" />;
   }
 
   return (

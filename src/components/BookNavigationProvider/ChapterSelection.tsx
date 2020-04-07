@@ -89,13 +89,19 @@ const ChapterButtons = styled.div`
 
   a {
     text-decoration: none;
-    font-size: 20px;
+    font-size: 1.25rem;
     color: ${theme.secondaryColor};
     height: 85px;
     padding: 12px;
     border: 1px solid ${theme.secondaryColor};
     display: inline-block;
     font-weight: bold;
+    border-radius: ${theme.borderRadius};
+    transition: background-color 0.2s ease-in-out;
+
+    &:hover {
+      background-color: ${theme.secondaryHoverColor};
+    }
 
     &.active {
       color: white;

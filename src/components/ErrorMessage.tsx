@@ -5,6 +5,6 @@ interface Props {
   message?: string;
 }
 
-export const ErrorDisplay: React.FC<Props> = ({ message = UNKNOWN_ERROR }) => {
+export const ErrorMessage: React.FC<Props> = ({ message = UNKNOWN_ERROR }) => {
   return <div>{message}</div>;
 };

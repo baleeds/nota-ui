@@ -29,7 +29,7 @@ export const FormErrorDisplay: React.FC<Props> = ({
 
 const Container = styled.div`
   margin-bottom: 16px;
-  font-size: 18px;
+  font-size: 1.125rem;
   line-height: 1.3em;
   font-weight: bold;
   color: ${theme.errorColor};

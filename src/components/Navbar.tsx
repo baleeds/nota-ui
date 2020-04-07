@@ -102,7 +102,7 @@ const MobileContainer = styled(Container)`
 `;
 
 const InnerContainer = styled.div`
-  max-width: 1000px;
+  max-width: 1100px;
   margin: 0 -12px;
   height: 60px;
   display: flex;
@@ -138,7 +138,7 @@ const navButtonStyles = `
   }
 
   div {
-    font-size: 0.7em;
+    font-size: 0.7rem;
     text-decoration: none;
     margin-top: 2px;
   }
@@ -159,7 +159,7 @@ const navButtonStyles = `
     }
 
     div {
-      font-size: 1em;
+      font-size: 1rem;
       margin-top: 0px;
     }
   }

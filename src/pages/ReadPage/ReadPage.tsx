@@ -10,10 +10,11 @@ import {
   CHAPTER_ID_KEY,
 } from '../../base/constants/localStorageKeys';
 import { useScreen } from '../../hooks/useScreen';
-import { MobileVersePage } from '../MobileVersePage';
-import { MobileAnnotationPage } from '../MobileAnnotationPage';
-import { MobileReadPage } from '../MobileReadPage';
+import { MobileVersePage } from './MobileVersePage';
+import { MobileAnnotationPage } from './MobileAnnotationPage';
+import { MobileReadPage } from './MobileReadPage';
 import { Block } from '../../components/Block';
+import { DesktopSidecar } from './DesktopSidecar';
 
 const getReadLink = (
   bookName: string | undefined,
@@ -86,9 +87,9 @@ export const ReadPage: React.FC = () => {
             <Passage />
           </Block>
         </PassageContainer>
-        <Block>
-          <Sidebar>Sidebar</Sidebar>
-        </Block>
+        <SidecarContainer>
+          <DesktopSidecar passageKey={`${bookName}${chapterId}${verseId}`} />
+        </SidecarContainer>
       </Center>
     </Page>
   );
@@ -100,14 +101,10 @@ const Center = styled.div`
 `;
 
 const PassageContainer = styled.div`
-  flex: 1;
+  flex: 3;
 `;
 
-const Sidebar = styled.div`
-  width: 400px;
-  min-height: 100px;
-  border-radius: 8px;
-  box-shadow: 0px 1px 8px 0px rgba(0, 0, 0, 0.08);
-  display: flex;
-  flex-direction: column;
+const SidecarContainer = styled(Block)`
+  flex: 2;
+  min-width: 400px;
 `;
