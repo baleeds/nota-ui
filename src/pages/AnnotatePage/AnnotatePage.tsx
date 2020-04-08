@@ -115,21 +115,16 @@ const AnnotationQuillContainer = styled.div`
   }
 
   .quill {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    flex-flow: column-reverse;
-
     .ql-container {
       border: none;
 
       .ql-editor {
-        padding-bottom: 50vh;
         font-size: 1.3em;
         padding: 16px;
         font-family: 'Open Sans', sans-serif;
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
+        min-height: 80vh;
 
         p {
           margin-bottom: 16px;
