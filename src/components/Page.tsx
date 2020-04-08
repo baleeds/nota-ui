@@ -2,6 +2,7 @@ import React from 'react';
 import { Navbar } from './Navbar';
 import styled from 'styled-components';
 import { BookNavigationProvider } from './BookNavigationProvider';
+import { theme } from '../styles/theme';
 
 export const Page: React.FC = ({ children }) => {
   return (
@@ -27,7 +28,7 @@ export const Container = styled.div`
 `;
 
 const BodyContainer = styled.div`
-  max-width: 1100px;
+  max-width: ${theme.maxContentWidth}px;
   width: 100%;
   margin: 0 auto;
 `;

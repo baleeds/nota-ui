@@ -24,7 +24,7 @@ const navButtonStyles = `
   min-width: 80px;
   display: flex;
   align-items: center;
-  color: ${theme.primaryColor};
+  color: ${theme.secondaryColor};
   font-weight: 600;
   height: 60px;
   text-decoration: none;

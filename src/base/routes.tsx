@@ -6,6 +6,7 @@ import { CollectionPage } from '../pages/CollectionPage';
 import { LoginPage } from '../pages/LoginPage';
 import { ForgotPasswordPage } from '../pages/ForgotPasswordPage';
 import { ResetPasswordPage } from '../pages/ResetPasswordPage';
+import { AnnotatePage } from '../pages/AnnotatePage';
 
 export interface RouteParams {
   bookName?: string;
@@ -30,6 +31,11 @@ export const routes = [
     ],
     exact: true,
     component: ReadPage,
+  },
+  {
+    path: '/annotate/:bookName/:chapterId/:verseId',
+    exact: true,
+    component: AnnotatePage,
   },
   {
     path: '/collection',

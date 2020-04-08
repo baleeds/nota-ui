@@ -11,6 +11,7 @@ interface Props {
   padding?: SpaceConfig;
   alignItems?: CSSProperties['alignItems'];
   textAlign?: CSSProperties['textAlign'];
+  spaceBetween?: boolean;
 }
 
 export const Flex = styled.div<Props>`
@@ -23,4 +24,6 @@ export const Flex = styled.div<Props>`
   padding: ${({ padding }) => spaceConfigToProperty(padding)};
   align-items: ${({ alignItems }) => alignItems ?? 'unset'};
   text-align: ${({ textAlign }) => textAlign ?? 'unset'};
+  justify-content: ${({ spaceBetween }) =>
+    spaceBetween ? 'space-between' : 'unset'}
 `;
