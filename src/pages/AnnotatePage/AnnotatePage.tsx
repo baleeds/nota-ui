@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import styled from 'styled-components';
@@ -22,7 +22,7 @@ const modules = {
 const formats = ['bold', 'italic', 'blockquote', 'link'];
 
 export const AnnotatePage: React.FC = () => {
-  // const quillRef = useRef<Quill>(null);
+  const quillRef = useRef<ReactQuill>();
   const { fullName, bookName, chapterNumber, verseNumber } = usePassage();
   const { width } = useScreen();
 
@@ -52,7 +52,11 @@ export const AnnotatePage: React.FC = () => {
       </NavigationContainer>
       <AnnotationQuillContainer>
         <ReactQuill
-          // ref={quillRef}
+          ref={instance => {
+            if (!instance) return;
+            instance.focus();
+            quillRef.current = instance;
+          }}
           placeholder="Let it fly..."
           modules={modules}
           formats={formats}
