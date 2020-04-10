@@ -15,6 +15,7 @@ import {
 } from '../../api/__generated__/apollo-graphql';
 import { useAuth } from '../AuthProvider';
 import { Separator } from '../Separator';
+import { usePassage } from '../../hooks/usePassage';
 
 interface Props {
   passageId: string;
@@ -22,6 +23,9 @@ interface Props {
 
 export const Annotations: React.FC<Props> = ({ passageId }) => {
   const { user } = useAuth();
+  const { bookName, chapterNumber, verseNumber } = usePassage();
+  const versePath = `/read/${bookName}/${chapterNumber}/${verseNumber}`;
+
   const verseAnnotations = useVerseAnnotationsQuery({
     variables: {
       verseId: passageId,
@@ -82,7 +86,7 @@ export const Annotations: React.FC<Props> = ({ passageId }) => {
     if (loading && !allAnnotations) {
       return new Array(3).fill(null).map((_item, index) => (
         <Box key={`loading-annotation-${index}`}>
-          <Annotation />
+          <Annotation versePath={versePath} />
         </Box>
       ));
     }
@@ -97,7 +101,7 @@ export const Annotations: React.FC<Props> = ({ passageId }) => {
 
     const renderedAnnotations = allAnnotations.map(annotation => (
       <Box key={annotation.id}>
-        <Annotation annotation={annotation} />
+        <Annotation annotation={annotation} versePath={versePath} />
       </Box>
     ));
 

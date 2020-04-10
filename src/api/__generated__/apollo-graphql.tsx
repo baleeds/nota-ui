@@ -379,6 +379,15 @@ export type Verse = ActiveRecord & {
   updatedAt: Scalars['ISO8601DateTime'],
 };
 
+export type AnnotationFragment = (
+  { __typename?: 'Annotation' }
+  & Pick<Annotation, 'id' | 'text' | 'favorited' | 'createdAt'>
+  & { user: (
+    { __typename?: 'User' }
+    & Pick<User, 'id' | 'displayName' | 'username'>
+  ) }
+);
+
 export type AnnotationListFragment = (
   { __typename?: 'Annotation' }
   & Pick<Annotation, 'id' | 'text' | 'createdAt'>
@@ -465,6 +474,19 @@ export type SignInUserMutation = (
   )> }
 );
 
+export type AnnotationQueryVariables = {
+  annotationId: Scalars['ID']
+};
+
+
+export type AnnotationQuery = (
+  { __typename?: 'Query' }
+  & { annotation: (
+    { __typename?: 'Annotation' }
+    & AnnotationFragment
+  ) }
+);
+
 export type MyVerseAnnotationsQueryVariables = {
   verseId: Scalars['ID'],
   userId: Scalars['ID']
@@ -509,6 +531,19 @@ export type VerseAnnotationsQuery = (
   ) }
 );
 
+export const AnnotationFragmentDoc = gql`
+    fragment Annotation on Annotation {
+  id
+  text
+  favorited
+  createdAt
+  user {
+    id
+    displayName
+    username
+  }
+}
+    `;
 export const AnnotationListFragmentDoc = gql`
     fragment AnnotationList on Annotation {
   id
@@ -678,6 +713,39 @@ export function useSignInUserMutation(baseOptions?: ApolloReactHooks.MutationHoo
 export type SignInUserMutationHookResult = ReturnType<typeof useSignInUserMutation>;
 export type SignInUserMutationResult = ApolloReactCommon.MutationResult<SignInUserMutation>;
 export type SignInUserMutationOptions = ApolloReactCommon.BaseMutationOptions<SignInUserMutation, SignInUserMutationVariables>;
+export const AnnotationDocument = gql`
+    query Annotation($annotationId: ID!) {
+  annotation(annotationId: $annotationId) {
+    ...Annotation
+  }
+}
+    ${AnnotationFragmentDoc}`;
+
+/**
+ * __useAnnotationQuery__
+ *
+ * To run a query within a React component, call `useAnnotationQuery` and pass it any options that fit your needs.
+ * When your component renders, `useAnnotationQuery` returns an object from Apollo Client that contains loading, error, and data properties 
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useAnnotationQuery({
+ *   variables: {
+ *      annotationId: // value for 'annotationId'
+ *   },
+ * });
+ */
+export function useAnnotationQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<AnnotationQuery, AnnotationQueryVariables>) {
+        return ApolloReactHooks.useQuery<AnnotationQuery, AnnotationQueryVariables>(AnnotationDocument, baseOptions);
+      }
+export function useAnnotationLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<AnnotationQuery, AnnotationQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<AnnotationQuery, AnnotationQueryVariables>(AnnotationDocument, baseOptions);
+        }
+export type AnnotationQueryHookResult = ReturnType<typeof useAnnotationQuery>;
+export type AnnotationLazyQueryHookResult = ReturnType<typeof useAnnotationLazyQuery>;
+export type AnnotationQueryResult = ApolloReactCommon.QueryResult<AnnotationQuery, AnnotationQueryVariables>;
 export const MyVerseAnnotationsDocument = gql`
     query MyVerseAnnotations($verseId: ID!, $userId: ID!) {
   myAnnotations: annotations(userId: $userId, verseId: $verseId) {

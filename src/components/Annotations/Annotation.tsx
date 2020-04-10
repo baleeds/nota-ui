@@ -5,12 +5,14 @@ import { toSimpleDate } from '../../base/utils/dates';
 import { theme } from '../../styles/theme';
 import { Flex } from '../layout/Flex';
 import Skeleton from 'react-loading-skeleton';
+import { Link } from 'react-router-dom';
 
 interface Props {
   annotation?: AnnotationListFragment;
+  versePath: string;
 }
 
-export const Annotation: React.FC<Props> = ({ annotation }) => {
+export const Annotation: React.FC<Props> = ({ annotation, versePath }) => {
   return (
     <div>
       <Flex margin={{ b: 8 }} alignItems="center">
@@ -19,8 +21,12 @@ export const Annotation: React.FC<Props> = ({ annotation }) => {
         </AuthorLink>
         {annotation && <Date>{toSimpleDate(annotation?.createdAt)}</Date>}
       </Flex>
-      {annotation?.text ? (
-        <TextContainer dangerouslySetInnerHTML={{ __html: annotation.text }} />
+      {annotation ? (
+        <TextContainer>
+          <TextLink to={`${versePath}/${annotation.id}`}>
+            <p dangerouslySetInnerHTML={{ __html: annotation.text }} />
+          </TextLink>
+        </TextContainer>
       ) : (
         <TextContainer>
           <Skeleton count={3} />
@@ -47,4 +53,9 @@ const TextContainer = styled.div`
   color: ${theme.primaryTextColor};
   line-height: 1.3;
   font-size: 0.9rem;
+`;
+
+const TextLink = styled(Link)`
+  color: ${theme.primaryTextColor};
+  text-decoration: none;
 `;

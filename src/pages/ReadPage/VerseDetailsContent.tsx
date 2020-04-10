@@ -1,5 +1,4 @@
 import React from 'react';
-import { Separator } from '../../components/Separator';
 import { Block } from '../../components/Block';
 import { OutlineButton } from '../../components/Buttons';
 import { Annotations } from '../../components/Annotations';
@@ -12,7 +11,6 @@ export const VerseDetailsContent: React.FC = () => {
 
   return (
     <>
-      <Separator />
       <Block>
         <OutlineButton
           style={{ display: 'block', width: '100%', margin: '24px 0' }}
