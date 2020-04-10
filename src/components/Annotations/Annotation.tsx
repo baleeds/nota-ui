@@ -52,7 +52,7 @@ const Date = styled.div`
 const TextContainer = styled.div`
   color: ${theme.primaryTextColor};
   line-height: 1.3;
-  font-size: 0.9rem;
+  font-size: 1rem;
 `;
 
 const TextLink = styled(Link)`

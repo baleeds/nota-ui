@@ -4,7 +4,6 @@ import { PageError } from '../PageError';
 import { Annotation } from './Annotation';
 import { usePassage } from '../../hooks/usePassage';
 import { Flex } from '../layout/Flex';
-import { Block } from '../Block';
 
 interface Props {
   annotationId: string;
@@ -26,12 +25,10 @@ export const AnnotationDetails: React.FC<Props> = ({ annotationId }) => {
 
   return (
     <Flex column>
-      <Block>
-        <Annotation
-          annotation={annotation}
-          versePath={`/read/${bookName}/${chapterNumber}/${verseNumber}`}
-        />
-      </Block>
+      <Annotation
+        annotation={annotation}
+        versePath={`/read/${bookName}/${chapterNumber}/${verseNumber}`}
+      />
     </Flex>
   );
 };

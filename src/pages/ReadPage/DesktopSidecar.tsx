@@ -52,7 +52,7 @@ export const DesktopSidecar: React.FC<Props> = ({ passageKey }) => {
       </Block>
       <Separator />
       {annotationId ? (
-        <Box margin={{ tb: 24 }}>
+        <Box margin={{ tb: 24 }} padding={{ lr: 16 }}>
           <AnnotationDetails annotationId={annotationId} />
         </Box>
       ) : (
