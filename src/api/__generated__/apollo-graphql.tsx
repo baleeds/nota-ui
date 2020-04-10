@@ -393,6 +393,25 @@ export type MeFragment = (
   & Pick<User, 'id' | 'email'>
 );
 
+export type CreateAnnotationMutationVariables = {
+  input: CreateAnnotationInput
+};
+
+
+export type CreateAnnotationMutation = (
+  { __typename?: 'Mutation' }
+  & { createAnnotation: Maybe<(
+    { __typename?: 'CreateAnnotationPayload' }
+    & { annotation: (
+      { __typename?: 'Annotation' }
+      & Pick<Annotation, 'id' | 'text'>
+    ), errors: Maybe<Array<Maybe<(
+      { __typename?: 'Error' }
+      & Pick<Error, 'field' | 'message'>
+    )>>> }
+  )> }
+);
+
 export type ResetPasswordMutationVariables = {
   input: ResetPasswordInput
 };
@@ -508,6 +527,45 @@ export const MeFragmentDoc = gql`
   email
 }
     `;
+export const CreateAnnotationDocument = gql`
+    mutation CreateAnnotation($input: CreateAnnotationInput!) {
+  createAnnotation(input: $input) {
+    annotation {
+      id
+      text
+    }
+    errors {
+      field
+      message
+    }
+  }
+}
+    `;
+export type CreateAnnotationMutationFn = ApolloReactCommon.MutationFunction<CreateAnnotationMutation, CreateAnnotationMutationVariables>;
+
+/**
+ * __useCreateAnnotationMutation__
+ *
+ * To run a mutation, you first call `useCreateAnnotationMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateAnnotationMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createAnnotationMutation, { data, loading, error }] = useCreateAnnotationMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useCreateAnnotationMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<CreateAnnotationMutation, CreateAnnotationMutationVariables>) {
+        return ApolloReactHooks.useMutation<CreateAnnotationMutation, CreateAnnotationMutationVariables>(CreateAnnotationDocument, baseOptions);
+      }
+export type CreateAnnotationMutationHookResult = ReturnType<typeof useCreateAnnotationMutation>;
+export type CreateAnnotationMutationResult = ApolloReactCommon.MutationResult<CreateAnnotationMutation>;
+export type CreateAnnotationMutationOptions = ApolloReactCommon.BaseMutationOptions<CreateAnnotationMutation, CreateAnnotationMutationVariables>;
 export const ResetPasswordDocument = gql`
     mutation ResetPassword($input: ResetPasswordInput!) {
   resetPassword(input: $input) {

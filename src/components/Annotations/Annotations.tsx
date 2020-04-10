@@ -101,7 +101,12 @@ export const Annotations: React.FC<Props> = ({ passageId }) => {
       </Box>
     ));
 
-    if (myAnnotations && myAnnotations.length) {
+    if (
+      myAnnotations &&
+      myAnnotations.length &&
+      publicAnnotations &&
+      publicAnnotations.length
+    ) {
       renderedAnnotations.splice(
         myAnnotations?.length,
         0,

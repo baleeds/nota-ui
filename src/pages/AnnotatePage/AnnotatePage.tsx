@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useCallback } from 'react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import styled from 'styled-components';
@@ -12,6 +12,8 @@ import { LARGE_SCREEN } from '../../base/constants/breakpoints';
 import { Toolbar } from './Toolbar';
 import { MobileHeaderNavLink } from '../../components/MobileHeader';
 import { ReactComponent as ChevronLeftIcon } from '../../icons/chevron_left-24px.svg';
+import { useCreateAnnotationMutation } from '../../api/__generated__/apollo-graphql';
+import { attempt } from '../../base/utils/attempt';
 
 const modules = {
   toolbar: {
@@ -23,8 +25,41 @@ const formats = ['bold', 'italic', 'blockquote', 'link'];
 
 export const AnnotatePage: React.FC = () => {
   const quillRef = useRef<ReactQuill>();
-  const { fullName, bookName, chapterNumber, verseNumber } = usePassage();
+  const contentRef = useRef<string>();
+  const {
+    fullName,
+    bookName,
+    chapterNumber,
+    verseNumber,
+    passageId,
+  } = usePassage();
   const { width } = useScreen();
+  const [createAnnotation, { loading }] = useCreateAnnotationMutation();
+
+  const handlePublish = useCallback(async () => {
+    if (loading) return;
+    if (!passageId) throw new Error('No passage ID for annotation.');
+    if (
+      !quillRef.current?.editor ||
+      quillRef.current.editor.getLength() <= 10 ||
+      !contentRef.current
+    ) {
+      return;
+    }
+
+    console.log(contentRef.current);
+    const [failure, result] = await attempt(
+      createAnnotation({
+        variables: {
+          input: {
+            annotationInput: { verseId: passageId, text: contentRef.current },
+          },
+        },
+      })
+    );
+
+    console.log(failure, result);
+  }, [createAnnotation, passageId, contentRef, quillRef, loading]);
 
   return (
     <>
@@ -40,7 +75,13 @@ export const AnnotatePage: React.FC = () => {
               </BackLink>
             </Box>
             <Box>
-              <PrimaryButton type="button">Publish</PrimaryButton>
+              <PrimaryButton
+                type="button"
+                onClick={handlePublish}
+                disabled={loading}
+              >
+                Publish
+              </PrimaryButton>
             </Box>
           </CommandsContainer>
         </div>
@@ -60,6 +101,7 @@ export const AnnotatePage: React.FC = () => {
           placeholder="Let it fly..."
           modules={modules}
           formats={formats}
+          onChange={html => (contentRef.current = html)}
         />
       </AnnotationQuillContainer>
       {width < LARGE_SCREEN && (
