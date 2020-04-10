@@ -14,6 +14,7 @@ import { MobileHeaderNavLink } from '../../components/MobileHeader';
 import { ReactComponent as ChevronLeftIcon } from '../../icons/chevron_left-24px.svg';
 import { useCreateAnnotationMutation } from '../../api/__generated__/apollo-graphql';
 import { attempt } from '../../base/utils/attempt';
+import { useHistory } from 'react-router';
 
 const modules = {
   toolbar: {
@@ -24,6 +25,7 @@ const modules = {
 const formats = ['bold', 'italic', 'blockquote', 'link'];
 
 export const AnnotatePage: React.FC = () => {
+  const history = useHistory();
   const quillRef = useRef<ReactQuill>();
   const contentRef = useRef<string>();
   const {
@@ -33,6 +35,7 @@ export const AnnotatePage: React.FC = () => {
     verseNumber,
     passageId,
   } = usePassage();
+  const versePath = `/read/${bookName}/${chapterNumber}/${verseNumber}`;
   const { width } = useScreen();
   const [createAnnotation, { loading }] = useCreateAnnotationMutation();
 
@@ -47,7 +50,6 @@ export const AnnotatePage: React.FC = () => {
       return;
     }
 
-    console.log(contentRef.current);
     const [failure, result] = await attempt(
       createAnnotation({
         variables: {
@@ -58,8 +60,22 @@ export const AnnotatePage: React.FC = () => {
       })
     );
 
-    console.log(failure, result);
-  }, [createAnnotation, passageId, contentRef, quillRef, loading]);
+    const { id: annotationId } =
+      result?.data?.createAnnotation?.annotation || {};
+    if (failure || !annotationId) {
+      console.error('Failed');
+    } else {
+      history.push(`${versePath}/${annotationId}`);
+    }
+  }, [
+    createAnnotation,
+    passageId,
+    contentRef,
+    quillRef,
+    loading,
+    history,
+    versePath,
+  ]);
 
   return (
     <>

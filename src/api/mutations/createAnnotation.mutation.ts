@@ -5,7 +5,6 @@ export const createAnnotationMutation = gql`
     createAnnotation(input: $input) {
       annotation {
         id
-        text
       }
       errors {
         field
