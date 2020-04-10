@@ -8,6 +8,7 @@ import { BaseButton } from './Buttons';
 interface Options {
   message: string;
   duration?: number | null;
+  type?: 'default' | 'success' | 'error';
 }
 
 type Props = {
@@ -29,9 +30,13 @@ export const toast = (options: Options) => {
   );
 };
 
-export const Toast: React.FC<Props> = ({ message, close }) => {
+export const Toast: React.FC<Props> = ({
+  message,
+  close,
+  type = 'default',
+}) => {
   return (
-    <ToastContainer>
+    <ToastContainer type={type}>
       <Message>{message}</Message>
       {close && (
         <DismissButton onClick={close} type="button">
@@ -42,14 +47,26 @@ export const Toast: React.FC<Props> = ({ message, close }) => {
   );
 };
 
-const ToastContainer = styled.div`
+const getBackgroundColor = ({ type }: Pick<Options, 'type'>) => {
+  switch (type) {
+    case 'success':
+      return theme.successColor;
+    case 'error':
+      return theme.errorColor;
+    default:
+      return theme.primaryTextColor;
+  }
+};
+
+const ToastContainer = styled.div<Pick<Options, 'type'>>`
   display: flex;
   align-items: center;
-  background-color: ${theme.successColor};
+  background-color: ${getBackgroundColor};
   border-radius: 4px;
   color: white;
   padding: 0 16px;
   font-weight: bold;
+  font-size: 0.9rem;
   box-shadow: 0px 2px 10px 1px rgba(0, 0, 0, 0.15);
 `;
 
@@ -58,7 +75,7 @@ const Message = styled.div`
 `;
 
 const DismissButton = styled(BaseButton)`
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   padding: 6px;
   margin-left: 8px;
   border-radius: 2px;

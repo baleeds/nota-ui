@@ -12,10 +12,15 @@ import { LARGE_SCREEN } from '../../base/constants/breakpoints';
 import { Toolbar } from './Toolbar';
 import { MobileHeaderNavLink } from '../../components/MobileHeader';
 import { ReactComponent as ChevronLeftIcon } from '../../icons/chevron_left-24px.svg';
-import { useCreateAnnotationMutation } from '../../api/__generated__/apollo-graphql';
+import {
+  useCreateAnnotationMutation,
+  CreateAnnotationMutation,
+} from '../../api/__generated__/apollo-graphql';
 import { attempt } from '../../base/utils/attempt';
 import { useHistory } from 'react-router';
 import { toast } from '../../components/Toast';
+import { normalizeErrors } from '../../base/utils/normalizeErrors';
+import { UNKNOWN_ERROR } from '../../base/constants/messages';
 
 const modules = {
   toolbar: {
@@ -48,6 +53,7 @@ export const AnnotatePage: React.FC = () => {
       quillRef.current.editor.getLength() <= 10 ||
       !contentRef.current
     ) {
+      toast({ message: 'Write a little more.', type: 'error' });
       return;
     }
 
@@ -61,9 +67,16 @@ export const AnnotatePage: React.FC = () => {
       })
     );
 
+    const { hasError, base } = normalizeErrors<CreateAnnotationMutation>(
+      failure,
+      result
+    );
+
     const { id: annotationId } =
       result?.data?.createAnnotation?.annotation || {};
-    if (failure || !annotationId) {
+
+    if (hasError || !annotationId) {
+      toast({ message: base || UNKNOWN_ERROR, type: 'error' });
       console.error('Failed');
     } else {
       toast({ message: 'Annotation published.' });
