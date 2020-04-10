@@ -167,7 +167,6 @@ const MobileToolbar = styled.div`
 `;
 
 const AnnotationQuillContainer = styled.div`
-  min-height: 100vh;
   max-width: ${theme.maxEditorWidth}px;
   margin: 0 auto;
   padding-top: 72px;
@@ -186,7 +185,7 @@ const AnnotationQuillContainer = styled.div`
         font-family: 'Open Sans', sans-serif;
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
-        min-height: 80vh;
+        min-height: 40vh;
 
         p {
           margin-bottom: 16px;
