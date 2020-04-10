@@ -15,6 +15,7 @@ import { ReactComponent as ChevronLeftIcon } from '../../icons/chevron_left-24px
 import { useCreateAnnotationMutation } from '../../api/__generated__/apollo-graphql';
 import { attempt } from '../../base/utils/attempt';
 import { useHistory } from 'react-router';
+import { toast } from '../../components/Toast';
 
 const modules = {
   toolbar: {
@@ -65,6 +66,7 @@ export const AnnotatePage: React.FC = () => {
     if (failure || !annotationId) {
       console.error('Failed');
     } else {
+      toast({ message: 'Annotation published.' });
       history.push(`${versePath}/${annotationId}`);
     }
   }, [
