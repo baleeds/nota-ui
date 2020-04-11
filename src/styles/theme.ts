@@ -14,7 +14,7 @@ export const theme = {
   borderRadius: '4px',
   inputBackgroundColor: '#F7F7F7',
   maxContentWidth: 1100,
-  maxEditorWidth: 800,
+  maxEditorWidth: 680,
   navShadow: '0px 0px 6px 0px rgba(0, 0, 0, 0.15)',
 } as const;
 

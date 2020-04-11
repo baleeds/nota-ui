@@ -1,5 +1,5 @@
 import React, { useCallback, useMemo } from 'react';
-import { Annotation } from './Annotation';
+import { AnnotationSummary } from './AnnotationSummary';
 import { extractNodes } from '../../base/utils/extractNodes';
 import { Flex } from '../layout/Flex';
 import { Box } from '../layout/Box';
@@ -86,7 +86,7 @@ export const Annotations: React.FC<Props> = ({ passageId }) => {
     if (loading && !allAnnotations) {
       return new Array(3).fill(null).map((_item, index) => (
         <Box key={`loading-annotation-${index}`}>
-          <Annotation versePath={versePath} />
+          <AnnotationSummary versePath={versePath} />
         </Box>
       ));
     }
@@ -101,7 +101,7 @@ export const Annotations: React.FC<Props> = ({ passageId }) => {
 
     const renderedAnnotations = allAnnotations.map(annotation => (
       <Box key={annotation.id}>
-        <Annotation annotation={annotation} versePath={versePath} />
+        <AnnotationSummary annotation={annotation} versePath={versePath} />
       </Box>
     ));
 

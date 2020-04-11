@@ -21,6 +21,7 @@ import { useHistory } from 'react-router';
 import { toast } from '../../components/Toast';
 import { normalizeErrors } from '../../base/utils/normalizeErrors';
 import { UNKNOWN_ERROR } from '../../base/constants/messages';
+import { ArticleTypography } from '../../components/Typography';
 
 const modules = {
   toolbar: {
@@ -181,7 +182,7 @@ const MobileToolbar = styled.div`
   box-shadow: ${theme.navShadow};
 `;
 
-const AnnotationQuillContainer = styled.div`
+const AnnotationQuillContainer = styled(ArticleTypography)`
   max-width: ${theme.maxEditorWidth}px;
   margin: 0 auto;
   padding-top: 72px;
@@ -201,10 +202,6 @@ const AnnotationQuillContainer = styled.div`
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
         min-height: 40vh;
-
-        p {
-          margin-bottom: 16px;
-        }
       }
     }
   }
