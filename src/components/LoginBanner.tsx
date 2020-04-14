@@ -1,5 +1,5 @@
 import React from 'react';
-import { OutlineButtonContrast, GhostButton } from './Buttons';
+import { OutlineButtonContrast, GhostButtonContrast } from './Buttons';
 import styled from 'styled-components';
 import { Card } from './Card';
 import { theme } from '../styles/theme';
@@ -19,9 +19,12 @@ export const LoginBanner: React.FC<Props> = ({ message }) => {
       <LoginCard>
         <div>{message}</div>
         <ButtonGroup>
-          <GhostButton type="button" onClick={() => history.push('/register')}>
+          <GhostButtonContrast
+            type="button"
+            onClick={() => history.push('/register')}
+          >
             Create an account
-          </GhostButton>
+          </GhostButtonContrast>
           <OutlineButtonContrast
             type="button"
             onClick={() => history.push('/login')}
