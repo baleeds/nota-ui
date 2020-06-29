@@ -278,7 +278,7 @@ export const BOOK_DETAILS: BookDetails = Object.freeze({
     displayName: '2 Thessalonians',
     numberOfChapters: 3,
   },
-  '1timothy': {
+  '1Timothy': {
     id: 54,
     displayName: '1 Timothy',
     numberOfChapters: 6,

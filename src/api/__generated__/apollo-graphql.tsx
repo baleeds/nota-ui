@@ -22,11 +22,13 @@ export type ActiveRecord = {
 export type Annotation = ActiveRecord & {
    __typename?: 'Annotation',
   createdAt: Scalars['ISO8601DateTime'],
+  excerpt: Scalars['String'],
   favorited: Scalars['Boolean'],
   id: Scalars['ID'],
   text: Scalars['String'],
   updatedAt: Scalars['ISO8601DateTime'],
   user: User,
+  verse: Verse,
 };
 
 export type AnnotationConnection = {
@@ -347,14 +349,32 @@ export type UpdatePasswordPayload = {
 
 export type User = ActiveRecord & {
    __typename?: 'User',
+  annotations?: Maybe<AnnotationConnection>,
   createdAt: Scalars['ISO8601DateTime'],
   displayName: Scalars['String'],
   email: Scalars['String'],
+  favoriteAnnotations?: Maybe<AnnotationConnection>,
   id: Scalars['ID'],
   isActive: Scalars['Boolean'],
   isAdmin: Scalars['Boolean'],
   updatedAt: Scalars['ISO8601DateTime'],
   username: Scalars['String'],
+};
+
+
+export type UserAnnotationsArgs = {
+  after?: Maybe<Scalars['String']>,
+  before?: Maybe<Scalars['String']>,
+  first?: Maybe<Scalars['Int']>,
+  last?: Maybe<Scalars['Int']>
+};
+
+
+export type UserFavoriteAnnotationsArgs = {
+  after?: Maybe<Scalars['String']>,
+  before?: Maybe<Scalars['String']>,
+  first?: Maybe<Scalars['Int']>,
+  last?: Maybe<Scalars['Int']>
 };
 
 export type UserConnection = {
@@ -372,12 +392,30 @@ export type UserEdge = {
 
 export type Verse = ActiveRecord & {
    __typename?: 'Verse',
+  annotations: AnnotationConnection,
   createdAt: Scalars['ISO8601DateTime'],
   id: Scalars['ID'],
   numberOfAnnotations?: Maybe<Scalars['Int']>,
   numberOfMyAnnotations?: Maybe<Scalars['Int']>,
   updatedAt: Scalars['ISO8601DateTime'],
 };
+
+
+export type VerseAnnotationsArgs = {
+  after?: Maybe<Scalars['String']>,
+  before?: Maybe<Scalars['String']>,
+  first?: Maybe<Scalars['Int']>,
+  last?: Maybe<Scalars['Int']>
+};
+
+export type AnnotationFragment = (
+  { __typename?: 'Annotation' }
+  & Pick<Annotation, 'id' | 'text' | 'favorited' | 'createdAt'>
+  & { user: (
+    { __typename?: 'User' }
+    & Pick<User, 'id' | 'displayName' | 'username'>
+  ) }
+);
 
 export type AnnotationListFragment = (
   { __typename?: 'Annotation' }
@@ -391,6 +429,25 @@ export type AnnotationListFragment = (
 export type MeFragment = (
   { __typename?: 'User' }
   & Pick<User, 'id' | 'email'>
+);
+
+export type CreateAnnotationMutationVariables = {
+  input: CreateAnnotationInput
+};
+
+
+export type CreateAnnotationMutation = (
+  { __typename?: 'Mutation' }
+  & { createAnnotation: Maybe<(
+    { __typename?: 'CreateAnnotationPayload' }
+    & { annotation: (
+      { __typename?: 'Annotation' }
+      & Pick<Annotation, 'id'>
+    ), errors: Maybe<Array<Maybe<(
+      { __typename?: 'Error' }
+      & Pick<Error, 'field' | 'message'>
+    )>>> }
+  )> }
 );
 
 export type ResetPasswordMutationVariables = {
@@ -446,6 +503,19 @@ export type SignInUserMutation = (
   )> }
 );
 
+export type AnnotationQueryVariables = {
+  annotationId: Scalars['ID']
+};
+
+
+export type AnnotationQuery = (
+  { __typename?: 'Query' }
+  & { annotation: (
+    { __typename?: 'Annotation' }
+    & AnnotationFragment
+  ) }
+);
+
 export type MyVerseAnnotationsQueryVariables = {
   verseId: Scalars['ID'],
   userId: Scalars['ID']
@@ -490,6 +560,19 @@ export type VerseAnnotationsQuery = (
   ) }
 );
 
+export const AnnotationFragmentDoc = gql`
+    fragment Annotation on Annotation {
+  id
+  text
+  favorited
+  createdAt
+  user {
+    id
+    displayName
+    username
+  }
+}
+    `;
 export const AnnotationListFragmentDoc = gql`
     fragment AnnotationList on Annotation {
   id
@@ -508,6 +591,44 @@ export const MeFragmentDoc = gql`
   email
 }
     `;
+export const CreateAnnotationDocument = gql`
+    mutation CreateAnnotation($input: CreateAnnotationInput!) {
+  createAnnotation(input: $input) {
+    annotation {
+      id
+    }
+    errors {
+      field
+      message
+    }
+  }
+}
+    `;
+export type CreateAnnotationMutationFn = ApolloReactCommon.MutationFunction<CreateAnnotationMutation, CreateAnnotationMutationVariables>;
+
+/**
+ * __useCreateAnnotationMutation__
+ *
+ * To run a mutation, you first call `useCreateAnnotationMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateAnnotationMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createAnnotationMutation, { data, loading, error }] = useCreateAnnotationMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useCreateAnnotationMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<CreateAnnotationMutation, CreateAnnotationMutationVariables>) {
+        return ApolloReactHooks.useMutation<CreateAnnotationMutation, CreateAnnotationMutationVariables>(CreateAnnotationDocument, baseOptions);
+      }
+export type CreateAnnotationMutationHookResult = ReturnType<typeof useCreateAnnotationMutation>;
+export type CreateAnnotationMutationResult = ApolloReactCommon.MutationResult<CreateAnnotationMutation>;
+export type CreateAnnotationMutationOptions = ApolloReactCommon.BaseMutationOptions<CreateAnnotationMutation, CreateAnnotationMutationVariables>;
 export const ResetPasswordDocument = gql`
     mutation ResetPassword($input: ResetPasswordInput!) {
   resetPassword(input: $input) {
@@ -620,6 +741,39 @@ export function useSignInUserMutation(baseOptions?: ApolloReactHooks.MutationHoo
 export type SignInUserMutationHookResult = ReturnType<typeof useSignInUserMutation>;
 export type SignInUserMutationResult = ApolloReactCommon.MutationResult<SignInUserMutation>;
 export type SignInUserMutationOptions = ApolloReactCommon.BaseMutationOptions<SignInUserMutation, SignInUserMutationVariables>;
+export const AnnotationDocument = gql`
+    query Annotation($annotationId: ID!) {
+  annotation(annotationId: $annotationId) {
+    ...Annotation
+  }
+}
+    ${AnnotationFragmentDoc}`;
+
+/**
+ * __useAnnotationQuery__
+ *
+ * To run a query within a React component, call `useAnnotationQuery` and pass it any options that fit your needs.
+ * When your component renders, `useAnnotationQuery` returns an object from Apollo Client that contains loading, error, and data properties 
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useAnnotationQuery({
+ *   variables: {
+ *      annotationId: // value for 'annotationId'
+ *   },
+ * });
+ */
+export function useAnnotationQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<AnnotationQuery, AnnotationQueryVariables>) {
+        return ApolloReactHooks.useQuery<AnnotationQuery, AnnotationQueryVariables>(AnnotationDocument, baseOptions);
+      }
+export function useAnnotationLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<AnnotationQuery, AnnotationQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<AnnotationQuery, AnnotationQueryVariables>(AnnotationDocument, baseOptions);
+        }
+export type AnnotationQueryHookResult = ReturnType<typeof useAnnotationQuery>;
+export type AnnotationLazyQueryHookResult = ReturnType<typeof useAnnotationLazyQuery>;
+export type AnnotationQueryResult = ApolloReactCommon.QueryResult<AnnotationQuery, AnnotationQueryVariables>;
 export const MyVerseAnnotationsDocument = gql`
     query MyVerseAnnotations($verseId: ID!, $userId: ID!) {
   myAnnotations: annotations(userId: $userId, verseId: $verseId) {

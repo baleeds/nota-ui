@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import './styles/index.css';
 import './styles/transitions.css';
 import './styles/animations.css';
+import './styles/toasts.css';
 import 'normalize.css';
 import './styles/reset.css';
 import App from './App';

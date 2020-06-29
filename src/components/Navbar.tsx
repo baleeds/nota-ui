@@ -80,7 +80,7 @@ export const Navbar: React.FC = () => {
 
 const Container = styled.div`
   background-color: white;
-  box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.15);
+  box-shadow: ${theme.navShadow};
   z-index: ${Z_INDEX.NAV};
   height: 60px;
 `;
@@ -102,7 +102,7 @@ const MobileContainer = styled(Container)`
 `;
 
 const InnerContainer = styled.div`
-  max-width: 1100px;
+  max-width: ${theme.maxContentWidth}px;
   margin: 0 -12px;
   height: 60px;
   display: flex;

@@ -16,11 +16,10 @@ export const BaseButton = styled.button`
 export const PrimaryButton = styled(BaseButton)`
   border-radius: ${theme.borderRadius};
   background: ${theme.primaryColor};
-  font-size: 0.9rem;
   height: 38px;
-  font-style: italic;
   color: ${theme.blank};
   padding: 0 20px;
+  font-size: 0.9rem;
 
   &:hover,
   &:focus {
@@ -39,6 +38,7 @@ export const OutlineButton = styled(BaseButton)`
   color: ${theme.primaryColor};
   border-radius: ${theme.borderRadius};
   padding: 0 20px;
+  font-size: 0.9rem;
 
   &:hover,
   &:focus {
@@ -74,7 +74,15 @@ export const GhostButton = styled(BaseButton)`
   height: 38px;
   padding: 0 20px;
   border-radius: ${theme.borderRadius};
+  font-size: 0.9rem;
 
+  &:hover,
+  &:focus {
+    background: rgba(0, 0, 0, 0.1);
+  }
+`;
+
+export const GhostButtonContrast = styled(GhostButton)`
   &:hover,
   &:focus {
     background: rgba(255, 255, 255, 0.1);

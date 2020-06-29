@@ -13,6 +13,7 @@ import { UNKNOWN_TEXT } from '../../base/constants/messages';
 import { BibleVerse } from '../../base/constants/bible';
 import { ReactComponent as QuoteIcon } from '../../icons/left-quote.svg';
 import { VerseDetailsContent } from './VerseDetailsContent';
+import { Separator } from '../../components/Separator';
 
 interface Props {
   bookName: string;
@@ -58,6 +59,7 @@ export const MobileVersePage: React.FC<Props> = ({
         <Quote />
         <VerseParagraph>{verseText}</VerseParagraph>
       </Block>
+      <Separator />
       <VerseDetailsContent />
     </>
   );

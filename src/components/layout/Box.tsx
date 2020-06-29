@@ -6,10 +6,11 @@ import { spaceConfigToProperty } from './helpers';
 interface Props {
   padding?: SpaceConfig;
   margin?: SpaceConfig;
+  className?: string;
 }
 
-const UBox: React.FC<Props> = ({ children }) => {
-  return <div className="box">{children}</div>;
+const UBox: React.FC<Props> = ({ className, children }) => {
+  return <div className={`box ${className || ''}`}>{children}</div>;
 };
 
 export const Box = styled(UBox)`
