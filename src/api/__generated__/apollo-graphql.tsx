@@ -22,11 +22,13 @@ export type ActiveRecord = {
 export type Annotation = ActiveRecord & {
    __typename?: 'Annotation',
   createdAt: Scalars['ISO8601DateTime'],
+  excerpt: Scalars['String'],
   favorited: Scalars['Boolean'],
   id: Scalars['ID'],
   text: Scalars['String'],
   updatedAt: Scalars['ISO8601DateTime'],
   user: User,
+  verse: Verse,
 };
 
 export type AnnotationConnection = {
@@ -347,14 +349,32 @@ export type UpdatePasswordPayload = {
 
 export type User = ActiveRecord & {
    __typename?: 'User',
+  annotations?: Maybe<AnnotationConnection>,
   createdAt: Scalars['ISO8601DateTime'],
   displayName: Scalars['String'],
   email: Scalars['String'],
+  favoriteAnnotations?: Maybe<AnnotationConnection>,
   id: Scalars['ID'],
   isActive: Scalars['Boolean'],
   isAdmin: Scalars['Boolean'],
   updatedAt: Scalars['ISO8601DateTime'],
   username: Scalars['String'],
+};
+
+
+export type UserAnnotationsArgs = {
+  after?: Maybe<Scalars['String']>,
+  before?: Maybe<Scalars['String']>,
+  first?: Maybe<Scalars['Int']>,
+  last?: Maybe<Scalars['Int']>
+};
+
+
+export type UserFavoriteAnnotationsArgs = {
+  after?: Maybe<Scalars['String']>,
+  before?: Maybe<Scalars['String']>,
+  first?: Maybe<Scalars['Int']>,
+  last?: Maybe<Scalars['Int']>
 };
 
 export type UserConnection = {
@@ -372,11 +392,20 @@ export type UserEdge = {
 
 export type Verse = ActiveRecord & {
    __typename?: 'Verse',
+  annotations: AnnotationConnection,
   createdAt: Scalars['ISO8601DateTime'],
   id: Scalars['ID'],
   numberOfAnnotations?: Maybe<Scalars['Int']>,
   numberOfMyAnnotations?: Maybe<Scalars['Int']>,
   updatedAt: Scalars['ISO8601DateTime'],
+};
+
+
+export type VerseAnnotationsArgs = {
+  after?: Maybe<Scalars['String']>,
+  before?: Maybe<Scalars['String']>,
+  first?: Maybe<Scalars['Int']>,
+  last?: Maybe<Scalars['Int']>
 };
 
 export type AnnotationFragment = (
@@ -413,7 +442,7 @@ export type CreateAnnotationMutation = (
     { __typename?: 'CreateAnnotationPayload' }
     & { annotation: (
       { __typename?: 'Annotation' }
-      & Pick<Annotation, 'id' | 'text'>
+      & Pick<Annotation, 'id'>
     ), errors: Maybe<Array<Maybe<(
       { __typename?: 'Error' }
       & Pick<Error, 'field' | 'message'>
@@ -567,7 +596,6 @@ export const CreateAnnotationDocument = gql`
   createAnnotation(input: $input) {
     annotation {
       id
-      text
     }
     errors {
       field

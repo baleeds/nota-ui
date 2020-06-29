@@ -28,7 +28,7 @@ const getReadLink = (
     return `/read/${bookName || localBookName}/1`;
   return `/read/${bookName || localBookName}/${
     chapterId || !!bookName ? '1' : localChapterId
-    }`;
+  }`;
 };
 
 const syncLocalStorage = (key: string, value: string | undefined) => {
@@ -88,7 +88,9 @@ export const ReadPage: React.FC = () => {
           </Block>
         </PassageContainer>
         <SidecarContainer>
-          <DesktopSidecar passageKey={`${bookName}${chapterId}${verseId}${annotationId}`} />
+          <DesktopSidecar
+            passageKey={`${bookName}${chapterId}${verseId}${annotationId}`}
+          />
         </SidecarContainer>
       </Center>
     </Page>
