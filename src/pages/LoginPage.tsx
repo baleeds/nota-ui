@@ -13,10 +13,12 @@ import { normalizeErrors } from '../base/utils/normalizeErrors';
 import { UNKNOWN_ERROR } from '../base/constants/messages';
 import { useAuth } from '../components/AuthProvider';
 import { useHistory } from 'react-router';
+import { History } from 'history';
 import { FormErrorDisplay } from '../components/FormErrorDisplay';
 import { Formik, FormikConfig, Field } from 'formik';
 import * as Yup from 'yup';
 import { isRequired, mustBeValid } from '../base/utils/errorMessages';
+import queryString from 'query-string';
 
 interface Values {
   email: string;
@@ -34,6 +36,15 @@ const validationSchema = Yup.object().shape({
     .matches(/@/, mustBeValid('Email')),
   password: Yup.string().required(isRequired('Password')),
 });
+
+const getRedirectUrl = (history: History): string => {
+  const {
+    location: { search },
+  } = history;
+  const { redirectTo } = queryString.parse(search);
+  if (redirectTo && !Array.isArray(redirectTo)) return redirectTo;
+  return '/home';
+};
 
 export const LoginPage: React.FC = () => {
   const history = useHistory();
@@ -75,7 +86,7 @@ export const LoginPage: React.FC = () => {
     }
 
     login({ user, accessToken, refreshToken });
-    history.push('/home');
+    history.push(getRedirectUrl(history));
   };
 
   return (

@@ -1,4 +1,4 @@
-import React, { useRef, useCallback } from 'react';
+import React, { useRef, useCallback, useEffect } from 'react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import styled from 'styled-components';
@@ -22,6 +22,7 @@ import { toast } from '../../components/Toast';
 import { normalizeErrors } from '../../base/utils/normalizeErrors';
 import { UNKNOWN_ERROR } from '../../base/constants/messages';
 import { ArticleTypography } from '../../components/Typography';
+import { useAuth } from '../../components/AuthProvider';
 
 const modules = {
   toolbar: {
@@ -33,6 +34,11 @@ const formats = ['bold', 'italic', 'blockquote', 'link'];
 
 export const AnnotatePage: React.FC = () => {
   const history = useHistory();
+  const { user } = useAuth();
+  useEffect(() => {
+    if (!user) history.push(`/login?redirectTo=${history.location.pathname}`);
+  }, []); // eslint-disable-line
+
   const quillRef = useRef<ReactQuill>();
   const contentRef = useRef<string>();
   const {
