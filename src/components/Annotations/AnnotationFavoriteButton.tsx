@@ -10,6 +10,7 @@ import { attempt } from '../../base/utils/attempt';
 import { normalizeErrors } from '../../base/utils/normalizeErrors';
 import { toast } from '../Toast';
 import { UNKNOWN_ERROR } from '../../base/constants/messages';
+import { updateCachedAnnotation } from '../../base/apollo/cacheUpdaters';
 
 interface Props {
   annotation?: Pick<AnnotationFragment, 'id' | 'favorited'>;
@@ -28,6 +29,10 @@ export const AnnotationFavoriteButton: React.FC<Props> = ({ annotation }) => {
           input: {
             annotationId: annotation.id,
           },
+        },
+        update: (proxy, result) => {
+          if (!result.data?.favoriteAnnotation?.success) return;
+          updateCachedAnnotation(proxy, annotation.id, { favorited: true });
         },
       })
     );
@@ -51,6 +56,10 @@ export const AnnotationFavoriteButton: React.FC<Props> = ({ annotation }) => {
           input: {
             annotationId: annotation.id,
           },
+        },
+        update: (proxy, result) => {
+          if (!result.data?.unfavoriteAnnotation?.success) return;
+          updateCachedAnnotation(proxy, annotation.id, { favorited: false });
         },
       })
     );
