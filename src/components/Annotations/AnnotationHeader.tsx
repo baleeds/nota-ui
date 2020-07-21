@@ -5,14 +5,19 @@ import { toSimpleDate } from '../../base/utils/dates';
 import Skeleton from 'react-loading-skeleton';
 import styled from 'styled-components';
 import { theme } from '../../styles/theme';
+import { AnnotationFavoriteButton } from './AnnotationFavoriteButton';
 
 interface Props {
-  annotation?: Pick<AnnotationFragment, 'user' | 'createdAt'>;
+  annotation?: Pick<
+    AnnotationFragment,
+    'id' | 'user' | 'createdAt' | 'favorited'
+  >;
 }
 
 export const AnnotationHeader: React.FC<Props> = ({ annotation }) => {
   return (
     <Flex margin={{ b: 8 }} alignItems="center">
+      <AnnotationFavoriteButton annotation={annotation} />
       <AuthorLink href="/">
         {annotation?.user.displayName || <Skeleton width={120} />}
       </AuthorLink>

@@ -5,6 +5,7 @@ export const annotationListFragment = gql`
     id
     text
     createdAt
+    favorited
     user {
       id
       username

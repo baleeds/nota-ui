@@ -419,7 +419,7 @@ export type AnnotationFragment = (
 
 export type AnnotationListFragment = (
   { __typename?: 'Annotation' }
-  & Pick<Annotation, 'id' | 'text' | 'createdAt'>
+  & Pick<Annotation, 'id' | 'text' | 'createdAt' | 'favorited'>
   & { user: (
     { __typename?: 'User' }
     & Pick<User, 'id' | 'username' | 'displayName'>
@@ -444,6 +444,23 @@ export type CreateAnnotationMutation = (
       { __typename?: 'Annotation' }
       & Pick<Annotation, 'id'>
     ), errors: Maybe<Array<Maybe<(
+      { __typename?: 'Error' }
+      & Pick<Error, 'field' | 'message'>
+    )>>> }
+  )> }
+);
+
+export type FavoriteAnnotationMutationVariables = {
+  input: FavoriteAnnotationInput
+};
+
+
+export type FavoriteAnnotationMutation = (
+  { __typename?: 'Mutation' }
+  & { favoriteAnnotation: Maybe<(
+    { __typename?: 'FavoriteAnnotationPayload' }
+    & Pick<FavoriteAnnotationPayload, 'success'>
+    & { errors: Maybe<Array<Maybe<(
       { __typename?: 'Error' }
       & Pick<Error, 'field' | 'message'>
     )>>> }
@@ -497,6 +514,23 @@ export type SignInUserMutation = (
       { __typename?: 'User' }
       & MeFragment
     )>, errors: Maybe<Array<Maybe<(
+      { __typename?: 'Error' }
+      & Pick<Error, 'field' | 'message'>
+    )>>> }
+  )> }
+);
+
+export type UnfavoriteAnnotationMutationVariables = {
+  input: UnfavoriteAnnotationInput
+};
+
+
+export type UnfavoriteAnnotationMutation = (
+  { __typename?: 'Mutation' }
+  & { unfavoriteAnnotation: Maybe<(
+    { __typename?: 'UnfavoriteAnnotationPayload' }
+    & Pick<UnfavoriteAnnotationPayload, 'success'>
+    & { errors: Maybe<Array<Maybe<(
       { __typename?: 'Error' }
       & Pick<Error, 'field' | 'message'>
     )>>> }
@@ -578,6 +612,7 @@ export const AnnotationListFragmentDoc = gql`
   id
   text
   createdAt
+  favorited
   user {
     id
     username
@@ -629,6 +664,42 @@ export function useCreateAnnotationMutation(baseOptions?: ApolloReactHooks.Mutat
 export type CreateAnnotationMutationHookResult = ReturnType<typeof useCreateAnnotationMutation>;
 export type CreateAnnotationMutationResult = ApolloReactCommon.MutationResult<CreateAnnotationMutation>;
 export type CreateAnnotationMutationOptions = ApolloReactCommon.BaseMutationOptions<CreateAnnotationMutation, CreateAnnotationMutationVariables>;
+export const FavoriteAnnotationDocument = gql`
+    mutation FavoriteAnnotation($input: FavoriteAnnotationInput!) {
+  favoriteAnnotation(input: $input) {
+    success
+    errors {
+      field
+      message
+    }
+  }
+}
+    `;
+export type FavoriteAnnotationMutationFn = ApolloReactCommon.MutationFunction<FavoriteAnnotationMutation, FavoriteAnnotationMutationVariables>;
+
+/**
+ * __useFavoriteAnnotationMutation__
+ *
+ * To run a mutation, you first call `useFavoriteAnnotationMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useFavoriteAnnotationMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [favoriteAnnotationMutation, { data, loading, error }] = useFavoriteAnnotationMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useFavoriteAnnotationMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<FavoriteAnnotationMutation, FavoriteAnnotationMutationVariables>) {
+        return ApolloReactHooks.useMutation<FavoriteAnnotationMutation, FavoriteAnnotationMutationVariables>(FavoriteAnnotationDocument, baseOptions);
+      }
+export type FavoriteAnnotationMutationHookResult = ReturnType<typeof useFavoriteAnnotationMutation>;
+export type FavoriteAnnotationMutationResult = ApolloReactCommon.MutationResult<FavoriteAnnotationMutation>;
+export type FavoriteAnnotationMutationOptions = ApolloReactCommon.BaseMutationOptions<FavoriteAnnotationMutation, FavoriteAnnotationMutationVariables>;
 export const ResetPasswordDocument = gql`
     mutation ResetPassword($input: ResetPasswordInput!) {
   resetPassword(input: $input) {
@@ -741,6 +812,42 @@ export function useSignInUserMutation(baseOptions?: ApolloReactHooks.MutationHoo
 export type SignInUserMutationHookResult = ReturnType<typeof useSignInUserMutation>;
 export type SignInUserMutationResult = ApolloReactCommon.MutationResult<SignInUserMutation>;
 export type SignInUserMutationOptions = ApolloReactCommon.BaseMutationOptions<SignInUserMutation, SignInUserMutationVariables>;
+export const UnfavoriteAnnotationDocument = gql`
+    mutation UnfavoriteAnnotation($input: UnfavoriteAnnotationInput!) {
+  unfavoriteAnnotation(input: $input) {
+    success
+    errors {
+      field
+      message
+    }
+  }
+}
+    `;
+export type UnfavoriteAnnotationMutationFn = ApolloReactCommon.MutationFunction<UnfavoriteAnnotationMutation, UnfavoriteAnnotationMutationVariables>;
+
+/**
+ * __useUnfavoriteAnnotationMutation__
+ *
+ * To run a mutation, you first call `useUnfavoriteAnnotationMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUnfavoriteAnnotationMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [unfavoriteAnnotationMutation, { data, loading, error }] = useUnfavoriteAnnotationMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useUnfavoriteAnnotationMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<UnfavoriteAnnotationMutation, UnfavoriteAnnotationMutationVariables>) {
+        return ApolloReactHooks.useMutation<UnfavoriteAnnotationMutation, UnfavoriteAnnotationMutationVariables>(UnfavoriteAnnotationDocument, baseOptions);
+      }
+export type UnfavoriteAnnotationMutationHookResult = ReturnType<typeof useUnfavoriteAnnotationMutation>;
+export type UnfavoriteAnnotationMutationResult = ApolloReactCommon.MutationResult<UnfavoriteAnnotationMutation>;
+export type UnfavoriteAnnotationMutationOptions = ApolloReactCommon.BaseMutationOptions<UnfavoriteAnnotationMutation, UnfavoriteAnnotationMutationVariables>;
 export const AnnotationDocument = gql`
     query Annotation($annotationId: ID!) {
   annotation(annotationId: $annotationId) {
