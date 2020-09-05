@@ -11,12 +11,15 @@ import { normalizeErrors } from '../../base/utils/normalizeErrors';
 import { toast } from '../Toast';
 import { UNKNOWN_ERROR } from '../../base/constants/messages';
 import { updateCachedAnnotation } from '../../base/apollo/cacheUpdaters';
+import { useAuth } from '../AuthProvider';
 
 interface Props {
   annotation?: Pick<AnnotationFragment, 'id' | 'favorited'>;
 }
 
 export const AnnotationFavoriteButton: React.FC<Props> = ({ annotation }) => {
+  const { user } = useAuth();
+
   const [favoriteAnnotationMutation] = useFavoriteAnnotationMutation();
   const [unfavoriteAnnotationMutation] = useUnfavoriteAnnotationMutation();
 
@@ -77,9 +80,14 @@ export const AnnotationFavoriteButton: React.FC<Props> = ({ annotation }) => {
   const handleClick = async () => {
     if (!annotation) return;
 
+    if (!user) {
+      toast({ message: 'You must be logged in to do that.', type: 'default' });
+      return;
+    }
+
     const { favorited } = annotation || {};
-    if (favorited) unfavoriteAnnotation();
-    else favoriteAnnotation();
+    if (favorited) await unfavoriteAnnotation();
+    else await favoriteAnnotation();
   };
 
   return (
