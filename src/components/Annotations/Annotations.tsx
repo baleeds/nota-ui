@@ -74,9 +74,12 @@ export const Annotations: React.FC<Props> = ({ passageId }) => {
           ) {
             return previousResult;
           }
+
           draftResult.publicAnnotations.edges.push(
             ...nextResult.fetchMoreResult.publicAnnotations.edges
           );
+          draftResult.publicAnnotations.pageInfo =
+            nextResult.fetchMoreResult.publicAnnotations.pageInfo;
         });
       },
     });
