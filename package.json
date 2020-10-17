@@ -13,6 +13,7 @@
     "client:regen": "yarn client:codegen && yarn client:fragments"
   },
   "dependencies": {
+    "@babel/helper-call-delegate": "^7.12.1",
     "animated": "^0.2.2",
     "apollo": "^2.19.1",
     "apollo-cache-inmemory": "^1.6.3",
