@@ -1,7 +1,7 @@
 import Maybe from 'graphql/tsutils/Maybe';
 
 export function extractNodes<TFragment>(
-  edges: Maybe<Array<Maybe<{ node: Maybe<TFragment> }>>>
+  edges: Maybe<Array<Maybe<{ node?: Maybe<TFragment> }>>>
 ) {
   if (!edges) return undefined;
 

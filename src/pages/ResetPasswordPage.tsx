@@ -9,7 +9,7 @@ import {
 } from '../api/__generated__/apollo-graphql';
 import { useHistory } from 'react-router';
 import { normalizeErrors } from '../base/utils/normalizeErrors';
-import { LoginPayload, useAuth } from '../components/AuthProvider';
+import { useAuth } from '../components/AuthProvider';
 import { UNKNOWN_ERROR } from '../base/constants/messages';
 import { AuthPage } from '../components/AuthPage';
 import { FormErrorDisplay } from '../components/FormErrorDisplay';
@@ -47,8 +47,8 @@ const initialValues = {
 
 export const ResetPasswordPage: React.FC = () => {
   const [resetPassword] = useResetPasswordMutation();
-  const [loginPayload, setLoginPayload] = useState<LoginPayload | undefined>();
-  const { login, user } = useAuth();
+  const [success, setSuccess] = useState<boolean>(false);
+  const { user } = useAuth();
   const history = useHistory();
 
   const token = useMemo(() => getToken(history.location.search), [history]);
@@ -73,7 +73,7 @@ export const ResetPasswordPage: React.FC = () => {
         variables: {
           input: {
             password: values.password,
-            resetPasswordToken: token as string,
+            token: token as string,
           },
         },
       })
@@ -84,13 +84,7 @@ export const ResetPasswordPage: React.FC = () => {
       Values
     >(failure, result);
 
-    const {
-      accessToken = undefined,
-      refreshToken = undefined,
-      user = undefined,
-    } = result?.data?.resetPassword || {};
-
-    if (hasError || !accessToken || !refreshToken || !user) {
+    if (hasError) {
       if (fields) {
         setErrors(fields);
       } else {
@@ -101,20 +95,11 @@ export const ResetPasswordPage: React.FC = () => {
       return;
     }
 
-    setLoginPayload({
-      accessToken,
-      refreshToken,
-      user,
-    });
+    setSuccess(true);
   };
 
-  const handleLogin = () => {
-    if (!loginPayload) {
-      history.push('/login');
-    } else {
-      login(loginPayload);
-      history.push('/home');
-    }
+  const handleContinue = () => {
+    history.push('/login');
   };
 
   const SuccessMessage = () => (
@@ -122,15 +107,15 @@ export const ResetPasswordPage: React.FC = () => {
       <P style={{ marginBottom: 16 }}>
         Your password has been successfully reset!
       </P>
-      <PrimaryButtonLarge onClick={handleLogin} type="button">
-        Continue
+      <PrimaryButtonLarge onClick={handleContinue} type="button">
+        Continue to login
       </PrimaryButtonLarge>
     </div>
   );
 
   return (
     <AuthPage>
-      {loginPayload ? (
+      {success ? (
         <SuccessMessage />
       ) : (
         <Formik<Values>

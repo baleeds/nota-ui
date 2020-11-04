@@ -3,11 +3,7 @@ import { annotationListFragment } from '../fragments/annotationList.fragment';
 
 export const verseAnnotationsQuery = gql`
   query VerseAnnotations($first: Int, $after: String, $verseId: ID!) {
-    publicAnnotations: annotations(
-      first: $first
-      after: $after
-      verseId: $verseId
-    ) {
+    publicAnnotations(first: $first, after: $after, verseId: $verseId) {
       edges {
         node {
           ...AnnotationList

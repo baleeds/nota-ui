@@ -33,16 +33,16 @@ export const Annotations: React.FC<Props> = ({ passageId }) => {
     },
   });
   const myVerseAnnotations = useMyVerseAnnotationsQuery({
-    variables: { verseId: passageId, userId: user?.id || '' },
+    variables: { verseId: passageId },
     skip: !user,
   });
 
   const publicAnnotations = extractNodes<AnnotationListFragment>(
-    verseAnnotations.data?.publicAnnotations.edges
+    verseAnnotations.data?.publicAnnotations?.edges
   );
 
   const myAnnotations = extractNodes<AnnotationListFragment>(
-    myVerseAnnotations.data?.myAnnotations.edges
+    myVerseAnnotations.data?.myAnnotations?.edges
   );
 
   const allAnnotations: AnnotationListFragment[] | undefined = useMemo(() => {
@@ -70,7 +70,7 @@ export const Annotations: React.FC<Props> = ({ passageId }) => {
         return produce(previousResult, draftResult => {
           if (
             !draftResult?.publicAnnotations?.edges ||
-            !nextResult?.fetchMoreResult?.publicAnnotations.edges
+            !nextResult?.fetchMoreResult?.publicAnnotations?.edges
           ) {
             return previousResult;
           }

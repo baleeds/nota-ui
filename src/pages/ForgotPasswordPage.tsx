@@ -4,8 +4,8 @@ import { PrimaryButtonLarge } from '../components/Buttons';
 import { Link } from '../components/Link';
 import { FieldGroup } from '../components/FieldGroup';
 import {
-  useSendResetPasswordMutation,
-  SendResetPasswordMutation,
+  useSendForgotPasswordMutation,
+  SendForgotPasswordMutation,
 } from '../api/__generated__/apollo-graphql';
 import { attempt } from '../base/utils/attempt';
 import { normalizeErrors } from '../base/utils/normalizeErrors';
@@ -36,7 +36,7 @@ export const ForgotPasswordPage: React.FC = () => {
   const history = useHistory();
   const [success, setSuccess] = useState(false);
   const { user } = useAuth();
-  const [sendResetPasswordMutation] = useSendResetPasswordMutation();
+  const [sendResetPasswordMutation] = useSendForgotPasswordMutation();
 
   useEffect(() => {
     if (user) {
@@ -57,13 +57,13 @@ export const ForgotPasswordPage: React.FC = () => {
     );
 
     const { hasError, base, fields } = normalizeErrors<
-      SendResetPasswordMutation,
+      SendForgotPasswordMutation,
       Values
     >(failure, result);
 
-    const { success } = result?.data?.sendResetPassword || {};
+    const { successful } = result?.data?.sendForgotPassword || {};
 
-    if (hasError || !success) {
+    if (hasError || !successful) {
       if (fields) {
         setErrors(fields);
       } else {

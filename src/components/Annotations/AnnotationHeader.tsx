@@ -6,11 +6,12 @@ import Skeleton from 'react-loading-skeleton';
 import styled from 'styled-components';
 import { theme } from '../../styles/theme';
 import { AnnotationFavoriteButton } from './AnnotationFavoriteButton';
+import { getUserDisplayName } from '../../base/utils/formatters';
 
 interface Props {
   annotation?: Pick<
     AnnotationFragment,
-    'id' | 'user' | 'createdAt' | 'favorited'
+    'id' | 'user' | 'insertedAt' | 'isFavorite'
   >;
 }
 
@@ -19,9 +20,9 @@ export const AnnotationHeader: React.FC<Props> = ({ annotation }) => {
     <Flex margin={{ b: 8 }} alignItems="center">
       <AnnotationFavoriteButton annotation={annotation} />
       <AuthorLink href="/">
-        {annotation?.user.displayName || <Skeleton width={120} />}
+        {getUserDisplayName(annotation?.user) || <Skeleton width={120} />}
       </AuthorLink>
-      {annotation && <Date>{toSimpleDate(annotation?.createdAt)}</Date>}
+      {annotation && <Date>{toSimpleDate(annotation?.insertedAt)}</Date>}
     </Flex>
   );
 };

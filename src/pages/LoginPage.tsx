@@ -5,8 +5,8 @@ import { PrimaryButtonLarge } from '../components/Buttons';
 import { Link } from '../components/Link';
 import { FieldGroup } from '../components/FieldGroup';
 import {
-  useSignInUserMutation,
-  SignInUserMutation,
+  useSignInMutation,
+  SignInMutation,
 } from '../api/__generated__/apollo-graphql';
 import { attempt } from '../base/utils/attempt';
 import { normalizeErrors } from '../base/utils/normalizeErrors';
@@ -48,7 +48,7 @@ const getRedirectUrl = (history: History): string => {
 
 export const LoginPage: React.FC = () => {
   const history = useHistory();
-  const [signInUserMutation] = useSignInUserMutation();
+  const [signInUserMutation] = useSignInMutation();
   const { login } = useAuth();
 
   const handleLogin: FormikConfig<Values>['onSubmit'] = async (
@@ -64,7 +64,7 @@ export const LoginPage: React.FC = () => {
     );
 
     const { hasError, base, fields } = normalizeErrors<
-      SignInUserMutation,
+      SignInMutation,
       Values
     >(failure, result);
 
@@ -72,7 +72,7 @@ export const LoginPage: React.FC = () => {
       accessToken = undefined,
       refreshToken = undefined,
       user = undefined,
-    } = result?.data?.signInUser || {};
+    } = result?.data?.signIn.result || {};
 
     if (hasError || !accessToken || !refreshToken || !user) {
       if (fields) {

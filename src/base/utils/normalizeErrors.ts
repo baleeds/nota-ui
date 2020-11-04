@@ -1,5 +1,5 @@
 import { ExecutionResult } from 'graphql';
-import { Error as MutationError } from '../../api/__generated__/apollo-graphql';
+import { ValidationMessage as MutationError } from '../../api/__generated__/apollo-graphql';
 import { objectHasProperties } from './objectHasProperties';
 import { NETWORK_ERROR, UNKNOWN_ERROR } from '../constants/messages';
 
@@ -36,7 +36,8 @@ export function normalizeErrors<MutationType extends ObjectBase, Values = {}>(
       const { errors = [] } = mutationResult || {};
 
       errors.forEach((error: MutationError) => {
-        errorsMap[error.field] = error.message || UNKNOWN_ERROR;
+        if (error.field)
+          errorsMap[error.field] = error.message || UNKNOWN_ERROR;
       });
 
       return errorsMap;

@@ -14,7 +14,7 @@ import { updateCachedAnnotation } from '../../base/apollo/cacheUpdaters';
 import { useAuth } from '../AuthProvider';
 
 interface Props {
-  annotation?: Pick<AnnotationFragment, 'id' | 'favorited'>;
+  annotation?: Pick<AnnotationFragment, 'id' | 'isFavorite'>;
 }
 
 export const AnnotationFavoriteButton: React.FC<Props> = ({ annotation }) => {
@@ -34,8 +34,8 @@ export const AnnotationFavoriteButton: React.FC<Props> = ({ annotation }) => {
           },
         },
         update: (proxy, result) => {
-          if (!result.data?.favoriteAnnotation?.success) return;
-          updateCachedAnnotation(proxy, annotation.id, { favorited: true });
+          if (!result.data?.favoriteAnnotation?.successful) return;
+          updateCachedAnnotation(proxy, annotation.id, { isFavorite: true });
         },
       })
     );
@@ -61,8 +61,8 @@ export const AnnotationFavoriteButton: React.FC<Props> = ({ annotation }) => {
           },
         },
         update: (proxy, result) => {
-          if (!result.data?.unfavoriteAnnotation?.success) return;
-          updateCachedAnnotation(proxy, annotation.id, { favorited: false });
+          if (!result.data?.unfavoriteAnnotation?.successful) return;
+          updateCachedAnnotation(proxy, annotation.id, { isFavorite: false });
         },
       })
     );
@@ -85,14 +85,14 @@ export const AnnotationFavoriteButton: React.FC<Props> = ({ annotation }) => {
       return;
     }
 
-    const { favorited } = annotation || {};
-    if (favorited) await unfavoriteAnnotation();
+    const { isFavorite } = annotation || {};
+    if (isFavorite) await unfavoriteAnnotation();
     else await favoriteAnnotation();
   };
 
   return (
     <button onClick={handleClick} type="button">
-      {annotation?.favorited ? 'Favorited' : 'Unfavorited'}
+      {annotation?.isFavorite ? 'Favorited' : 'Unfavorited'}
     </button>
   );
 };

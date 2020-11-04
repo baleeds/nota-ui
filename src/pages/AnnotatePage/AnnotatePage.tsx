@@ -12,10 +12,6 @@ import { LARGE_SCREEN } from '../../base/constants/breakpoints';
 import { Toolbar } from './Toolbar';
 import { MobileHeaderNavLink } from '../../components/MobileHeader';
 import { ReactComponent as ChevronLeftIcon } from '../../icons/chevron_left-24px.svg';
-import {
-  useCreateAnnotationMutation,
-  CreateAnnotationMutation,
-} from '../../api/__generated__/apollo-graphql';
 import { attempt } from '../../base/utils/attempt';
 import { useHistory } from 'react-router';
 import { toast } from '../../components/Toast';
@@ -23,6 +19,7 @@ import { normalizeErrors } from '../../base/utils/normalizeErrors';
 import { UNKNOWN_ERROR } from '../../base/constants/messages';
 import { ArticleTypography } from '../../components/Typography';
 import { useAuth } from '../../components/AuthProvider';
+import { SaveAnnotationMutation, useSaveAnnotationMutation } from '../../api/__generated__/apollo-graphql';
 
 const modules = {
   toolbar: {
@@ -50,7 +47,7 @@ export const AnnotatePage: React.FC = () => {
   } = usePassage();
   const versePath = `/read/${bookName}/${chapterNumber}/${verseNumber}`;
   const { width } = useScreen();
-  const [createAnnotation, { loading }] = useCreateAnnotationMutation();
+  const [saveAnnotation, { loading }] = useSaveAnnotationMutation();
 
   const handlePublish = useCallback(async () => {
     if (loading) return;
@@ -65,24 +62,25 @@ export const AnnotatePage: React.FC = () => {
     }
 
     const [failure, result] = await attempt(
-      createAnnotation({
+      saveAnnotation({
         variables: {
           input: {
-            annotationInput: { verseId: passageId, text: contentRef.current },
+            verseId: passageId,
+            text: contentRef.current,
           },
         },
       })
     );
 
-    const { hasError, base } = normalizeErrors<CreateAnnotationMutation>(
+    const { hasError, base } = normalizeErrors<SaveAnnotationMutation>(
       failure,
       result
     );
 
     const { id: annotationId } =
-      result?.data?.createAnnotation?.annotation || {};
+      result?.data?.saveAnnotation?.result || {};
 
-    if (hasError || !annotationId) {
+    if(hasError || !annotationId) {
       toast({ message: base || UNKNOWN_ERROR, type: 'error' });
       console.error('Failed');
     } else {
@@ -90,10 +88,9 @@ export const AnnotatePage: React.FC = () => {
       history.push(`${versePath}/${annotationId}`);
     }
   }, [
-    createAnnotation,
+    saveAnnotation,
     passageId,
     contentRef,
-    quillRef,
     loading,
     history,
     versePath,

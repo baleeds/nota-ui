@@ -3,426 +3,511 @@ import gql from 'graphql-tag';
 import * as ApolloReactCommon from '@apollo/react-common';
 import * as ApolloReactHooks from '@apollo/react-hooks';
 export type Maybe<T> = T | null;
-
+export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
-  ID: string,
-  String: string,
-  Boolean: boolean,
-  Int: number,
-  Float: number,
-  ISO8601DateTime: any,
+  ID: string;
+  String: string;
+  Boolean: boolean;
+  Int: number;
+  Float: number;
+  /**
+   * The `DateTime` scalar type represents a date and time in the UTC
+   * timezone. The DateTime appears in a JSON response as an ISO8601 formatted
+   * string, including UTC timezone ("Z"). The parsed date and time string will
+   * be converted to UTC if there is an offset.
+   */
+  DateTime: any;
 };
 
-export type ActiveRecord = {
-  createdAt: Scalars['ISO8601DateTime'],
-  updatedAt: Scalars['ISO8601DateTime'],
-};
-
-export type Annotation = ActiveRecord & {
-   __typename?: 'Annotation',
-  createdAt: Scalars['ISO8601DateTime'],
-  excerpt: Scalars['String'],
-  favorited: Scalars['Boolean'],
-  id: Scalars['ID'],
-  text: Scalars['String'],
-  updatedAt: Scalars['ISO8601DateTime'],
-  user: User,
-  verse: Verse,
+export type Annotation = Node & {
+  __typename?: 'Annotation';
+  /** The ID of an object */
+  id: Scalars['ID'];
+  insertedAt: Scalars['DateTime'];
+  isFavorite: Scalars['Boolean'];
+  numberOfFavorites: Scalars['Int'];
+  numberOfReplies: Scalars['Int'];
+  text: Scalars['String'];
+  updatedAt: Scalars['DateTime'];
+  user: User;
+  userId: Scalars['ID'];
+  verse: Verse;
+  verseId: Scalars['ID'];
 };
 
 export type AnnotationConnection = {
-   __typename?: 'AnnotationConnection',
-  edges?: Maybe<Array<Maybe<AnnotationEdge>>>,
-  nodes?: Maybe<Array<Maybe<Annotation>>>,
-  pageInfo: PageInfo,
+  __typename?: 'AnnotationConnection';
+  edges?: Maybe<Array<Maybe<AnnotationEdge>>>;
+  pageInfo: PageInfo;
 };
 
 export type AnnotationEdge = {
-   __typename?: 'AnnotationEdge',
-  cursor: Scalars['String'],
-  node?: Maybe<Annotation>,
+  __typename?: 'AnnotationEdge';
+  cursor?: Maybe<Scalars['String']>;
+  node?: Maybe<Annotation>;
 };
 
-export type AnnotationInput = {
-  text: Scalars['String'],
-  verseId: Scalars['ID'],
+export type AnnotationReply = Node & {
+  __typename?: 'AnnotationReply';
+  annotation: Annotation;
+  annotationId: Scalars['ID'];
+  /** The ID of an object */
+  id: Scalars['ID'];
+  insertedAt: Scalars['DateTime'];
+  text: Scalars['String'];
+  updatedAt: Scalars['DateTime'];
+  user: User;
+  userId: Scalars['ID'];
 };
 
-export type CreateAnnotationInput = {
-  annotationInput: AnnotationInput,
-  clientMutationId?: Maybe<Scalars['String']>,
+export type AnnotationReplyConnection = {
+  __typename?: 'AnnotationReplyConnection';
+  edges?: Maybe<Array<Maybe<AnnotationReplyEdge>>>;
+  pageInfo: PageInfo;
 };
 
-export type CreateAnnotationPayload = {
-   __typename?: 'CreateAnnotationPayload',
-  annotation: Annotation,
-  clientMutationId?: Maybe<Scalars['String']>,
-  errors?: Maybe<Array<Maybe<Error>>>,
+export type AnnotationReplyEdge = {
+  __typename?: 'AnnotationReplyEdge';
+  cursor?: Maybe<Scalars['String']>;
+  node?: Maybe<AnnotationReply>;
 };
 
-export type CreateUserInput = {
-  email: Scalars['String'],
-  isAdmin: Scalars['Boolean'],
-  username: Scalars['String'],
-  displayName: Scalars['String'],
-  clientMutationId?: Maybe<Scalars['String']>,
+export type CreateAccountInput = {
+  email: Scalars['String'];
+  firstName: Scalars['String'];
+  lastName?: Maybe<Scalars['String']>;
+  password: Scalars['String'];
 };
 
-export type CreateUserPayload = {
-   __typename?: 'CreateUserPayload',
-  clientMutationId?: Maybe<Scalars['String']>,
-  errors?: Maybe<Array<Maybe<Error>>>,
-  user?: Maybe<User>,
+export type CreateAccountPayload = {
+  __typename?: 'CreateAccountPayload';
+  /** A list of failed validations. May be blank or null if mutation succeeded. */
+  messages?: Maybe<Array<Maybe<ValidationMessage>>>;
+  /** The object created/updated/deleted by the mutation. May be null if mutation failed. */
+  result?: Maybe<User>;
+  /** Indicates if the mutation completed successfully or not.  */
+  successful: Scalars['Boolean'];
 };
 
-export type Error = {
-   __typename?: 'Error',
-  field: Scalars['String'],
-  message: Scalars['String'],
+
+export type DeleteAnnotationPayload = {
+  __typename?: 'DeleteAnnotationPayload';
+  /** A list of failed validations. May be blank or null if mutation succeeded. */
+  messages?: Maybe<Array<Maybe<ValidationMessage>>>;
+  /** The object created/updated/deleted by the mutation. May be null if mutation failed. */
+  result?: Maybe<Scalars['Boolean']>;
+  /** Indicates if the mutation completed successfully or not.  */
+  successful: Scalars['Boolean'];
+};
+
+export type DeleteAnnotationReplyPayload = {
+  __typename?: 'DeleteAnnotationReplyPayload';
+  /** A list of failed validations. May be blank or null if mutation succeeded. */
+  messages?: Maybe<Array<Maybe<ValidationMessage>>>;
+  /** The object created/updated/deleted by the mutation. May be null if mutation failed. */
+  result?: Maybe<Scalars['Boolean']>;
+  /** Indicates if the mutation completed successfully or not.  */
+  successful: Scalars['Boolean'];
 };
 
 export type FavoriteAnnotationInput = {
-  annotationId: Scalars['ID'],
-  clientMutationId?: Maybe<Scalars['String']>,
+  annotationId: Scalars['ID'];
 };
 
 export type FavoriteAnnotationPayload = {
-   __typename?: 'FavoriteAnnotationPayload',
-  clientMutationId?: Maybe<Scalars['String']>,
-  errors?: Maybe<Array<Maybe<Error>>>,
-  success?: Maybe<Scalars['Boolean']>,
+  __typename?: 'FavoriteAnnotationPayload';
+  /** A list of failed validations. May be blank or null if mutation succeeded. */
+  messages?: Maybe<Array<Maybe<ValidationMessage>>>;
+  /** The object created/updated/deleted by the mutation. May be null if mutation failed. */
+  result?: Maybe<Scalars['Boolean']>;
+  /** Indicates if the mutation completed successfully or not.  */
+  successful: Scalars['Boolean'];
 };
 
-export type InvalidateTokenInput = {
-  userId: Scalars['ID'],
-  clientMutationId?: Maybe<Scalars['String']>,
-};
-
-export type InvalidateTokenPayload = {
-   __typename?: 'InvalidateTokenPayload',
-  clientMutationId?: Maybe<Scalars['String']>,
-  errors?: Maybe<Array<Maybe<Error>>>,
-  success: Scalars['Boolean'],
-};
-
-
-export type Mutation = {
-   __typename?: 'Mutation',
-  createAnnotation?: Maybe<CreateAnnotationPayload>,
-  createUser?: Maybe<CreateUserPayload>,
-  favoriteAnnotation?: Maybe<FavoriteAnnotationPayload>,
-  invalidateToken?: Maybe<InvalidateTokenPayload>,
-  refreshTokens?: Maybe<RefreshTokensPayload>,
-  resetPassword?: Maybe<ResetPasswordPayload>,
-  sendResetPassword?: Maybe<SendResetPasswordPayload>,
-  signInUser?: Maybe<SignInUserPayload>,
-  suspendUser?: Maybe<SuspendUserPayload>,
-  unfavoriteAnnotation?: Maybe<UnfavoriteAnnotationPayload>,
-  unsuspendUser?: Maybe<UnsuspendUserPayload>,
-  updatePassword?: Maybe<UpdatePasswordPayload>,
-};
-
-
-export type MutationCreateAnnotationArgs = {
-  input: CreateAnnotationInput
-};
-
-
-export type MutationCreateUserArgs = {
-  input: CreateUserInput
-};
-
-
-export type MutationFavoriteAnnotationArgs = {
-  input: FavoriteAnnotationInput
-};
-
-
-export type MutationInvalidateTokenArgs = {
-  input: InvalidateTokenInput
-};
-
-
-export type MutationRefreshTokensArgs = {
-  input: RefreshTokensInput
-};
-
-
-export type MutationResetPasswordArgs = {
-  input: ResetPasswordInput
-};
-
-
-export type MutationSendResetPasswordArgs = {
-  input: SendResetPasswordInput
-};
-
-
-export type MutationSignInUserArgs = {
-  input: SignInUserInput
-};
-
-
-export type MutationSuspendUserArgs = {
-  input: SuspendUserInput
-};
-
-
-export type MutationUnfavoriteAnnotationArgs = {
-  input: UnfavoriteAnnotationInput
-};
-
-
-export type MutationUnsuspendUserArgs = {
-  input: UnsuspendUserInput
-};
-
-
-export type MutationUpdatePasswordArgs = {
-  input: UpdatePasswordInput
+export type Node = {
+  /** The id of the object. */
+  id: Scalars['ID'];
 };
 
 export type PageInfo = {
-   __typename?: 'PageInfo',
-  endCursor?: Maybe<Scalars['String']>,
-  hasNextPage: Scalars['Boolean'],
-  hasPreviousPage: Scalars['Boolean'],
-  startCursor?: Maybe<Scalars['String']>,
+  __typename?: 'PageInfo';
+  /** When paginating forwards, the cursor to continue. */
+  endCursor?: Maybe<Scalars['String']>;
+  /** When paginating forwards, are there more items? */
+  hasNextPage: Scalars['Boolean'];
+  /** When paginating backwards, are there more items? */
+  hasPreviousPage: Scalars['Boolean'];
+  /** When paginating backwards, the cursor to continue. */
+  startCursor?: Maybe<Scalars['String']>;
 };
 
-export type Query = {
-   __typename?: 'Query',
-  annotation: Annotation,
-  annotations: AnnotationConnection,
-  me?: Maybe<User>,
-  myAnnotations: AnnotationConnection,
-  user: User,
-  users: UserConnection,
-  verse: Verse,
-};
-
-
-export type QueryAnnotationArgs = {
-  annotationId: Scalars['ID']
-};
-
-
-export type QueryAnnotationsArgs = {
-  verseId?: Maybe<Scalars['ID']>,
-  userId?: Maybe<Scalars['ID']>,
-  after?: Maybe<Scalars['String']>,
-  before?: Maybe<Scalars['String']>,
-  first?: Maybe<Scalars['Int']>,
-  last?: Maybe<Scalars['Int']>
-};
-
-
-export type QueryMyAnnotationsArgs = {
-  after?: Maybe<Scalars['String']>,
-  before?: Maybe<Scalars['String']>,
-  first?: Maybe<Scalars['Int']>,
-  last?: Maybe<Scalars['Int']>
-};
-
-
-export type QueryUserArgs = {
-  userId: Scalars['ID']
-};
-
-
-export type QueryUsersArgs = {
-  after?: Maybe<Scalars['String']>,
-  before?: Maybe<Scalars['String']>,
-  first?: Maybe<Scalars['Int']>,
-  last?: Maybe<Scalars['Int']>
-};
-
-
-export type QueryVerseArgs = {
-  verseId: Scalars['ID']
-};
-
-export type RefreshTokensInput = {
-  refreshToken: Scalars['String'],
-  clientMutationId?: Maybe<Scalars['String']>,
-};
-
-export type RefreshTokensPayload = {
-   __typename?: 'RefreshTokensPayload',
-  accessToken?: Maybe<Scalars['String']>,
-  clientMutationId?: Maybe<Scalars['String']>,
-  errors?: Maybe<Array<Maybe<Error>>>,
-  refreshToken?: Maybe<Scalars['String']>,
-  user?: Maybe<User>,
+export type RefreshTokenPayload = {
+  __typename?: 'RefreshTokenPayload';
+  /** A list of failed validations. May be blank or null if mutation succeeded. */
+  messages?: Maybe<Array<Maybe<ValidationMessage>>>;
+  /** The object created/updated/deleted by the mutation. May be null if mutation failed. */
+  result?: Maybe<SessionInfo>;
+  /** Indicates if the mutation completed successfully or not.  */
+  successful: Scalars['Boolean'];
 };
 
 export type ResetPasswordInput = {
-  password: Scalars['String'],
-  resetPasswordToken: Scalars['String'],
-  clientMutationId?: Maybe<Scalars['String']>,
+  password: Scalars['String'];
+  token: Scalars['String'];
 };
 
 export type ResetPasswordPayload = {
-   __typename?: 'ResetPasswordPayload',
-  accessToken?: Maybe<Scalars['String']>,
-  clientMutationId?: Maybe<Scalars['String']>,
-  errors?: Maybe<Array<Maybe<Error>>>,
-  refreshToken?: Maybe<Scalars['String']>,
-  user?: Maybe<User>,
+  __typename?: 'ResetPasswordPayload';
+  /** A list of failed validations. May be blank or null if mutation succeeded. */
+  messages?: Maybe<Array<Maybe<ValidationMessage>>>;
+  /** The object created/updated/deleted by the mutation. May be null if mutation failed. */
+  result?: Maybe<Scalars['Boolean']>;
+  /** Indicates if the mutation completed successfully or not.  */
+  successful: Scalars['Boolean'];
 };
 
-export type SendResetPasswordInput = {
-  email: Scalars['String'],
-  clientMutationId?: Maybe<Scalars['String']>,
+export type RootMutationType = {
+  __typename?: 'RootMutationType';
+  createAccount: CreateAccountPayload;
+  deleteAnnotation: DeleteAnnotationPayload;
+  deleteAnnotationReply: DeleteAnnotationReplyPayload;
+  favoriteAnnotation: FavoriteAnnotationPayload;
+  refreshToken: RefreshTokenPayload;
+  resetPassword: ResetPasswordPayload;
+  saveAnnotation: SaveAnnotationPayload;
+  saveAnnotationReply: SaveAnnotationReplyPayload;
+  sendForgotPassword: SendForgotPasswordPayload;
+  signIn: SignInPayload;
+  signOut: SignOutPayload;
+  signOutEverywhere: SignOutPayload;
+  unfavoriteAnnotation: UnfavoriteAnnotationPayload;
 };
 
-export type SendResetPasswordPayload = {
-   __typename?: 'SendResetPasswordPayload',
-  clientMutationId?: Maybe<Scalars['String']>,
-  success: Scalars['Boolean'],
+
+export type RootMutationTypeCreateAccountArgs = {
+  input: CreateAccountInput;
 };
 
-export type SignInUserInput = {
-  email: Scalars['String'],
-  password: Scalars['String'],
-  clientMutationId?: Maybe<Scalars['String']>,
+
+export type RootMutationTypeDeleteAnnotationArgs = {
+  annotationId: Scalars['ID'];
 };
 
-export type SignInUserPayload = {
-   __typename?: 'SignInUserPayload',
-  accessToken?: Maybe<Scalars['String']>,
-  clientMutationId?: Maybe<Scalars['String']>,
-  errors?: Maybe<Array<Maybe<Error>>>,
-  refreshToken?: Maybe<Scalars['String']>,
-  user?: Maybe<User>,
+
+export type RootMutationTypeDeleteAnnotationReplyArgs = {
+  annotationReplyId: Scalars['ID'];
 };
 
-export type SuspendUserInput = {
-  userId: Scalars['ID'],
-  clientMutationId?: Maybe<Scalars['String']>,
+
+export type RootMutationTypeFavoriteAnnotationArgs = {
+  input: FavoriteAnnotationInput;
 };
 
-export type SuspendUserPayload = {
-   __typename?: 'SuspendUserPayload',
-  clientMutationId?: Maybe<Scalars['String']>,
-  errors?: Maybe<Array<Maybe<Error>>>,
-  user?: Maybe<User>,
+
+export type RootMutationTypeRefreshTokenArgs = {
+  refreshToken: Scalars['String'];
+};
+
+
+export type RootMutationTypeResetPasswordArgs = {
+  input: ResetPasswordInput;
+};
+
+
+export type RootMutationTypeSaveAnnotationArgs = {
+  input: SaveAnnotationInput;
+};
+
+
+export type RootMutationTypeSaveAnnotationReplyArgs = {
+  input: SaveAnnotationReplyInput;
+};
+
+
+export type RootMutationTypeSendForgotPasswordArgs = {
+  input: SendForgotPasswordInput;
+};
+
+
+export type RootMutationTypeSignInArgs = {
+  input: SignInInput;
+};
+
+
+export type RootMutationTypeSignOutArgs = {
+  refreshToken: Scalars['String'];
+};
+
+
+export type RootMutationTypeUnfavoriteAnnotationArgs = {
+  input: UnfavoriteAnnotationInput;
+};
+
+export type RootQueryType = {
+  __typename?: 'RootQueryType';
+  annotation: Annotation;
+  annotationReplies?: Maybe<AnnotationReplyConnection>;
+  favoriteAnnotations?: Maybe<AnnotationConnection>;
+  me?: Maybe<User>;
+  myAnnotations?: Maybe<AnnotationConnection>;
+  publicAnnotations?: Maybe<AnnotationConnection>;
+  user: User;
+  verse: Verse;
+  verses?: Maybe<Array<Verse>>;
+};
+
+
+export type RootQueryTypeAnnotationArgs = {
+  id: Scalars['ID'];
+};
+
+
+export type RootQueryTypeAnnotationRepliesArgs = {
+  after?: Maybe<Scalars['String']>;
+  annotationId?: Maybe<Scalars['ID']>;
+  before?: Maybe<Scalars['String']>;
+  first?: Maybe<Scalars['Int']>;
+  last?: Maybe<Scalars['Int']>;
+};
+
+
+export type RootQueryTypeFavoriteAnnotationsArgs = {
+  after?: Maybe<Scalars['String']>;
+  before?: Maybe<Scalars['String']>;
+  first?: Maybe<Scalars['Int']>;
+  last?: Maybe<Scalars['Int']>;
+  userId?: Maybe<Scalars['ID']>;
+};
+
+
+export type RootQueryTypeMyAnnotationsArgs = {
+  after?: Maybe<Scalars['String']>;
+  before?: Maybe<Scalars['String']>;
+  first?: Maybe<Scalars['Int']>;
+  last?: Maybe<Scalars['Int']>;
+  verseId?: Maybe<Scalars['ID']>;
+};
+
+
+export type RootQueryTypePublicAnnotationsArgs = {
+  after?: Maybe<Scalars['String']>;
+  before?: Maybe<Scalars['String']>;
+  first?: Maybe<Scalars['Int']>;
+  last?: Maybe<Scalars['Int']>;
+  userId?: Maybe<Scalars['ID']>;
+  verseId?: Maybe<Scalars['ID']>;
+};
+
+
+export type RootQueryTypeUserArgs = {
+  id: Scalars['ID'];
+};
+
+
+export type RootQueryTypeVerseArgs = {
+  id: Scalars['ID'];
+};
+
+
+export type RootQueryTypeVersesArgs = {
+  bookNumber: Scalars['Int'];
+  chapterNumber: Scalars['Int'];
+};
+
+export type SaveAnnotationInput = {
+  deletedAt?: Maybe<Scalars['DateTime']>;
+  id?: Maybe<Scalars['ID']>;
+  insertedAt?: Maybe<Scalars['DateTime']>;
+  text: Scalars['String'];
+  updatedAt?: Maybe<Scalars['DateTime']>;
+  verseId: Scalars['ID'];
+};
+
+export type SaveAnnotationPayload = {
+  __typename?: 'SaveAnnotationPayload';
+  /** A list of failed validations. May be blank or null if mutation succeeded. */
+  messages?: Maybe<Array<Maybe<ValidationMessage>>>;
+  /** The object created/updated/deleted by the mutation. May be null if mutation failed. */
+  result?: Maybe<Annotation>;
+  /** Indicates if the mutation completed successfully or not.  */
+  successful: Scalars['Boolean'];
+};
+
+export type SaveAnnotationReplyInput = {
+  annotationId: Scalars['ID'];
+  id?: Maybe<Scalars['ID']>;
+  text: Scalars['String'];
+};
+
+export type SaveAnnotationReplyPayload = {
+  __typename?: 'SaveAnnotationReplyPayload';
+  /** A list of failed validations. May be blank or null if mutation succeeded. */
+  messages?: Maybe<Array<Maybe<ValidationMessage>>>;
+  /** The object created/updated/deleted by the mutation. May be null if mutation failed. */
+  result?: Maybe<AnnotationReply>;
+  /** Indicates if the mutation completed successfully or not.  */
+  successful: Scalars['Boolean'];
+};
+
+export type SendForgotPasswordInput = {
+  email: Scalars['String'];
+};
+
+export type SendForgotPasswordPayload = {
+  __typename?: 'SendForgotPasswordPayload';
+  /** A list of failed validations. May be blank or null if mutation succeeded. */
+  messages?: Maybe<Array<Maybe<ValidationMessage>>>;
+  /** The object created/updated/deleted by the mutation. May be null if mutation failed. */
+  result?: Maybe<Scalars['Boolean']>;
+  /** Indicates if the mutation completed successfully or not.  */
+  successful: Scalars['Boolean'];
+};
+
+export type SessionInfo = {
+  __typename?: 'SessionInfo';
+  accessToken: Scalars['String'];
+  refreshToken?: Maybe<Scalars['String']>;
+  user: User;
+  userId?: Maybe<Scalars['ID']>;
+};
+
+export type SignInInput = {
+  email: Scalars['String'];
+  password: Scalars['String'];
+};
+
+export type SignInPayload = {
+  __typename?: 'SignInPayload';
+  /** A list of failed validations. May be blank or null if mutation succeeded. */
+  messages?: Maybe<Array<Maybe<ValidationMessage>>>;
+  /** The object created/updated/deleted by the mutation. May be null if mutation failed. */
+  result?: Maybe<SessionInfo>;
+  /** Indicates if the mutation completed successfully or not.  */
+  successful: Scalars['Boolean'];
+};
+
+export type SignOutPayload = {
+  __typename?: 'SignOutPayload';
+  /** A list of failed validations. May be blank or null if mutation succeeded. */
+  messages?: Maybe<Array<Maybe<ValidationMessage>>>;
+  /** The object created/updated/deleted by the mutation. May be null if mutation failed. */
+  result?: Maybe<Scalars['Boolean']>;
+  /** Indicates if the mutation completed successfully or not.  */
+  successful: Scalars['Boolean'];
 };
 
 export type UnfavoriteAnnotationInput = {
-  annotationId: Scalars['ID'],
-  clientMutationId?: Maybe<Scalars['String']>,
+  annotationId: Scalars['ID'];
 };
 
 export type UnfavoriteAnnotationPayload = {
-   __typename?: 'UnfavoriteAnnotationPayload',
-  clientMutationId?: Maybe<Scalars['String']>,
-  errors?: Maybe<Array<Maybe<Error>>>,
-  success?: Maybe<Scalars['Boolean']>,
+  __typename?: 'UnfavoriteAnnotationPayload';
+  /** A list of failed validations. May be blank or null if mutation succeeded. */
+  messages?: Maybe<Array<Maybe<ValidationMessage>>>;
+  /** The object created/updated/deleted by the mutation. May be null if mutation failed. */
+  result?: Maybe<Scalars['Boolean']>;
+  /** Indicates if the mutation completed successfully or not.  */
+  successful: Scalars['Boolean'];
 };
 
-export type UnsuspendUserInput = {
-  userId: Scalars['ID'],
-  clientMutationId?: Maybe<Scalars['String']>,
+export type User = Node & {
+  __typename?: 'User';
+  email: Scalars['String'];
+  firstName?: Maybe<Scalars['String']>;
+  /** The ID of an object */
+  id: Scalars['ID'];
+  isAdmin: Scalars['Boolean'];
+  lastName?: Maybe<Scalars['String']>;
 };
 
-export type UnsuspendUserPayload = {
-   __typename?: 'UnsuspendUserPayload',
-  clientMutationId?: Maybe<Scalars['String']>,
-  errors?: Maybe<Array<Maybe<Error>>>,
-  user?: Maybe<User>,
+/**
+ * Validation messages are returned when mutation input does not meet the requirements.
+ * While client-side validation is highly recommended to provide the best User Experience,
+ * All inputs will always be validated server-side.
+ * 
+ * Some examples of validations are:
+ * 
+ * * Username must be at least 10 characters
+ * * Email field does not contain an email address
+ * * Birth Date is required
+ * 
+ * While GraphQL has support for required values, mutation data fields are always
+ * set to optional in our API. This allows 'required field' messages
+ * to be returned in the same manner as other validations. The only exceptions
+ * are id fields, which may be required to perform updates or deletes.
+ */
+export type ValidationMessage = {
+  __typename?: 'ValidationMessage';
+  /** A unique error code for the type of validation used. */
+  code: Scalars['String'];
+  /**
+   * The input field that the error applies to. The field can be used to
+   * identify which field the error message should be displayed next to in the
+   * presentation layer.
+   * 
+   * If there are multiple errors to display for a field, multiple validation
+   * messages will be in the result.
+   * 
+   * This field may be null in cases where an error cannot be applied to a specific field.
+   */
+  field?: Maybe<Scalars['String']>;
+  /**
+   * A friendly error message, appropriate for display to the end user.
+   * 
+   * The message is interpolated to include the appropriate variables.
+   * 
+   * Example: `Username must be at least 10 characters`
+   * 
+   * This message may change without notice, so we do not recommend you match against the text.
+   * Instead, use the *code* field for matching.
+   */
+  message?: Maybe<Scalars['String']>;
+  /** A list of substitutions to be applied to a validation message template */
+  options?: Maybe<Array<Maybe<ValidationOption>>>;
+  /**
+   * A template used to generate the error message, with placeholders for option substiution.
+   * 
+   * Example: `Username must be at least {count} characters`
+   * 
+   * This message may change without notice, so we do not recommend you match against the text.
+   * Instead, use the *code* field for matching.
+   */
+  template?: Maybe<Scalars['String']>;
 };
 
-export type UpdatePasswordInput = {
-  currentPassword: Scalars['String'],
-  newPassword: Scalars['String'],
-  clientMutationId?: Maybe<Scalars['String']>,
+export type ValidationOption = {
+  __typename?: 'ValidationOption';
+  /** The name of a variable to be subsituted in a validation message template */
+  key: Scalars['String'];
+  /** The value of a variable to be substituted in a validation message template */
+  value: Scalars['String'];
 };
 
-export type UpdatePasswordPayload = {
-   __typename?: 'UpdatePasswordPayload',
-  clientMutationId?: Maybe<Scalars['String']>,
-  errors?: Maybe<Array<Maybe<Error>>>,
-  user?: Maybe<User>,
-};
-
-export type User = ActiveRecord & {
-   __typename?: 'User',
-  annotations?: Maybe<AnnotationConnection>,
-  createdAt: Scalars['ISO8601DateTime'],
-  displayName: Scalars['String'],
-  email: Scalars['String'],
-  favoriteAnnotations?: Maybe<AnnotationConnection>,
-  id: Scalars['ID'],
-  isActive: Scalars['Boolean'],
-  isAdmin: Scalars['Boolean'],
-  updatedAt: Scalars['ISO8601DateTime'],
-  username: Scalars['String'],
-};
-
-
-export type UserAnnotationsArgs = {
-  after?: Maybe<Scalars['String']>,
-  before?: Maybe<Scalars['String']>,
-  first?: Maybe<Scalars['Int']>,
-  last?: Maybe<Scalars['Int']>
-};
-
-
-export type UserFavoriteAnnotationsArgs = {
-  after?: Maybe<Scalars['String']>,
-  before?: Maybe<Scalars['String']>,
-  first?: Maybe<Scalars['Int']>,
-  last?: Maybe<Scalars['Int']>
-};
-
-export type UserConnection = {
-   __typename?: 'UserConnection',
-  edges?: Maybe<Array<Maybe<UserEdge>>>,
-  nodes?: Maybe<Array<Maybe<User>>>,
-  pageInfo: PageInfo,
-};
-
-export type UserEdge = {
-   __typename?: 'UserEdge',
-  cursor: Scalars['String'],
-  node?: Maybe<User>,
-};
-
-export type Verse = ActiveRecord & {
-   __typename?: 'Verse',
-  annotations: AnnotationConnection,
-  createdAt: Scalars['ISO8601DateTime'],
-  id: Scalars['ID'],
-  numberOfAnnotations?: Maybe<Scalars['Int']>,
-  numberOfMyAnnotations?: Maybe<Scalars['Int']>,
-  updatedAt: Scalars['ISO8601DateTime'],
-};
-
-
-export type VerseAnnotationsArgs = {
-  after?: Maybe<Scalars['String']>,
-  before?: Maybe<Scalars['String']>,
-  first?: Maybe<Scalars['Int']>,
-  last?: Maybe<Scalars['Int']>
+export type Verse = {
+  __typename?: 'Verse';
+  bookNumber: Scalars['Int'];
+  chapterNumber: Scalars['Int'];
+  id: Scalars['ID'];
+  text: Scalars['String'];
+  verseNumber: Scalars['Int'];
 };
 
 export type AnnotationFragment = (
   { __typename?: 'Annotation' }
-  & Pick<Annotation, 'id' | 'text' | 'favorited' | 'createdAt'>
+  & Pick<Annotation, 'id' | 'text' | 'isFavorite' | 'insertedAt'>
   & { user: (
     { __typename?: 'User' }
-    & Pick<User, 'id' | 'displayName' | 'username'>
+    & Pick<User, 'id' | 'firstName' | 'lastName'>
   ) }
 );
 
 export type AnnotationListFragment = (
   { __typename?: 'Annotation' }
-  & Pick<Annotation, 'id' | 'text' | 'createdAt' | 'favorited'>
+  & Pick<Annotation, 'id' | 'text' | 'insertedAt' | 'isFavorite'>
   & { user: (
     { __typename?: 'User' }
-    & Pick<User, 'id' | 'username' | 'displayName'>
+    & Pick<User, 'id' | 'firstName' | 'lastName'>
   ) }
 );
 
@@ -431,159 +516,163 @@ export type MeFragment = (
   & Pick<User, 'id' | 'email'>
 );
 
-export type CreateAnnotationMutationVariables = {
-  input: CreateAnnotationInput
-};
-
-
-export type CreateAnnotationMutation = (
-  { __typename?: 'Mutation' }
-  & { createAnnotation: Maybe<(
-    { __typename?: 'CreateAnnotationPayload' }
-    & { annotation: (
-      { __typename?: 'Annotation' }
-      & Pick<Annotation, 'id'>
-    ), errors: Maybe<Array<Maybe<(
-      { __typename?: 'Error' }
-      & Pick<Error, 'field' | 'message'>
-    )>>> }
-  )> }
-);
-
-export type FavoriteAnnotationMutationVariables = {
-  input: FavoriteAnnotationInput
-};
+export type FavoriteAnnotationMutationVariables = Exact<{
+  input: FavoriteAnnotationInput;
+}>;
 
 
 export type FavoriteAnnotationMutation = (
-  { __typename?: 'Mutation' }
-  & { favoriteAnnotation: Maybe<(
+  { __typename?: 'RootMutationType' }
+  & { favoriteAnnotation: (
     { __typename?: 'FavoriteAnnotationPayload' }
-    & Pick<FavoriteAnnotationPayload, 'success'>
-    & { errors: Maybe<Array<Maybe<(
-      { __typename?: 'Error' }
-      & Pick<Error, 'field' | 'message'>
+    & Pick<FavoriteAnnotationPayload, 'successful'>
+    & { messages?: Maybe<Array<Maybe<(
+      { __typename?: 'ValidationMessage' }
+      & Pick<ValidationMessage, 'field' | 'message'>
     )>>> }
-  )> }
+  ) }
 );
 
-export type ResetPasswordMutationVariables = {
-  input: ResetPasswordInput
-};
+export type ResetPasswordMutationVariables = Exact<{
+  input: ResetPasswordInput;
+}>;
 
 
 export type ResetPasswordMutation = (
-  { __typename?: 'Mutation' }
-  & { resetPassword: Maybe<(
+  { __typename?: 'RootMutationType' }
+  & { resetPassword: (
     { __typename?: 'ResetPasswordPayload' }
-    & Pick<ResetPasswordPayload, 'accessToken' | 'refreshToken'>
-    & { user: Maybe<(
-      { __typename?: 'User' }
-      & MeFragment
-    )>, errors: Maybe<Array<Maybe<(
-      { __typename?: 'Error' }
-      & Pick<Error, 'field' | 'message'>
+    & Pick<ResetPasswordPayload, 'result'>
+    & { messages?: Maybe<Array<Maybe<(
+      { __typename?: 'ValidationMessage' }
+      & Pick<ValidationMessage, 'field' | 'message'>
     )>>> }
-  )> }
+  ) }
 );
 
-export type SendResetPasswordMutationVariables = {
-  input: SendResetPasswordInput
-};
+export type SaveAnnotationMutationVariables = Exact<{
+  input: SaveAnnotationInput;
+}>;
 
 
-export type SendResetPasswordMutation = (
-  { __typename?: 'Mutation' }
-  & { sendResetPassword: Maybe<(
-    { __typename?: 'SendResetPasswordPayload' }
-    & Pick<SendResetPasswordPayload, 'success'>
-  )> }
-);
-
-export type SignInUserMutationVariables = {
-  input: SignInUserInput
-};
-
-
-export type SignInUserMutation = (
-  { __typename?: 'Mutation' }
-  & { signInUser: Maybe<(
-    { __typename?: 'SignInUserPayload' }
-    & Pick<SignInUserPayload, 'accessToken' | 'refreshToken'>
-    & { user: Maybe<(
-      { __typename?: 'User' }
-      & MeFragment
-    )>, errors: Maybe<Array<Maybe<(
-      { __typename?: 'Error' }
-      & Pick<Error, 'field' | 'message'>
+export type SaveAnnotationMutation = (
+  { __typename?: 'RootMutationType' }
+  & { saveAnnotation: (
+    { __typename?: 'SaveAnnotationPayload' }
+    & Pick<SaveAnnotationPayload, 'successful'>
+    & { result?: Maybe<(
+      { __typename?: 'Annotation' }
+      & Pick<Annotation, 'id'>
+    )>, messages?: Maybe<Array<Maybe<(
+      { __typename?: 'ValidationMessage' }
+      & Pick<ValidationMessage, 'field' | 'message'>
     )>>> }
-  )> }
+  ) }
 );
 
-export type UnfavoriteAnnotationMutationVariables = {
-  input: UnfavoriteAnnotationInput
-};
+export type SendForgotPasswordMutationVariables = Exact<{
+  input: SendForgotPasswordInput;
+}>;
+
+
+export type SendForgotPasswordMutation = (
+  { __typename?: 'RootMutationType' }
+  & { sendForgotPassword: (
+    { __typename?: 'SendForgotPasswordPayload' }
+    & Pick<SendForgotPasswordPayload, 'successful'>
+    & { messages?: Maybe<Array<Maybe<(
+      { __typename?: 'ValidationMessage' }
+      & Pick<ValidationMessage, 'field' | 'message'>
+    )>>> }
+  ) }
+);
+
+export type SignInMutationVariables = Exact<{
+  input: SignInInput;
+}>;
+
+
+export type SignInMutation = (
+  { __typename?: 'RootMutationType' }
+  & { signIn: (
+    { __typename?: 'SignInPayload' }
+    & { result?: Maybe<(
+      { __typename?: 'SessionInfo' }
+      & Pick<SessionInfo, 'accessToken' | 'refreshToken'>
+      & { user: (
+        { __typename?: 'User' }
+        & MeFragment
+      ) }
+    )>, messages?: Maybe<Array<Maybe<(
+      { __typename?: 'ValidationMessage' }
+      & Pick<ValidationMessage, 'field' | 'message'>
+    )>>> }
+  ) }
+);
+
+export type UnfavoriteAnnotationMutationVariables = Exact<{
+  input: UnfavoriteAnnotationInput;
+}>;
 
 
 export type UnfavoriteAnnotationMutation = (
-  { __typename?: 'Mutation' }
-  & { unfavoriteAnnotation: Maybe<(
+  { __typename?: 'RootMutationType' }
+  & { unfavoriteAnnotation: (
     { __typename?: 'UnfavoriteAnnotationPayload' }
-    & Pick<UnfavoriteAnnotationPayload, 'success'>
-    & { errors: Maybe<Array<Maybe<(
-      { __typename?: 'Error' }
-      & Pick<Error, 'field' | 'message'>
+    & Pick<UnfavoriteAnnotationPayload, 'successful'>
+    & { messages?: Maybe<Array<Maybe<(
+      { __typename?: 'ValidationMessage' }
+      & Pick<ValidationMessage, 'field' | 'message'>
     )>>> }
-  )> }
+  ) }
 );
 
-export type AnnotationQueryVariables = {
-  annotationId: Scalars['ID']
-};
+export type AnnotationQueryVariables = Exact<{
+  annotationId: Scalars['ID'];
+}>;
 
 
 export type AnnotationQuery = (
-  { __typename?: 'Query' }
+  { __typename?: 'RootQueryType' }
   & { annotation: (
     { __typename?: 'Annotation' }
     & AnnotationFragment
   ) }
 );
 
-export type MyVerseAnnotationsQueryVariables = {
-  verseId: Scalars['ID'],
-  userId: Scalars['ID']
-};
+export type MyVerseAnnotationsQueryVariables = Exact<{
+  verseId: Scalars['ID'];
+}>;
 
 
 export type MyVerseAnnotationsQuery = (
-  { __typename?: 'Query' }
-  & { myAnnotations: (
+  { __typename?: 'RootQueryType' }
+  & { myAnnotations?: Maybe<(
     { __typename?: 'AnnotationConnection' }
-    & { edges: Maybe<Array<Maybe<(
+    & { edges?: Maybe<Array<Maybe<(
       { __typename?: 'AnnotationEdge' }
-      & { node: Maybe<(
+      & { node?: Maybe<(
         { __typename?: 'Annotation' }
         & AnnotationListFragment
       )> }
     )>>> }
-  ) }
+  )> }
 );
 
-export type VerseAnnotationsQueryVariables = {
-  first?: Maybe<Scalars['Int']>,
-  after?: Maybe<Scalars['String']>,
-  verseId: Scalars['ID']
-};
+export type VerseAnnotationsQueryVariables = Exact<{
+  first?: Maybe<Scalars['Int']>;
+  after?: Maybe<Scalars['String']>;
+  verseId: Scalars['ID'];
+}>;
 
 
 export type VerseAnnotationsQuery = (
-  { __typename?: 'Query' }
-  & { publicAnnotations: (
+  { __typename?: 'RootQueryType' }
+  & { publicAnnotations?: Maybe<(
     { __typename?: 'AnnotationConnection' }
-    & { edges: Maybe<Array<Maybe<(
+    & { edges?: Maybe<Array<Maybe<(
       { __typename?: 'AnnotationEdge' }
-      & { node: Maybe<(
+      & { node?: Maybe<(
         { __typename?: 'Annotation' }
         & AnnotationListFragment
       )> }
@@ -591,19 +680,19 @@ export type VerseAnnotationsQuery = (
       { __typename?: 'PageInfo' }
       & Pick<PageInfo, 'startCursor' | 'endCursor' | 'hasNextPage' | 'hasPreviousPage'>
     ) }
-  ) }
+  )> }
 );
 
 export const AnnotationFragmentDoc = gql`
     fragment Annotation on Annotation {
   id
   text
-  favorited
-  createdAt
+  isFavorite
+  insertedAt
   user {
     id
-    displayName
-    username
+    firstName
+    lastName
   }
 }
     `;
@@ -611,12 +700,12 @@ export const AnnotationListFragmentDoc = gql`
     fragment AnnotationList on Annotation {
   id
   text
-  createdAt
-  favorited
+  insertedAt
+  isFavorite
   user {
     id
-    username
-    displayName
+    firstName
+    lastName
   }
 }
     `;
@@ -626,49 +715,11 @@ export const MeFragmentDoc = gql`
   email
 }
     `;
-export const CreateAnnotationDocument = gql`
-    mutation CreateAnnotation($input: CreateAnnotationInput!) {
-  createAnnotation(input: $input) {
-    annotation {
-      id
-    }
-    errors {
-      field
-      message
-    }
-  }
-}
-    `;
-export type CreateAnnotationMutationFn = ApolloReactCommon.MutationFunction<CreateAnnotationMutation, CreateAnnotationMutationVariables>;
-
-/**
- * __useCreateAnnotationMutation__
- *
- * To run a mutation, you first call `useCreateAnnotationMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useCreateAnnotationMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [createAnnotationMutation, { data, loading, error }] = useCreateAnnotationMutation({
- *   variables: {
- *      input: // value for 'input'
- *   },
- * });
- */
-export function useCreateAnnotationMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<CreateAnnotationMutation, CreateAnnotationMutationVariables>) {
-        return ApolloReactHooks.useMutation<CreateAnnotationMutation, CreateAnnotationMutationVariables>(CreateAnnotationDocument, baseOptions);
-      }
-export type CreateAnnotationMutationHookResult = ReturnType<typeof useCreateAnnotationMutation>;
-export type CreateAnnotationMutationResult = ApolloReactCommon.MutationResult<CreateAnnotationMutation>;
-export type CreateAnnotationMutationOptions = ApolloReactCommon.BaseMutationOptions<CreateAnnotationMutation, CreateAnnotationMutationVariables>;
 export const FavoriteAnnotationDocument = gql`
     mutation FavoriteAnnotation($input: FavoriteAnnotationInput!) {
   favoriteAnnotation(input: $input) {
-    success
-    errors {
+    successful
+    messages {
       field
       message
     }
@@ -703,18 +754,14 @@ export type FavoriteAnnotationMutationOptions = ApolloReactCommon.BaseMutationOp
 export const ResetPasswordDocument = gql`
     mutation ResetPassword($input: ResetPasswordInput!) {
   resetPassword(input: $input) {
-    accessToken
-    refreshToken
-    user {
-      ...Me
-    }
-    errors {
+    result
+    messages {
       field
       message
     }
   }
 }
-    ${MeFragmentDoc}`;
+    `;
 export type ResetPasswordMutationFn = ApolloReactCommon.MutationFunction<ResetPasswordMutation, ResetPasswordMutationVariables>;
 
 /**
@@ -740,83 +787,128 @@ export function useResetPasswordMutation(baseOptions?: ApolloReactHooks.Mutation
 export type ResetPasswordMutationHookResult = ReturnType<typeof useResetPasswordMutation>;
 export type ResetPasswordMutationResult = ApolloReactCommon.MutationResult<ResetPasswordMutation>;
 export type ResetPasswordMutationOptions = ApolloReactCommon.BaseMutationOptions<ResetPasswordMutation, ResetPasswordMutationVariables>;
-export const SendResetPasswordDocument = gql`
-    mutation SendResetPassword($input: SendResetPasswordInput!) {
-  sendResetPassword(input: $input) {
-    success
+export const SaveAnnotationDocument = gql`
+    mutation SaveAnnotation($input: SaveAnnotationInput!) {
+  saveAnnotation(input: $input) {
+    result {
+      id
+    }
+    messages {
+      field
+      message
+    }
+    successful
   }
 }
     `;
-export type SendResetPasswordMutationFn = ApolloReactCommon.MutationFunction<SendResetPasswordMutation, SendResetPasswordMutationVariables>;
+export type SaveAnnotationMutationFn = ApolloReactCommon.MutationFunction<SaveAnnotationMutation, SaveAnnotationMutationVariables>;
 
 /**
- * __useSendResetPasswordMutation__
+ * __useSaveAnnotationMutation__
  *
- * To run a mutation, you first call `useSendResetPasswordMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useSendResetPasswordMutation` returns a tuple that includes:
+ * To run a mutation, you first call `useSaveAnnotationMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSaveAnnotationMutation` returns a tuple that includes:
  * - A mutate function that you can call at any time to execute the mutation
  * - An object with fields that represent the current status of the mutation's execution
  *
  * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
  *
  * @example
- * const [sendResetPasswordMutation, { data, loading, error }] = useSendResetPasswordMutation({
+ * const [saveAnnotationMutation, { data, loading, error }] = useSaveAnnotationMutation({
  *   variables: {
  *      input: // value for 'input'
  *   },
  * });
  */
-export function useSendResetPasswordMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<SendResetPasswordMutation, SendResetPasswordMutationVariables>) {
-        return ApolloReactHooks.useMutation<SendResetPasswordMutation, SendResetPasswordMutationVariables>(SendResetPasswordDocument, baseOptions);
+export function useSaveAnnotationMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<SaveAnnotationMutation, SaveAnnotationMutationVariables>) {
+        return ApolloReactHooks.useMutation<SaveAnnotationMutation, SaveAnnotationMutationVariables>(SaveAnnotationDocument, baseOptions);
       }
-export type SendResetPasswordMutationHookResult = ReturnType<typeof useSendResetPasswordMutation>;
-export type SendResetPasswordMutationResult = ApolloReactCommon.MutationResult<SendResetPasswordMutation>;
-export type SendResetPasswordMutationOptions = ApolloReactCommon.BaseMutationOptions<SendResetPasswordMutation, SendResetPasswordMutationVariables>;
-export const SignInUserDocument = gql`
-    mutation SignInUser($input: SignInUserInput!) {
-  signInUser(input: $input) {
-    accessToken
-    refreshToken
-    user {
-      ...Me
+export type SaveAnnotationMutationHookResult = ReturnType<typeof useSaveAnnotationMutation>;
+export type SaveAnnotationMutationResult = ApolloReactCommon.MutationResult<SaveAnnotationMutation>;
+export type SaveAnnotationMutationOptions = ApolloReactCommon.BaseMutationOptions<SaveAnnotationMutation, SaveAnnotationMutationVariables>;
+export const SendForgotPasswordDocument = gql`
+    mutation SendForgotPassword($input: SendForgotPasswordInput!) {
+  sendForgotPassword(input: $input) {
+    successful
+    messages {
+      field
+      message
     }
-    errors {
+  }
+}
+    `;
+export type SendForgotPasswordMutationFn = ApolloReactCommon.MutationFunction<SendForgotPasswordMutation, SendForgotPasswordMutationVariables>;
+
+/**
+ * __useSendForgotPasswordMutation__
+ *
+ * To run a mutation, you first call `useSendForgotPasswordMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSendForgotPasswordMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [sendForgotPasswordMutation, { data, loading, error }] = useSendForgotPasswordMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useSendForgotPasswordMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<SendForgotPasswordMutation, SendForgotPasswordMutationVariables>) {
+        return ApolloReactHooks.useMutation<SendForgotPasswordMutation, SendForgotPasswordMutationVariables>(SendForgotPasswordDocument, baseOptions);
+      }
+export type SendForgotPasswordMutationHookResult = ReturnType<typeof useSendForgotPasswordMutation>;
+export type SendForgotPasswordMutationResult = ApolloReactCommon.MutationResult<SendForgotPasswordMutation>;
+export type SendForgotPasswordMutationOptions = ApolloReactCommon.BaseMutationOptions<SendForgotPasswordMutation, SendForgotPasswordMutationVariables>;
+export const SignInDocument = gql`
+    mutation SignIn($input: SignInInput!) {
+  signIn(input: $input) {
+    result {
+      accessToken
+      refreshToken
+      user {
+        ...Me
+      }
+    }
+    messages {
       field
       message
     }
   }
 }
     ${MeFragmentDoc}`;
-export type SignInUserMutationFn = ApolloReactCommon.MutationFunction<SignInUserMutation, SignInUserMutationVariables>;
+export type SignInMutationFn = ApolloReactCommon.MutationFunction<SignInMutation, SignInMutationVariables>;
 
 /**
- * __useSignInUserMutation__
+ * __useSignInMutation__
  *
- * To run a mutation, you first call `useSignInUserMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useSignInUserMutation` returns a tuple that includes:
+ * To run a mutation, you first call `useSignInMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSignInMutation` returns a tuple that includes:
  * - A mutate function that you can call at any time to execute the mutation
  * - An object with fields that represent the current status of the mutation's execution
  *
  * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
  *
  * @example
- * const [signInUserMutation, { data, loading, error }] = useSignInUserMutation({
+ * const [signInMutation, { data, loading, error }] = useSignInMutation({
  *   variables: {
  *      input: // value for 'input'
  *   },
  * });
  */
-export function useSignInUserMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<SignInUserMutation, SignInUserMutationVariables>) {
-        return ApolloReactHooks.useMutation<SignInUserMutation, SignInUserMutationVariables>(SignInUserDocument, baseOptions);
+export function useSignInMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<SignInMutation, SignInMutationVariables>) {
+        return ApolloReactHooks.useMutation<SignInMutation, SignInMutationVariables>(SignInDocument, baseOptions);
       }
-export type SignInUserMutationHookResult = ReturnType<typeof useSignInUserMutation>;
-export type SignInUserMutationResult = ApolloReactCommon.MutationResult<SignInUserMutation>;
-export type SignInUserMutationOptions = ApolloReactCommon.BaseMutationOptions<SignInUserMutation, SignInUserMutationVariables>;
+export type SignInMutationHookResult = ReturnType<typeof useSignInMutation>;
+export type SignInMutationResult = ApolloReactCommon.MutationResult<SignInMutation>;
+export type SignInMutationOptions = ApolloReactCommon.BaseMutationOptions<SignInMutation, SignInMutationVariables>;
 export const UnfavoriteAnnotationDocument = gql`
     mutation UnfavoriteAnnotation($input: UnfavoriteAnnotationInput!) {
   unfavoriteAnnotation(input: $input) {
-    success
-    errors {
+    successful
+    messages {
       field
       message
     }
@@ -850,7 +942,7 @@ export type UnfavoriteAnnotationMutationResult = ApolloReactCommon.MutationResul
 export type UnfavoriteAnnotationMutationOptions = ApolloReactCommon.BaseMutationOptions<UnfavoriteAnnotationMutation, UnfavoriteAnnotationMutationVariables>;
 export const AnnotationDocument = gql`
     query Annotation($annotationId: ID!) {
-  annotation(annotationId: $annotationId) {
+  annotation(id: $annotationId) {
     ...Annotation
   }
 }
@@ -860,7 +952,7 @@ export const AnnotationDocument = gql`
  * __useAnnotationQuery__
  *
  * To run a query within a React component, call `useAnnotationQuery` and pass it any options that fit your needs.
- * When your component renders, `useAnnotationQuery` returns an object from Apollo Client that contains loading, error, and data properties 
+ * When your component renders, `useAnnotationQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
@@ -882,8 +974,8 @@ export type AnnotationQueryHookResult = ReturnType<typeof useAnnotationQuery>;
 export type AnnotationLazyQueryHookResult = ReturnType<typeof useAnnotationLazyQuery>;
 export type AnnotationQueryResult = ApolloReactCommon.QueryResult<AnnotationQuery, AnnotationQueryVariables>;
 export const MyVerseAnnotationsDocument = gql`
-    query MyVerseAnnotations($verseId: ID!, $userId: ID!) {
-  myAnnotations: annotations(userId: $userId, verseId: $verseId) {
+    query MyVerseAnnotations($verseId: ID!) {
+  myAnnotations(verseId: $verseId, first: 100) {
     edges {
       node {
         ...AnnotationList
@@ -897,7 +989,7 @@ export const MyVerseAnnotationsDocument = gql`
  * __useMyVerseAnnotationsQuery__
  *
  * To run a query within a React component, call `useMyVerseAnnotationsQuery` and pass it any options that fit your needs.
- * When your component renders, `useMyVerseAnnotationsQuery` returns an object from Apollo Client that contains loading, error, and data properties 
+ * When your component renders, `useMyVerseAnnotationsQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
@@ -906,7 +998,6 @@ export const MyVerseAnnotationsDocument = gql`
  * const { data, loading, error } = useMyVerseAnnotationsQuery({
  *   variables: {
  *      verseId: // value for 'verseId'
- *      userId: // value for 'userId'
  *   },
  * });
  */
@@ -921,7 +1012,7 @@ export type MyVerseAnnotationsLazyQueryHookResult = ReturnType<typeof useMyVerse
 export type MyVerseAnnotationsQueryResult = ApolloReactCommon.QueryResult<MyVerseAnnotationsQuery, MyVerseAnnotationsQueryVariables>;
 export const VerseAnnotationsDocument = gql`
     query VerseAnnotations($first: Int, $after: String, $verseId: ID!) {
-  publicAnnotations: annotations(first: $first, after: $after, verseId: $verseId) {
+  publicAnnotations(first: $first, after: $after, verseId: $verseId) {
     edges {
       node {
         ...AnnotationList
@@ -941,7 +1032,7 @@ export const VerseAnnotationsDocument = gql`
  * __useVerseAnnotationsQuery__
  *
  * To run a query within a React component, call `useVerseAnnotationsQuery` and pass it any options that fit your needs.
- * When your component renders, `useVerseAnnotationsQuery` returns an object from Apollo Client that contains loading, error, and data properties 
+ * When your component renders, `useVerseAnnotationsQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;

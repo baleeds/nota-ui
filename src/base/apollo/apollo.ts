@@ -23,7 +23,7 @@ const authLink = setContext((_, { headers }) => {
   return {
     headers: {
       ...headers,
-      Authorization: token,
+      Authorization: `Bearer ${token}`,
     },
   };
 });
@@ -65,7 +65,7 @@ const cache = new InMemoryCache({
    * By changing the behavior, we get a simpler and less volatile method
    * of generating cache keys
    */
-  dataIdFromObject: obj => obj.id,
+  dataIdFromObject: (obj) => obj.id,
   fragmentMatcher,
 });
 

@@ -4,12 +4,12 @@ export const annotationFragment = gql`
   fragment Annotation on Annotation {
     id
     text
-    favorited
-    createdAt
+    isFavorite
+    insertedAt
     user {
       id
-      displayName
-      username
+      firstName
+      lastName
     }
   }
 `;

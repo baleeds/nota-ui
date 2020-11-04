@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { theme } from '../styles/theme';
 
-interface Props {}
+interface Props { }
 
 export const NothingHere: React.FC<Props> = () => {
   return (
@@ -26,5 +26,6 @@ const Container = styled.div`
     margin: 0 auto;
     margin-bottom: 24px;
     opacity: 0.8;
+    max-width: 300px;
   }
 `;
