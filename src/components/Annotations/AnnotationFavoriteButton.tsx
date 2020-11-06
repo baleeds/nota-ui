@@ -45,8 +45,11 @@ export const AnnotationFavoriteButton: React.FC<Props> = ({ annotation }) => {
               id: annotation.id,
               isFavorite: true,
               numberOfFavorites: annotation.numberOfFavorites + 1,
-            }
-          }
+              __typename: 'Annotation',
+            },
+            __typename: 'FavoriteAnnotationPayload',
+          },
+          __typename: 'RootMutationType'
         }
       })
     );
@@ -79,8 +82,11 @@ export const AnnotationFavoriteButton: React.FC<Props> = ({ annotation }) => {
               id: annotation.id,
               isFavorite: false,
               numberOfFavorites: annotation.numberOfFavorites - 1,
-            }
-          }
+              __typename: "Annotation",
+            },
+            __typename: 'UnfavoriteAnnotationPayload',
+          },
+          __typename: 'RootMutationType',
         }
       })
     );

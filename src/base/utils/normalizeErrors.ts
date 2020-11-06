@@ -17,7 +17,6 @@ export function normalizeErrors<MutationType extends ObjectBase, Values = {}>(
   failure: Error | undefined,
   result: ExecutionResult<MutationType> | undefined
 ): NormalizedErrors<Values> {
-  console.log(failure, result);
   if (failure) {
     if (failure.message.match(/network/i)) {
       return { hasError: true, base: NETWORK_ERROR };
