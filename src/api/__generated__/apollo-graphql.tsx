@@ -495,7 +495,7 @@ export type Verse = {
 
 export type AnnotationFragment = (
   { __typename?: 'Annotation' }
-  & Pick<Annotation, 'id' | 'text' | 'isFavorite' | 'insertedAt'>
+  & Pick<Annotation, 'id' | 'text' | 'isFavorite' | 'numberOfFavorites' | 'insertedAt'>
   & { user: (
     { __typename?: 'User' }
     & Pick<User, 'id' | 'firstName' | 'lastName'>
@@ -504,7 +504,7 @@ export type AnnotationFragment = (
 
 export type AnnotationListFragment = (
   { __typename?: 'Annotation' }
-  & Pick<Annotation, 'id' | 'text' | 'insertedAt' | 'isFavorite'>
+  & Pick<Annotation, 'id' | 'text' | 'insertedAt' | 'isFavorite' | 'numberOfFavorites'>
   & { user: (
     { __typename?: 'User' }
     & Pick<User, 'id' | 'firstName' | 'lastName'>
@@ -708,6 +708,7 @@ export const AnnotationFragmentDoc = gql`
   id
   text
   isFavorite
+  numberOfFavorites
   insertedAt
   user {
     id
@@ -722,6 +723,7 @@ export const AnnotationListFragmentDoc = gql`
   text
   insertedAt
   isFavorite
+  numberOfFavorites
   user {
     id
     firstName

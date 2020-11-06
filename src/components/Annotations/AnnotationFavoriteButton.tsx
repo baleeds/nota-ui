@@ -12,9 +12,14 @@ import { toast } from '../Toast';
 import { UNKNOWN_ERROR } from '../../base/constants/messages';
 import { updateCachedAnnotation } from '../../base/apollo/cacheUpdaters';
 import { useAuth } from '../AuthProvider';
+import { ReactComponent as EmptyHeartIcon } from '../../icons/heart-16px.svg';
+import { ReactComponent as FilledHeartIcon } from '../../icons/heart_filled-16px.svg';
+import styled from 'styled-components';
+import { BaseButton } from '../Buttons';
+import { theme } from '../../styles/theme';
 
 interface Props {
-  annotation?: Pick<AnnotationFragment, 'id' | 'isFavorite'>;
+  annotation?: Pick<AnnotationFragment, 'id' | 'isFavorite' | 'numberOfFavorites'>;
 }
 
 export const AnnotationFavoriteButton: React.FC<Props> = ({ annotation }) => {
@@ -91,8 +96,17 @@ export const AnnotationFavoriteButton: React.FC<Props> = ({ annotation }) => {
   };
 
   return (
-    <button onClick={handleClick} type="button">
-      {annotation?.isFavorite ? 'Favorited' : 'Unfavorited'}
-    </button>
+    <ToggleButton onClick={handleClick} type="button">
+      {annotation?.isFavorite ? <FilledHeartIcon /> : <EmptyHeartIcon />}
+    </ToggleButton>
   );
 };
+
+const ToggleButton = styled(BaseButton)`
+  height: 20px;
+  width: 20px;
+  margin-right: 8px;
+  color: ${theme.primaryColor};
+  display: flex;
+  align-items: center;
+`;

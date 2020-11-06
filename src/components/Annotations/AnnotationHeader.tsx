@@ -11,7 +11,7 @@ import { getUserDisplayName } from '../../base/utils/formatters';
 interface Props {
   annotation?: Pick<
     AnnotationFragment,
-    'id' | 'user' | 'insertedAt' | 'isFavorite'
+    'id' | 'user' | 'insertedAt' | 'isFavorite' | 'numberOfFavorites'
   >;
 }
 
