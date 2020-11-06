@@ -120,7 +120,7 @@ export type FavoriteAnnotationPayload = {
   /** A list of failed validations. May be blank or null if mutation succeeded. */
   messages?: Maybe<Array<Maybe<ValidationMessage>>>;
   /** The object created/updated/deleted by the mutation. May be null if mutation failed. */
-  result?: Maybe<Scalars['Boolean']>;
+  result?: Maybe<Annotation>;
   /** Indicates if the mutation completed successfully or not.  */
   successful: Scalars['Boolean'];
 };
@@ -406,7 +406,7 @@ export type UnfavoriteAnnotationPayload = {
   /** A list of failed validations. May be blank or null if mutation succeeded. */
   messages?: Maybe<Array<Maybe<ValidationMessage>>>;
   /** The object created/updated/deleted by the mutation. May be null if mutation failed. */
-  result?: Maybe<Scalars['Boolean']>;
+  result?: Maybe<Annotation>;
   /** Indicates if the mutation completed successfully or not.  */
   successful: Scalars['Boolean'];
 };
@@ -546,7 +546,10 @@ export type FavoriteAnnotationMutation = (
   & { favoriteAnnotation: (
     { __typename?: 'FavoriteAnnotationPayload' }
     & Pick<FavoriteAnnotationPayload, 'successful'>
-    & { messages?: Maybe<Array<Maybe<(
+    & { result?: Maybe<(
+      { __typename?: 'Annotation' }
+      & Pick<Annotation, 'id' | 'isFavorite' | 'numberOfFavorites'>
+    )>, messages?: Maybe<Array<Maybe<(
       { __typename?: 'ValidationMessage' }
       & Pick<ValidationMessage, 'field' | 'message'>
     )>>> }
@@ -640,7 +643,10 @@ export type UnfavoriteAnnotationMutation = (
   & { unfavoriteAnnotation: (
     { __typename?: 'UnfavoriteAnnotationPayload' }
     & Pick<UnfavoriteAnnotationPayload, 'successful'>
-    & { messages?: Maybe<Array<Maybe<(
+    & { result?: Maybe<(
+      { __typename?: 'Annotation' }
+      & Pick<Annotation, 'id' | 'isFavorite' | 'numberOfFavorites'>
+    )>, messages?: Maybe<Array<Maybe<(
       { __typename?: 'ValidationMessage' }
       & Pick<ValidationMessage, 'field' | 'message'>
     )>>> }
@@ -780,6 +786,11 @@ export const FavoriteAnnotationDocument = gql`
     mutation FavoriteAnnotation($input: FavoriteAnnotationInput!) {
   favoriteAnnotation(input: $input) {
     successful
+    result {
+      id
+      isFavorite
+      numberOfFavorites
+    }
     messages {
       field
       message
@@ -969,6 +980,11 @@ export const UnfavoriteAnnotationDocument = gql`
     mutation UnfavoriteAnnotation($input: UnfavoriteAnnotationInput!) {
   unfavoriteAnnotation(input: $input) {
     successful
+    result {
+      id
+      isFavorite
+      numberOfFavorites
+    }
     messages {
       field
       message

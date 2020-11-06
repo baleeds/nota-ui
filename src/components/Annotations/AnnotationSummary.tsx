@@ -5,6 +5,7 @@ import { theme } from '../../styles/theme';
 import Skeleton from 'react-loading-skeleton';
 import { Link } from 'react-router-dom';
 import { AnnotationHeader } from './AnnotationHeader';
+import { AnnotationActivitySummary } from './AnnotationActivitySummary';
 
 interface Props {
   annotation?: AnnotationListFragment;
@@ -22,6 +23,7 @@ export const AnnotationSummary: React.FC<Props> = ({
         <TextContainer>
           <TextLink to={`${versePath}/${annotation.id}`}>
             <p dangerouslySetInnerHTML={{ __html: annotation.text }} />
+            <AnnotationActivitySummary annotation={annotation} />
           </TextLink>
         </TextContainer>
       ) : (

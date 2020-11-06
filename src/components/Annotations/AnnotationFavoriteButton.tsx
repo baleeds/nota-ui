@@ -10,7 +10,6 @@ import { attempt } from '../../base/utils/attempt';
 import { normalizeErrors } from '../../base/utils/normalizeErrors';
 import { toast } from '../Toast';
 import { UNKNOWN_ERROR } from '../../base/constants/messages';
-import { updateCachedAnnotation } from '../../base/apollo/cacheUpdaters';
 import { useAuth } from '../AuthProvider';
 import { ReactComponent as EmptyHeartIcon } from '../../icons/heart-16px.svg';
 import { ReactComponent as FilledHeartIcon } from '../../icons/heart_filled-16px.svg';
@@ -38,10 +37,17 @@ export const AnnotationFavoriteButton: React.FC<Props> = ({ annotation }) => {
             annotationId: annotation.id,
           },
         },
-        update: (proxy, result) => {
-          if (!result.data?.favoriteAnnotation?.successful) return;
-          updateCachedAnnotation(proxy, annotation.id, { isFavorite: true });
-        },
+        optimisticResponse: {
+          favoriteAnnotation: {
+            successful: true,
+            messages: [],
+            result: {
+              id: annotation.id,
+              isFavorite: true,
+              numberOfFavorites: annotation.numberOfFavorites + 1,
+            }
+          }
+        }
       })
     );
 
@@ -65,10 +71,17 @@ export const AnnotationFavoriteButton: React.FC<Props> = ({ annotation }) => {
             annotationId: annotation.id,
           },
         },
-        update: (proxy, result) => {
-          if (!result.data?.unfavoriteAnnotation?.successful) return;
-          updateCachedAnnotation(proxy, annotation.id, { isFavorite: false });
-        },
+        optimisticResponse: {
+          unfavoriteAnnotation: {
+            successful: true,
+            messages: [],
+            result: {
+              id: annotation.id,
+              isFavorite: false,
+              numberOfFavorites: annotation.numberOfFavorites - 1,
+            }
+          }
+        }
       })
     );
 
