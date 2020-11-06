@@ -32,9 +32,9 @@ const initialValues: Values = {
 
 const validationSchema = Yup.object().shape({
   email: Yup.string()
-    .required(isRequired('Email'))
-    .matches(/@/, mustBeValid('Email')),
-  password: Yup.string().required(isRequired('Password')),
+    .required(isRequired('email'))
+    .matches(/@/, mustBeValid('email')),
+  password: Yup.string().required(isRequired('password')),
 });
 
 const getRedirectUrl = (history: History): string => {

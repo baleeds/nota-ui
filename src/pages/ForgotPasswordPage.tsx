@@ -28,8 +28,8 @@ const initialValues: Values = {
 
 const validationSchema = Yup.object().shape({
   email: Yup.string()
-    .required(isRequired('Email'))
-    .matches(/@/, mustBeValid('Email')),
+    .required(isRequired('email'))
+    .matches(/@/, mustBeValid('email')),
 });
 
 export const ForgotPasswordPage: React.FC = () => {

@@ -516,6 +516,26 @@ export type MeFragment = (
   & Pick<User, 'id' | 'email'>
 );
 
+export type CreateAccountMutationVariables = Exact<{
+  input: CreateAccountInput;
+}>;
+
+
+export type CreateAccountMutation = (
+  { __typename?: 'RootMutationType' }
+  & { createAccount: (
+    { __typename?: 'CreateAccountPayload' }
+    & Pick<CreateAccountPayload, 'successful'>
+    & { result?: Maybe<(
+      { __typename?: 'User' }
+      & Pick<User, 'id'>
+    )>, messages?: Maybe<Array<Maybe<(
+      { __typename?: 'ValidationMessage' }
+      & Pick<ValidationMessage, 'field' | 'message'>
+    )>>> }
+  ) }
+);
+
 export type FavoriteAnnotationMutationVariables = Exact<{
   input: FavoriteAnnotationInput;
 }>;
@@ -715,6 +735,45 @@ export const MeFragmentDoc = gql`
   email
 }
     `;
+export const CreateAccountDocument = gql`
+    mutation CreateAccount($input: CreateAccountInput!) {
+  createAccount(input: $input) {
+    result {
+      id
+    }
+    messages {
+      field
+      message
+    }
+    successful
+  }
+}
+    `;
+export type CreateAccountMutationFn = ApolloReactCommon.MutationFunction<CreateAccountMutation, CreateAccountMutationVariables>;
+
+/**
+ * __useCreateAccountMutation__
+ *
+ * To run a mutation, you first call `useCreateAccountMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateAccountMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createAccountMutation, { data, loading, error }] = useCreateAccountMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useCreateAccountMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<CreateAccountMutation, CreateAccountMutationVariables>) {
+        return ApolloReactHooks.useMutation<CreateAccountMutation, CreateAccountMutationVariables>(CreateAccountDocument, baseOptions);
+      }
+export type CreateAccountMutationHookResult = ReturnType<typeof useCreateAccountMutation>;
+export type CreateAccountMutationResult = ApolloReactCommon.MutationResult<CreateAccountMutation>;
+export type CreateAccountMutationOptions = ApolloReactCommon.BaseMutationOptions<CreateAccountMutation, CreateAccountMutationVariables>;
 export const FavoriteAnnotationDocument = gql`
     mutation FavoriteAnnotation($input: FavoriteAnnotationInput!) {
   favoriteAnnotation(input: $input) {

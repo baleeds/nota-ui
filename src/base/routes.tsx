@@ -7,6 +7,7 @@ import { LoginPage } from '../pages/LoginPage';
 import { ForgotPasswordPage } from '../pages/ForgotPasswordPage';
 import { ResetPasswordPage } from '../pages/ResetPasswordPage';
 import { AnnotatePage } from '../pages/AnnotatePage';
+import { RegisterPage } from '../pages/RegisterPage';
 
 export interface RouteParams {
   bookName?: string;
@@ -43,9 +44,14 @@ export const routes = [
     component: CollectionPage,
   },
   {
-    path: ['/login', '/register'],
+    path: '/login',
     exact: true,
     component: LoginPage,
+  },
+  {
+    path: '/register',
+    exact: true,
+    component: RegisterPage,
   },
   {
     path: '/forgot-password',

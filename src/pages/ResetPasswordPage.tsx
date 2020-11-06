@@ -15,7 +15,7 @@ import { AuthPage } from '../components/AuthPage';
 import { FormErrorDisplay } from '../components/FormErrorDisplay';
 import { FieldGroup } from '../components/FieldGroup';
 import { PrimaryButtonLarge } from '../components/Buttons';
-import { isRequired } from '../base/utils/errorMessages';
+import * as ErrorMessages from '../base/utils/errorMessages';
 import { P } from '../components/Typography';
 
 interface Values {
@@ -33,11 +33,12 @@ const isTokenValid = (token: ReturnType<typeof getToken>) =>
 
 const validationSchema = Yup.object().shape({
   password: Yup.string()
-    .min(8, 'Passwords must be at least 8 characters')
-    .required(isRequired('Password')),
+    .min(1, ErrorMessages.minLength("password", 1))
+    .max(255, ErrorMessages.maxLength("password", 255))
+    .required(ErrorMessages.isRequired('password')),
   confirmPassword: Yup.string()
-    .oneOf([Yup.ref('password'), ''], 'Passwords should match')
-    .required(isRequired('Password confirmation')),
+    .oneOf([Yup.ref('password'), ''], 'passwords should match')
+    .required(ErrorMessages.isRequired('password confirmation')),
 });
 
 const initialValues = {

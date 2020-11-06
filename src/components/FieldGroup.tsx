@@ -1,7 +1,34 @@
+import React from 'react';
+import { ErrorMessage } from 'formik';
 import styled from 'styled-components';
 import { theme } from '../styles/theme';
 
-export const FieldGroup = styled.div`
+interface Props {
+  formikFieldName?: string;
+  error?: string;
+}
+
+export const FieldGroup: React.FC<Props> = ({
+  formikFieldName,
+  error: errorOverride,
+  children,
+}) => (
+  <Container>
+    {children}
+    {errorOverride ? (
+      <ErrorContainer>{errorOverride}</ErrorContainer>
+    ) : (
+      !!formikFieldName && (
+        <ErrorMessage
+          name={formikFieldName}
+          render={error => <ErrorContainer>{error}</ErrorContainer>}
+        />
+      )
+    )}
+  </Container>
+);
+
+const Container = styled.div`
   margin-bottom: 20px;
 
   label {
@@ -28,4 +55,11 @@ export const FieldGroup = styled.div`
       border-color: ${theme.primaryColor};
     }
   }
+`;
+
+const ErrorContainer = styled.div`
+  margin-top: 8px;
+  color: ${theme.errorColor};
+  font-size: 0.9rem;
+  font-weight: bold;
 `;

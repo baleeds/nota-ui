@@ -56,6 +56,7 @@ export const OutlineButtonLarge = styled(OutlineButton)`
   &:hover,
   &:focus {
     background: ${theme.primaryTint};
+    color: ${theme.primaryColor};
   }
 `;
 

@@ -17,6 +17,7 @@ export function normalizeErrors<MutationType extends ObjectBase, Values = {}>(
   failure: Error | undefined,
   result: ExecutionResult<MutationType> | undefined
 ): NormalizedErrors<Values> {
+  console.log(failure, result);
   if (failure) {
     if (failure.message.match(/network/i)) {
       return { hasError: true, base: NETWORK_ERROR };
@@ -33,9 +34,9 @@ export function normalizeErrors<MutationType extends ObjectBase, Values = {}>(
   const mutationErrorsMap = Object.keys(data).reduce<{ [key: string]: string }>(
     (errorsMap, dataKey) => {
       const mutationResult = data[dataKey];
-      const { errors = [] } = mutationResult || {};
+      const { messages = [] } = mutationResult || {};
 
-      errors.forEach((error: MutationError) => {
+      messages.forEach((error: MutationError) => {
         if (error.field)
           errorsMap[error.field] = error.message || UNKNOWN_ERROR;
       });
