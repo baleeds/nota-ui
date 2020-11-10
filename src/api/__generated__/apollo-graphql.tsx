@@ -690,6 +690,30 @@ export type CollectionAnnotationsQuery = (
   )> }
 );
 
+export type FavoriteAnnotationsQueryVariables = Exact<{
+  first: Scalars['Int'];
+  after?: Maybe<Scalars['String']>;
+  userId: Scalars['ID'];
+}>;
+
+
+export type FavoriteAnnotationsQuery = (
+  { __typename?: 'RootQueryType' }
+  & { favoriteAnnotations?: Maybe<(
+    { __typename?: 'AnnotationConnection' }
+    & { edges?: Maybe<Array<Maybe<(
+      { __typename?: 'AnnotationEdge' }
+      & { node?: Maybe<(
+        { __typename?: 'Annotation' }
+        & AnnotationListFragment
+      )> }
+    )>>>, pageInfo: (
+      { __typename?: 'PageInfo' }
+      & Pick<PageInfo, 'startCursor' | 'endCursor' | 'hasNextPage' | 'hasPreviousPage'>
+    ) }
+  )> }
+);
+
 export type MyCollectionAnnotationsQueryVariables = Exact<{
   first: Scalars['Int'];
   after?: Maybe<Scalars['String']>;
@@ -1155,6 +1179,51 @@ export function useCollectionAnnotationsLazyQuery(baseOptions?: ApolloReactHooks
 export type CollectionAnnotationsQueryHookResult = ReturnType<typeof useCollectionAnnotationsQuery>;
 export type CollectionAnnotationsLazyQueryHookResult = ReturnType<typeof useCollectionAnnotationsLazyQuery>;
 export type CollectionAnnotationsQueryResult = ApolloReactCommon.QueryResult<CollectionAnnotationsQuery, CollectionAnnotationsQueryVariables>;
+export const FavoriteAnnotationsDocument = gql`
+    query FavoriteAnnotations($first: Int!, $after: String, $userId: ID!) {
+  favoriteAnnotations(first: $first, after: $after, userId: $userId) {
+    edges {
+      node {
+        ...AnnotationList
+      }
+    }
+    pageInfo {
+      startCursor
+      endCursor
+      hasNextPage
+      hasPreviousPage
+    }
+  }
+}
+    ${AnnotationListFragmentDoc}`;
+
+/**
+ * __useFavoriteAnnotationsQuery__
+ *
+ * To run a query within a React component, call `useFavoriteAnnotationsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useFavoriteAnnotationsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useFavoriteAnnotationsQuery({
+ *   variables: {
+ *      first: // value for 'first'
+ *      after: // value for 'after'
+ *      userId: // value for 'userId'
+ *   },
+ * });
+ */
+export function useFavoriteAnnotationsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<FavoriteAnnotationsQuery, FavoriteAnnotationsQueryVariables>) {
+        return ApolloReactHooks.useQuery<FavoriteAnnotationsQuery, FavoriteAnnotationsQueryVariables>(FavoriteAnnotationsDocument, baseOptions);
+      }
+export function useFavoriteAnnotationsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<FavoriteAnnotationsQuery, FavoriteAnnotationsQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<FavoriteAnnotationsQuery, FavoriteAnnotationsQueryVariables>(FavoriteAnnotationsDocument, baseOptions);
+        }
+export type FavoriteAnnotationsQueryHookResult = ReturnType<typeof useFavoriteAnnotationsQuery>;
+export type FavoriteAnnotationsLazyQueryHookResult = ReturnType<typeof useFavoriteAnnotationsLazyQuery>;
+export type FavoriteAnnotationsQueryResult = ApolloReactCommon.QueryResult<FavoriteAnnotationsQuery, FavoriteAnnotationsQueryVariables>;
 export const MyCollectionAnnotationsDocument = gql`
     query MyCollectionAnnotations($first: Int!, $after: String) {
   myAnnotations(first: $first, after: $after) {

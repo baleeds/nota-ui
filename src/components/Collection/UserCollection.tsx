@@ -9,6 +9,7 @@ import { Card } from '../Card';
 import { NothingHere } from '../NothingHere';
 import { Tab, Tabs } from '../Tabs';
 import { CollectionAnnotations } from './CollectionAnnotations';
+import { CollectionFavorites } from './CollectionFavorites';
 import { CollectionUserInfo } from './CollectionUserInfo';
 import { MyCollectionAnnotations } from './MyCollectionAnnotations';
 
@@ -38,6 +39,8 @@ export const UserCollection: React.FC<Props> = ({ userId }) => {
     if (pathname.includes('annotations')) {
       if (isMe) return <MyCollectionAnnotations />;
       return <CollectionAnnotations userId={userId} />;
+    } else if (pathname.includes('favorites')) {
+      return <CollectionFavorites />;
     }
 
     // if (pathname.includes("favorites")) return <CollectionFavorites userId={userId} />

@@ -3,7 +3,7 @@ import { AnnotationListFragment } from '../../api/__generated__/apollo-graphql';
 import styled from 'styled-components';
 import { theme } from '../../styles/theme';
 import Skeleton from 'react-loading-skeleton';
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { AnnotationHeader } from './AnnotationHeader';
 import { AnnotationActivitySummary } from './AnnotationActivitySummary';
 
@@ -16,7 +16,6 @@ export const AnnotationSummary: React.FC<Props> = ({
   annotation,
   versePath,
 }) => {
-  const history = useHistory();
   return (
     <div>
       <AnnotationHeader annotation={annotation} />
