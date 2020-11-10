@@ -14,6 +14,7 @@ export interface RouteParams {
   chapterId?: string;
   verseId?: string;
   annotationId?: string;
+  userId?: string;
 }
 
 export const routes = [
@@ -39,7 +40,18 @@ export const routes = [
     component: AnnotatePage,
   },
   {
-    path: '/collection',
+    path: '/collection/:userId',
+    exact: true,
+    component: (props: any) => (
+      <Redirect to={`/collection/${props.match.params.userId}/annotations`} />
+    ),
+  },
+  {
+    path: [
+      '/collection',
+      '/collection/:userId/annotations',
+      '/collection/:userId/favorites',
+    ],
     exact: true,
     component: CollectionPage,
   },

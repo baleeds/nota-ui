@@ -666,6 +666,53 @@ export type AnnotationQuery = (
   ) }
 );
 
+export type CollectionAnnotationsQueryVariables = Exact<{
+  userId: Scalars['ID'];
+  first?: Maybe<Scalars['Int']>;
+  after?: Maybe<Scalars['String']>;
+}>;
+
+
+export type CollectionAnnotationsQuery = (
+  { __typename?: 'RootQueryType' }
+  & { publicAnnotations?: Maybe<(
+    { __typename?: 'AnnotationConnection' }
+    & { edges?: Maybe<Array<Maybe<(
+      { __typename?: 'AnnotationEdge' }
+      & { node?: Maybe<(
+        { __typename?: 'Annotation' }
+        & AnnotationListFragment
+      )> }
+    )>>>, pageInfo: (
+      { __typename?: 'PageInfo' }
+      & Pick<PageInfo, 'startCursor' | 'endCursor' | 'hasNextPage' | 'hasPreviousPage'>
+    ) }
+  )> }
+);
+
+export type MyCollectionAnnotationsQueryVariables = Exact<{
+  first: Scalars['Int'];
+  after?: Maybe<Scalars['String']>;
+}>;
+
+
+export type MyCollectionAnnotationsQuery = (
+  { __typename?: 'RootQueryType' }
+  & { myAnnotations?: Maybe<(
+    { __typename?: 'AnnotationConnection' }
+    & { edges?: Maybe<Array<Maybe<(
+      { __typename?: 'AnnotationEdge' }
+      & { node?: Maybe<(
+        { __typename?: 'Annotation' }
+        & AnnotationListFragment
+      )> }
+    )>>>, pageInfo: (
+      { __typename?: 'PageInfo' }
+      & Pick<PageInfo, 'startCursor' | 'endCursor' | 'hasNextPage' | 'hasPreviousPage'>
+    ) }
+  )> }
+);
+
 export type MyVerseAnnotationsQueryVariables = Exact<{
   verseId: Scalars['ID'];
 }>;
@@ -683,6 +730,19 @@ export type MyVerseAnnotationsQuery = (
       )> }
     )>>> }
   )> }
+);
+
+export type UserProfileQueryVariables = Exact<{
+  userId: Scalars['ID'];
+}>;
+
+
+export type UserProfileQuery = (
+  { __typename?: 'RootQueryType' }
+  & { user: (
+    { __typename?: 'User' }
+    & Pick<User, 'id' | 'firstName' | 'lastName'>
+  ) }
 );
 
 export type VerseAnnotationsQueryVariables = Exact<{
@@ -1050,6 +1110,95 @@ export function useAnnotationLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryH
 export type AnnotationQueryHookResult = ReturnType<typeof useAnnotationQuery>;
 export type AnnotationLazyQueryHookResult = ReturnType<typeof useAnnotationLazyQuery>;
 export type AnnotationQueryResult = ApolloReactCommon.QueryResult<AnnotationQuery, AnnotationQueryVariables>;
+export const CollectionAnnotationsDocument = gql`
+    query CollectionAnnotations($userId: ID!, $first: Int, $after: String) {
+  publicAnnotations(userId: $userId, first: $first, after: $after) {
+    edges {
+      node {
+        ...AnnotationList
+      }
+    }
+    pageInfo {
+      startCursor
+      endCursor
+      hasNextPage
+      hasPreviousPage
+    }
+  }
+}
+    ${AnnotationListFragmentDoc}`;
+
+/**
+ * __useCollectionAnnotationsQuery__
+ *
+ * To run a query within a React component, call `useCollectionAnnotationsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useCollectionAnnotationsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useCollectionAnnotationsQuery({
+ *   variables: {
+ *      userId: // value for 'userId'
+ *      first: // value for 'first'
+ *      after: // value for 'after'
+ *   },
+ * });
+ */
+export function useCollectionAnnotationsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<CollectionAnnotationsQuery, CollectionAnnotationsQueryVariables>) {
+        return ApolloReactHooks.useQuery<CollectionAnnotationsQuery, CollectionAnnotationsQueryVariables>(CollectionAnnotationsDocument, baseOptions);
+      }
+export function useCollectionAnnotationsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<CollectionAnnotationsQuery, CollectionAnnotationsQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<CollectionAnnotationsQuery, CollectionAnnotationsQueryVariables>(CollectionAnnotationsDocument, baseOptions);
+        }
+export type CollectionAnnotationsQueryHookResult = ReturnType<typeof useCollectionAnnotationsQuery>;
+export type CollectionAnnotationsLazyQueryHookResult = ReturnType<typeof useCollectionAnnotationsLazyQuery>;
+export type CollectionAnnotationsQueryResult = ApolloReactCommon.QueryResult<CollectionAnnotationsQuery, CollectionAnnotationsQueryVariables>;
+export const MyCollectionAnnotationsDocument = gql`
+    query MyCollectionAnnotations($first: Int!, $after: String) {
+  myAnnotations(first: $first, after: $after) {
+    edges {
+      node {
+        ...AnnotationList
+      }
+    }
+    pageInfo {
+      startCursor
+      endCursor
+      hasNextPage
+      hasPreviousPage
+    }
+  }
+}
+    ${AnnotationListFragmentDoc}`;
+
+/**
+ * __useMyCollectionAnnotationsQuery__
+ *
+ * To run a query within a React component, call `useMyCollectionAnnotationsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useMyCollectionAnnotationsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useMyCollectionAnnotationsQuery({
+ *   variables: {
+ *      first: // value for 'first'
+ *      after: // value for 'after'
+ *   },
+ * });
+ */
+export function useMyCollectionAnnotationsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<MyCollectionAnnotationsQuery, MyCollectionAnnotationsQueryVariables>) {
+        return ApolloReactHooks.useQuery<MyCollectionAnnotationsQuery, MyCollectionAnnotationsQueryVariables>(MyCollectionAnnotationsDocument, baseOptions);
+      }
+export function useMyCollectionAnnotationsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<MyCollectionAnnotationsQuery, MyCollectionAnnotationsQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<MyCollectionAnnotationsQuery, MyCollectionAnnotationsQueryVariables>(MyCollectionAnnotationsDocument, baseOptions);
+        }
+export type MyCollectionAnnotationsQueryHookResult = ReturnType<typeof useMyCollectionAnnotationsQuery>;
+export type MyCollectionAnnotationsLazyQueryHookResult = ReturnType<typeof useMyCollectionAnnotationsLazyQuery>;
+export type MyCollectionAnnotationsQueryResult = ApolloReactCommon.QueryResult<MyCollectionAnnotationsQuery, MyCollectionAnnotationsQueryVariables>;
 export const MyVerseAnnotationsDocument = gql`
     query MyVerseAnnotations($verseId: ID!) {
   myAnnotations(verseId: $verseId, first: 100) {
@@ -1087,6 +1236,41 @@ export function useMyVerseAnnotationsLazyQuery(baseOptions?: ApolloReactHooks.La
 export type MyVerseAnnotationsQueryHookResult = ReturnType<typeof useMyVerseAnnotationsQuery>;
 export type MyVerseAnnotationsLazyQueryHookResult = ReturnType<typeof useMyVerseAnnotationsLazyQuery>;
 export type MyVerseAnnotationsQueryResult = ApolloReactCommon.QueryResult<MyVerseAnnotationsQuery, MyVerseAnnotationsQueryVariables>;
+export const UserProfileDocument = gql`
+    query UserProfile($userId: ID!) {
+  user(id: $userId) {
+    id
+    firstName
+    lastName
+  }
+}
+    `;
+
+/**
+ * __useUserProfileQuery__
+ *
+ * To run a query within a React component, call `useUserProfileQuery` and pass it any options that fit your needs.
+ * When your component renders, `useUserProfileQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useUserProfileQuery({
+ *   variables: {
+ *      userId: // value for 'userId'
+ *   },
+ * });
+ */
+export function useUserProfileQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<UserProfileQuery, UserProfileQueryVariables>) {
+        return ApolloReactHooks.useQuery<UserProfileQuery, UserProfileQueryVariables>(UserProfileDocument, baseOptions);
+      }
+export function useUserProfileLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<UserProfileQuery, UserProfileQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<UserProfileQuery, UserProfileQueryVariables>(UserProfileDocument, baseOptions);
+        }
+export type UserProfileQueryHookResult = ReturnType<typeof useUserProfileQuery>;
+export type UserProfileLazyQueryHookResult = ReturnType<typeof useUserProfileLazyQuery>;
+export type UserProfileQueryResult = ApolloReactCommon.QueryResult<UserProfileQuery, UserProfileQueryVariables>;
 export const VerseAnnotationsDocument = gql`
     query VerseAnnotations($first: Int, $after: String, $verseId: ID!) {
   publicAnnotations(first: $first, after: $after, verseId: $verseId) {

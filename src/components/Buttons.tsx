@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { theme } from '../styles/theme';
 
@@ -88,5 +89,15 @@ export const GhostButtonContrast = styled(GhostButton)`
   &:hover,
   &:focus {
     background: rgba(255, 255, 255, 0.1);
+  }
+`;
+
+export const LinkBaseButton = styled(Link)`
+  text-decoration: none;
+  color: currentColor;
+
+  &:hover,
+  &:focus {
+    color: currentColor;
   }
 `;

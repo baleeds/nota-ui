@@ -18,7 +18,10 @@ import { BaseButton } from '../Buttons';
 import { theme } from '../../styles/theme';
 
 interface Props {
-  annotation?: Pick<AnnotationFragment, 'id' | 'isFavorite' | 'numberOfFavorites'>;
+  annotation?: Pick<
+    AnnotationFragment,
+    'id' | 'isFavorite' | 'numberOfFavorites'
+  >;
 }
 
 export const AnnotationFavoriteButton: React.FC<Props> = ({ annotation }) => {
@@ -49,8 +52,8 @@ export const AnnotationFavoriteButton: React.FC<Props> = ({ annotation }) => {
             },
             __typename: 'FavoriteAnnotationPayload',
           },
-          __typename: 'RootMutationType'
-        }
+          __typename: 'RootMutationType',
+        },
       })
     );
 
@@ -82,12 +85,12 @@ export const AnnotationFavoriteButton: React.FC<Props> = ({ annotation }) => {
               id: annotation.id,
               isFavorite: false,
               numberOfFavorites: annotation.numberOfFavorites - 1,
-              __typename: "Annotation",
+              __typename: 'Annotation',
             },
             __typename: 'UnfavoriteAnnotationPayload',
           },
           __typename: 'RootMutationType',
-        }
+        },
       })
     );
 
