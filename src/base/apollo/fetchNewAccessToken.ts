@@ -32,7 +32,6 @@ export const fetchNewAccessToken = async (refreshToken: string) => {
     const refreshResponse = await fetchResult.json();
 
     const { accessToken } = refreshResponse?.data?.refreshToken?.result || {};
-    console.log(accessToken);
     if (accessToken) {
       localStorage.setItem(ACCESS_TOKEN_KEY, accessToken);
       return `Bearer ${accessToken}`;
