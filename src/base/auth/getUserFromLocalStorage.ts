@@ -10,6 +10,7 @@ const meFragmentSchema = Yup.object().shape({
 
 export const getUserFromLocalStorage = (): MeFragment | undefined => {
   const currentUserString = localStorage.getItem(CURRENT_USER_KEY);
+
   if (!currentUserString) {
     return undefined;
   }

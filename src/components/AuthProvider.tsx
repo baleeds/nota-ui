@@ -7,6 +7,7 @@ import { clearLocalStorageAuth } from '../base/auth/clearLocalStorageAuth';
 
 export interface IAuthContext {
   user?: MeFragment;
+  isSessionValid: boolean;
   login: (payload: LoginPayload) => void;
   logout: () => void;
 }
@@ -19,6 +20,7 @@ export interface LoginPayload {
 
 export const AuthContext = React.createContext<IAuthContext>({
   user: undefined,
+  isSessionValid: false,
   login: () => {},
   logout: () => {},
 });
@@ -29,10 +31,9 @@ export const useAuth = () => {
 };
 
 export const AuthProvider: React.FC = ({ children }) => {
-  let cachedUser: MeFragment | undefined;
-  if (isAccessTokenValid()) {
-    cachedUser = getUserFromLocalStorage();
-  }
+  const cachedUser = getUserFromLocalStorage();
+  const isSessionValid = isAccessTokenValid();
+
   const [user, setUser] = useState<MeFragment | undefined>(cachedUser);
 
   const login = useCallback(
@@ -48,11 +49,10 @@ export const AuthProvider: React.FC = ({ children }) => {
     setUser(undefined);
   }, [setUser]);
 
-  const contextValue = React.useMemo(() => ({ user, login, logout }), [
-    user,
-    login,
-    logout,
-  ]);
+  const contextValue = React.useMemo(
+    () => ({ user, isSessionValid, login, logout }),
+    [user, isSessionValid, login, logout]
+  );
 
   return (
     <AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>

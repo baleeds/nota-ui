@@ -556,6 +556,26 @@ export type FavoriteAnnotationMutation = (
   ) }
 );
 
+export type RefreshTokenMutationVariables = Exact<{
+  input: Scalars['String'];
+}>;
+
+
+export type RefreshTokenMutation = (
+  { __typename?: 'RootMutationType' }
+  & { refreshToken: (
+    { __typename?: 'RefreshTokenPayload' }
+    & Pick<RefreshTokenPayload, 'successful'>
+    & { result?: Maybe<(
+      { __typename?: 'SessionInfo' }
+      & Pick<SessionInfo, 'accessToken' | 'refreshToken'>
+    )>, messages?: Maybe<Array<Maybe<(
+      { __typename?: 'ValidationMessage' }
+      & Pick<ValidationMessage, 'field' | 'message'>
+    )>>> }
+  ) }
+);
+
 export type ResetPasswordMutationVariables = Exact<{
   input: ResetPasswordInput;
 }>;
@@ -907,6 +927,46 @@ export function useFavoriteAnnotationMutation(baseOptions?: ApolloReactHooks.Mut
 export type FavoriteAnnotationMutationHookResult = ReturnType<typeof useFavoriteAnnotationMutation>;
 export type FavoriteAnnotationMutationResult = ApolloReactCommon.MutationResult<FavoriteAnnotationMutation>;
 export type FavoriteAnnotationMutationOptions = ApolloReactCommon.BaseMutationOptions<FavoriteAnnotationMutation, FavoriteAnnotationMutationVariables>;
+export const RefreshTokenDocument = gql`
+    mutation RefreshToken($input: String!) {
+  refreshToken(refreshToken: $input) {
+    result {
+      accessToken
+      refreshToken
+    }
+    messages {
+      field
+      message
+    }
+    successful
+  }
+}
+    `;
+export type RefreshTokenMutationFn = ApolloReactCommon.MutationFunction<RefreshTokenMutation, RefreshTokenMutationVariables>;
+
+/**
+ * __useRefreshTokenMutation__
+ *
+ * To run a mutation, you first call `useRefreshTokenMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useRefreshTokenMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [refreshTokenMutation, { data, loading, error }] = useRefreshTokenMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useRefreshTokenMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<RefreshTokenMutation, RefreshTokenMutationVariables>) {
+        return ApolloReactHooks.useMutation<RefreshTokenMutation, RefreshTokenMutationVariables>(RefreshTokenDocument, baseOptions);
+      }
+export type RefreshTokenMutationHookResult = ReturnType<typeof useRefreshTokenMutation>;
+export type RefreshTokenMutationResult = ApolloReactCommon.MutationResult<RefreshTokenMutation>;
+export type RefreshTokenMutationOptions = ApolloReactCommon.BaseMutationOptions<RefreshTokenMutation, RefreshTokenMutationVariables>;
 export const ResetPasswordDocument = gql`
     mutation ResetPassword($input: ResetPasswordInput!) {
   resetPassword(input: $input) {
