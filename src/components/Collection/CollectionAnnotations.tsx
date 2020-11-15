@@ -60,7 +60,6 @@ export const CollectionAnnotations: React.FC<Props> = ({ userId }) => {
       error={error}
       onShowMore={handleShowMore}
       pageInfo={pageInfo}
-      versePath={'TODO'}
     />
   );
 };

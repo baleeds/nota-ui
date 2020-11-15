@@ -6,22 +6,21 @@ import Skeleton from 'react-loading-skeleton';
 import { Link } from 'react-router-dom';
 import { AnnotationHeader } from './AnnotationHeader';
 import { AnnotationActivitySummary } from './AnnotationActivitySummary';
+import { getVersePath } from '../../base/utils/getVersePath';
 
 interface Props {
   annotation?: AnnotationListFragment;
-  versePath: string;
 }
 
-export const AnnotationSummary: React.FC<Props> = ({
-  annotation,
-  versePath,
-}) => {
+export const AnnotationSummary: React.FC<Props> = ({ annotation }) => {
+  const versePath = annotation ? getVersePath(annotation.verseId) : '';
+
   return (
     <div>
       <AnnotationHeader annotation={annotation} />
       {annotation ? (
         <TextContainer>
-          <TextLink to={`${versePath}/${annotation.id}`}>
+          <TextLink to={`/read/${versePath}/${annotation.id}`}>
             <p dangerouslySetInnerHTML={{ __html: annotation.text }} />
             <AnnotationActivitySummary annotation={annotation} />
           </TextLink>

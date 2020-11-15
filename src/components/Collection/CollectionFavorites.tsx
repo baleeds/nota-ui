@@ -60,7 +60,6 @@ export const CollectionFavorites: React.FC = () => {
       error={error}
       onShowMore={handleShowMore}
       pageInfo={pageInfo}
-      versePath={'TODO'}
     />
   );
 };

@@ -17,7 +17,6 @@ interface Props {
   error?: ApolloError;
   onShowMore: () => void;
   pageInfo?: Pick<PageInfo, 'startCursor' | 'hasNextPage'>;
-  versePath: string;
 }
 
 export const CollectionAnnotationsList: React.FC<Props> = ({
@@ -26,13 +25,12 @@ export const CollectionAnnotationsList: React.FC<Props> = ({
   error,
   onShowMore,
   pageInfo,
-  versePath,
 }) => {
   const renderAnnotations = () => {
     if (loading && !annotations) {
       return new Array(3).fill(null).map((_item, index) => (
         <Box key={`loading-annotation-${index}`}>
-          <AnnotationSummary versePath={versePath} />
+          <AnnotationSummary />
         </Box>
       ));
     }
@@ -47,7 +45,7 @@ export const CollectionAnnotationsList: React.FC<Props> = ({
 
     return annotations.map((annotation) => (
       <Box key={annotation.id}>
-        <AnnotationSummary annotation={annotation} versePath={versePath} />
+        <AnnotationSummary annotation={annotation} />
       </Box>
     ));
   };

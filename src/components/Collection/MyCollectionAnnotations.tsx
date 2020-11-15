@@ -57,7 +57,6 @@ export const MyCollectionAnnotations: React.FC<Props> = () => {
       error={error}
       onShowMore={handleShowMore}
       pageInfo={pageInfo}
-      versePath="TODO"
     />
   );
 };
