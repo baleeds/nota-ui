@@ -29,7 +29,7 @@
     "formik": "^2.1.4",
     "graphql": "^14.5.8",
     "graphql-tag": "^2.10.1",
-    "immer": "^5.3.6",
+    "immer": "^8.0.1",
     "jwt-decode": "^2.2.0",
     "lodash.debounce": "^4.0.8",
     "normalize.css": "^8.0.1",
