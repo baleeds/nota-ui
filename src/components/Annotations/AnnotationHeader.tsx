@@ -16,13 +16,16 @@ interface Props {
 }
 
 export const AnnotationHeader: React.FC<Props> = ({ annotation }) => {
+  const userDisplayName = getUserDisplayName(annotation?.user);
+  const insertedAt = annotation ? toSimpleDate(annotation.insertedAt) : '';
+
   return (
     <Flex margin={{ b: 8 }} alignItems="center">
       <AnnotationFavoriteButton annotation={annotation} />
       <AuthorLink href="/">
-        {getUserDisplayName(annotation?.user) || <Skeleton width={120} />}
+        {userDisplayName || <Skeleton width={120} />}
       </AuthorLink>
-      {annotation && <Date>{toSimpleDate(annotation?.insertedAt)}</Date>}
+      {insertedAt && <Date>{insertedAt}</Date>}
     </Flex>
   );
 };
