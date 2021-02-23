@@ -6,26 +6,22 @@ export interface BookDetail {
   id: number;
   displayName: string;
   numberOfChapters: number;
-  pathName?: string;
 }
 
 export const BOOK_DETAILS: BookDetails = Object.freeze({
   genesis: {
     id: 1,
     displayName: 'Genesis',
-    pathName: 'genesis',
     numberOfChapters: 50,
   },
   exodus: {
     id: 2,
     displayName: 'Exodus',
-    pathName: 'exodus',
     numberOfChapters: 40,
   },
   leviticus: {
     id: 3,
     displayName: 'Leviticus',
-    pathName: 'leviticus',
     numberOfChapters: 27,
   },
   numbers: {
@@ -56,6 +52,7 @@ export const BOOK_DETAILS: BookDetails = Object.freeze({
   '1Samuel': {
     id: 9,
     displayName: '1 Samuel',
+    pathName: 'first-samuel',
     numberOfChapters: 31,
   },
   '2Samuel': {

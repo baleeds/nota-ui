@@ -64,7 +64,9 @@ export const UserCollection: React.FC<Props> = ({ userId }) => {
 
   return (
     <Container>
-      <Card>{collectionBody}</Card>
+      <Card>
+        <Block>{collectionBody}</Block>
+      </Card>
     </Container>
   );
 };

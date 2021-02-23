@@ -44,9 +44,9 @@ export const getVersePath = (verseId: string): string | undefined => {
 
   const { bookNumber, chapterNumber, verseNumber } = splitIds;
 
-  const bookPathName = Object.values(BOOK_DETAILS).find(
-    (d) => d.id === bookNumber
-  )?.pathName;
+  const bookPathName = Object.keys(BOOK_DETAILS).find(
+    (key) => BOOK_DETAILS[key].id === bookNumber
+  );
 
   return `${bookPathName}/${chapterNumber}/${verseNumber}`;
 };
