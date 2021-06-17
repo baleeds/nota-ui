@@ -3,8 +3,9 @@ import { Link, useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import { LARGE_SCREEN } from '../base/constants/breakpoints';
 import { theme } from '../styles/theme';
+import { numberToPixels } from './layout/helpers';
 
-interface TabProps {
+export interface TabProps {
   to: string;
   title: string;
 }
@@ -38,6 +39,7 @@ const TabLink = styled(Link)`
   flex-direction: column;
   align-items: center;
   padding: 12px 12px;
+  height: ${numberToPixels(theme.tabHeight)};
 
   &.active {
     color: ${theme.primaryTextColor};

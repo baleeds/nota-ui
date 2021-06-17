@@ -21,7 +21,7 @@ const navButtonStyles = `
   padding: 0px 12px;
   display: block;
   text-align: left;
-  min-width: 80px;
+  min-width: 50px;
   display: flex;
   align-items: center;
   color: ${theme.secondaryColor};

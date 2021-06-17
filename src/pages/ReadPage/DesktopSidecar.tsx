@@ -48,7 +48,9 @@ export const DesktopSidecar: React.FC<Props> = ({ passageKey }) => {
   return (
     <Container style={{ transform: `translateY(${top}px)` }}>
       <Block>
-        <TopContainer>{renderHeader()}</TopContainer>
+        <Flex spaceBetween margin={{ tb: 28 }}>
+          {renderHeader()}
+        </Flex>
       </Block>
       <Separator />
       {annotationId ? (
@@ -77,10 +79,4 @@ const Title = styled(H3)`
     fill: currentColor;
     margin-right: 6px;
   }
-`;
-
-const TopContainer = styled.div`
-  display: flex;
-  justify-content: space-between;
-  margin: 24px 0;
 `;

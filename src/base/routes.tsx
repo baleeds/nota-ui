@@ -8,6 +8,7 @@ import { ForgotPasswordPage } from '../pages/ForgotPasswordPage';
 import { ResetPasswordPage } from '../pages/ResetPasswordPage';
 import { AnnotatePage } from '../pages/AnnotatePage';
 import { RegisterPage } from '../pages/RegisterPage';
+import { SettingsPage } from '../pages/SettingsPage';
 
 export interface RouteParams {
   bookName?: string;
@@ -74,6 +75,16 @@ export const routes = [
     path: '/reset-password',
     exact: true,
     component: ResetPasswordPage,
+  },
+  {
+    path: [
+      '/settings',
+      '/settings/password',
+      '/settings/email',
+      '/settings/display-name',
+    ],
+    exact: true,
+    component: SettingsPage,
   },
   {
     path: '*',

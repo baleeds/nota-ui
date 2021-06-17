@@ -16,6 +16,7 @@ export const theme = {
   maxContentWidth: 1100,
   maxEditorWidth: 680,
   navShadow: '0px 0px 6px 0px rgba(0, 0, 0, 0.15)',
+  tabHeight: 48,
 } as const;
 
 export type Theme = typeof theme;
