@@ -3,7 +3,7 @@ import { Flex } from '../layout/Flex';
 import { AnnotationFragment } from '../../api/__generated__/apollo-graphql';
 import { toSimpleDate } from '../../base/utils/dates';
 import Skeleton from 'react-loading-skeleton';
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 import { theme } from '../../styles/theme';
 import { AnnotationFavoriteButton } from './AnnotationFavoriteButton';
 import { getUserDisplayName } from '../../base/utils/formatters';

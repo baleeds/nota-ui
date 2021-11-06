@@ -1,8 +1,8 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 import { theme } from '../styles/theme';
 
-interface Props { }
+interface Props {}
 
 export const NothingHere: React.FC<Props> = () => {
   return (

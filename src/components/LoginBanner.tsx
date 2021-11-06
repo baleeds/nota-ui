@@ -1,6 +1,6 @@
 import React from 'react';
 import { OutlineButtonContrast, GhostButtonContrast } from './Buttons';
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 import { Card } from './Card';
 import { theme } from '../styles/theme';
 import { Block } from './Block';

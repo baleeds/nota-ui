@@ -1,7 +1,7 @@
 import React from 'react';
 import { Page } from '../../components/Page';
 import { Passage } from './Passage';
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 import { useParams, Redirect } from 'react-router';
 import { RouteParams } from '../../base/routes';
 import {
@@ -40,9 +40,12 @@ const syncLocalStorage = (key: string, value: string | undefined) => {
 };
 
 export const ReadPage: React.FC = () => {
-  const { bookName, chapterId, verseId, annotationId } = useParams<
-    RouteParams
-  >();
+  const {
+    bookName,
+    chapterId,
+    verseId,
+    annotationId,
+  } = useParams<RouteParams>();
   const { isMobile } = useScreen();
 
   if (!bookName || !chapterId)

@@ -8,7 +8,7 @@ import { ReactComponent as ChevronLeftIcon } from '../icons/chevron_left-24px.sv
 import { Card } from './Card';
 import { Box } from './layout/Box';
 import { Separator } from './Separator';
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 import { LinkBaseButton } from './Buttons';
 import { SpaceConfig } from './layout/types';
 import { theme } from '../styles/theme';
@@ -94,7 +94,11 @@ export const PageOnCard: React.FC<Props> = ({
         <Container>
           <Card>
             <Header>
-              <Flex spaceBetween={true} alignItems="center">
+              <Flex
+                spaceBetween={true}
+                alignItems="center"
+                padding={{ lr: 16 }}
+              >
                 <Flex alignItems="center">
                   {backTo && showBackButton && (
                     <MobileHeaderNavLink to={backTo}>

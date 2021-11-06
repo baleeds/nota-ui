@@ -4,7 +4,7 @@ import { getUserDisplayName } from '../../base/utils/formatters';
 import { useAuth } from '../AuthProvider';
 import { ReactComponent as SettingsIcon } from '../../icons/gear-16px.svg';
 import { LinkBaseButton } from '../Buttons';
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 import { theme } from '../../styles/theme';
 import { ApolloError } from 'apollo-client';
 import Skeleton from 'react-loading-skeleton';

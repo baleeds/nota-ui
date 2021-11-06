@@ -8,7 +8,7 @@ import { useBookNavigation } from '../../components/BookNavigationProvider';
 import { Block } from '../../components/Block';
 import { P } from '../../components/Typography';
 import { usePassage } from '../../hooks/usePassage';
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 import { UNKNOWN_TEXT } from '../../base/constants/messages';
 import { BibleVerse } from '../../base/constants/bible';
 import { ReactComponent as QuoteIcon } from '../../icons/left-quote.svg';

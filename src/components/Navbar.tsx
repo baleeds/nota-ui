@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 import { ReactComponent as HomeIcon } from '../icons/home-24px.svg';
 import { ReactComponent as ReadIcon } from '../icons/menu_book-24px.svg';
 import { ReactComponent as CollectionIcon } from '../icons/collections_bookmark-24px.svg';

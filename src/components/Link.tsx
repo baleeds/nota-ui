@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 import { Link as RouterLink } from 'react-router-dom';
 import { theme } from '../styles/theme';
 

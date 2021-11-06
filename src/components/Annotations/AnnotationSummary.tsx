@@ -1,6 +1,6 @@
 import React from 'react';
 import { AnnotationListFragment } from '../../api/__generated__/apollo-graphql';
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 import { theme } from '../../styles/theme';
 import Skeleton from 'react-loading-skeleton';
 import { Link } from 'react-router-dom';

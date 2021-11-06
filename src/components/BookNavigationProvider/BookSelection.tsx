@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useMemo } from 'react';
 import { BOOK_DETAILS } from '../../base/constants/bookDetails';
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 import { theme } from '../../styles/theme';
 
 interface Props {
@@ -16,7 +16,7 @@ export const BookSelection: React.FC<Props> = ({
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const currentIndex = useMemo(
-    () => bookKeys.findIndex(key => key === bookName),
+    () => bookKeys.findIndex((key) => key === bookName),
     [bookName]
   );
 

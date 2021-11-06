@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 import { AnnotationFragment } from '../../api/__generated__/apollo-graphql';
 import { theme } from '../../styles/theme';
 
@@ -12,7 +12,7 @@ export const AnnotationActivitySummary: React.FC<Props> = ({ annotation }) => {
     if (numberOfFavorites === 0) return 'no favorites';
     if (numberOfFavorites === 1) return '1 favorite';
     return `${numberOfFavorites} favorites`;
-  }
+  };
 
   return (
     <Container>

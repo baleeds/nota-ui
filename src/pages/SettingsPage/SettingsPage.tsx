@@ -2,7 +2,7 @@ import React from 'react';
 import { useHistory } from 'react-router';
 import { useAuth } from '../../components/AuthProvider';
 import { useScreen } from '../../hooks/useScreen';
-import { SettingsLink } from '../../components/ListNav';
+import { ListNav, SettingsLink } from '../../components/ListNav';
 import { PageOnCard } from '../../components/PageOnCard';
 
 export const SettingsPage: React.FC = () => {
@@ -25,7 +25,7 @@ export const SettingsPage: React.FC = () => {
 
   return (
     <PageOnCard backTo="/collection" showBackTo="mobile" title="Settings">
-      Settings
+      <ListNav links={settingsLinks} />
     </PageOnCard>
   );
 };

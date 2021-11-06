@@ -1,6 +1,6 @@
 import React from 'react';
 import { ErrorMessage } from 'formik';
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 import { theme } from '../styles/theme';
 
 interface Props {
@@ -21,7 +21,7 @@ export const FieldGroup: React.FC<Props> = ({
       !!formikFieldName && (
         <ErrorMessage
           name={formikFieldName}
-          render={error => <ErrorContainer>{error}</ErrorContainer>}
+          render={(error) => <ErrorContainer>{error}</ErrorContainer>}
         />
       )
     )}

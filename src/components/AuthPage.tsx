@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 import { LARGE_SCREEN } from '../base/constants/breakpoints';
 import { Link } from 'react-router-dom';
 import { theme } from '../styles/theme';

@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 import { LARGE_SCREEN } from '../base/constants/breakpoints';
 
 export const Block = styled.div`

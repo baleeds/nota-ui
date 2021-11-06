@@ -1,7 +1,7 @@
 import React, { useRef, useCallback, useEffect } from 'react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 import { theme } from '../../styles/theme';
 import { usePassage } from '../../hooks/usePassage';
 import { PrimaryButton } from '../../components/Buttons';
@@ -19,7 +19,10 @@ import { normalizeErrors } from '../../base/utils/normalizeErrors';
 import { UNKNOWN_ERROR } from '../../base/constants/messages';
 import { ArticleTypography } from '../../components/Typography';
 import { useAuth } from '../../components/AuthProvider';
-import { SaveAnnotationMutation, useSaveAnnotationMutation } from '../../api/__generated__/apollo-graphql';
+import {
+  SaveAnnotationMutation,
+  useSaveAnnotationMutation,
+} from '../../api/__generated__/apollo-graphql';
 
 const modules = {
   toolbar: {
@@ -77,24 +80,16 @@ export const AnnotatePage: React.FC = () => {
       result
     );
 
-    const { id: annotationId } =
-      result?.data?.saveAnnotation?.result || {};
+    const { id: annotationId } = result?.data?.saveAnnotation?.result || {};
 
-    if(hasError || !annotationId) {
+    if (hasError || !annotationId) {
       toast({ message: base || UNKNOWN_ERROR, type: 'error' });
       console.error('Failed');
     } else {
       toast({ message: 'Annotation published.' });
       history.push(`${versePath}/${annotationId}`);
     }
-  }, [
-    saveAnnotation,
-    passageId,
-    contentRef,
-    loading,
-    history,
-    versePath,
-  ]);
+  }, [saveAnnotation, passageId, contentRef, loading, history, versePath]);
 
   return (
     <>
@@ -128,7 +123,7 @@ export const AnnotatePage: React.FC = () => {
       </NavigationContainer>
       <AnnotationQuillContainer>
         <ReactQuill
-          ref={instance => {
+          ref={(instance) => {
             if (!instance) return;
             instance.focus();
             quillRef.current = instance;
@@ -136,7 +131,7 @@ export const AnnotatePage: React.FC = () => {
           placeholder="Let it fly..."
           modules={modules}
           formats={formats}
-          onChange={html => (contentRef.current = html)}
+          onChange={(html) => (contentRef.current = html)}
         />
       </AnnotationQuillContainer>
       {width < LARGE_SCREEN && (

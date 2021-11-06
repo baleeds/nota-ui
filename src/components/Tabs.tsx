@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, useHistory } from 'react-router-dom';
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 import { LARGE_SCREEN } from '../base/constants/breakpoints';
 import { theme } from '../styles/theme';
 import { numberToPixels } from './layout/helpers';

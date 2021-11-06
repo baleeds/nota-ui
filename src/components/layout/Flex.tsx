@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 import { CSSProperties } from 'react';
 import { SpaceConfig } from './types';
 import { spaceConfigToProperty } from './helpers';
@@ -25,5 +25,5 @@ export const Flex = styled.div<Props>`
   align-items: ${({ alignItems }) => alignItems ?? 'unset'};
   text-align: ${({ textAlign }) => textAlign ?? 'unset'};
   justify-content: ${({ spaceBetween }) =>
-    spaceBetween ? 'space-between' : 'unset'}
+    spaceBetween ? 'space-between' : 'unset'};
 `;

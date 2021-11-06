@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 import { theme } from '../styles/theme';
 import { ReactComponent as ErrorIcon } from '../icons/error-24px.svg';
 

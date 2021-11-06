@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 import { theme } from '../styles/theme';
 
 export const BaseButton = styled.button`
@@ -21,7 +21,7 @@ export const PrimaryButton = styled(BaseButton)`
   color: ${theme.blank};
   padding: 0 20px;
   font-size: 0.9rem;
-  box-shadow: 0 2px 8px 0px rgba(0, 0, 0, .1);
+  box-shadow: 0 2px 8px 0px rgba(0, 0, 0, 0.1);
 
   &:hover,
   &:focus {

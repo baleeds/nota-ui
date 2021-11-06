@@ -1,7 +1,7 @@
 import React from 'react';
 import { BibleVerse } from '../../base/constants/bible';
 import { theme } from '../../styles/theme';
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 import { Link } from 'react-router-dom';
 
 interface Props {

@@ -13,7 +13,7 @@ import { UNKNOWN_ERROR } from '../../base/constants/messages';
 import { useAuth } from '../AuthProvider';
 import { ReactComponent as EmptyHeartIcon } from '../../icons/heart-16px.svg';
 import { ReactComponent as FilledHeartIcon } from '../../icons/heart_filled-16px.svg';
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 import { BaseButton } from '../Buttons';
 import { theme } from '../../styles/theme';
 

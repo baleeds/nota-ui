@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 import { theme } from '../../styles/theme';
 import { BOOK_DETAILS } from '../../base/constants/bookDetails';
 import { NavLink } from 'react-router-dom';

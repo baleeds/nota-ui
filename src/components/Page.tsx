@@ -1,6 +1,6 @@
 import React from 'react';
 import { Navbar } from './Navbar';
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 import { BookNavigationProvider } from './BookNavigationProvider';
 import { theme } from '../styles/theme';
 

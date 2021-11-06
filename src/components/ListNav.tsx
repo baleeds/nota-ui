@@ -1,5 +1,5 @@
 ﻿import React from 'react';
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 import { Link as RouterLink } from 'react-router-dom';
 import { theme } from '../styles/theme';
 
@@ -16,7 +16,9 @@ export const ListNav: React.FC<Props> = ({ links }) => {
   return (
     <Container>
       {links.map((link) => (
-        <NavItem to={link.to}>{link.label}</NavItem>
+        <NavItem key={link.to} to={link.to}>
+          {link.label}
+        </NavItem>
       ))}
     </Container>
   );
@@ -32,7 +34,8 @@ const Container = styled.div`
 
 const NavItem = styled(RouterLink)`
   display: flex;
-  height: 42px;
+  height: 50px;
+  padding: 0 16px;
   align-items: center;
   text-decoration: none;
   color: ${theme.primaryColor};

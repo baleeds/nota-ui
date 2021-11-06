@@ -1,6 +1,6 @@
 import React from 'react';
 import { useHistory } from 'react-router';
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 import { useUserProfileQuery } from '../../api/__generated__/apollo-graphql';
 import { useScreen } from '../../hooks/useScreen';
 import { useAuth } from '../AuthProvider';

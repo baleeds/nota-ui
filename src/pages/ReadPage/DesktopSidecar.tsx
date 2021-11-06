@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 import { usePassage } from '../../hooks/usePassage';
 import { Block } from '../../components/Block';
 import { H3 } from '../../components/Typography';

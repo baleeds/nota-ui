@@ -1,5 +1,5 @@
 import React, { useState, useContext, useMemo, useCallback } from 'react';
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 import { CSSTransition } from 'react-transition-group';
 import { Z_INDEX } from '../../base/constants/zIndex';
 import { PassageSelector } from './PassageSelector';

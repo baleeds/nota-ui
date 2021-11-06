@@ -1,6 +1,6 @@
 import React from 'react';
 import toaster from 'toasted-notes';
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 import { theme } from '../styles/theme';
 import { LARGE_SCREEN } from '../base/constants/breakpoints';
 import { BaseButton } from './Buttons';

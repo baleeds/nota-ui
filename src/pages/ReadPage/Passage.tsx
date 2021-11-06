@@ -1,7 +1,7 @@
 import React from 'react';
 import { ErrorMessage } from '../../components/ErrorMessage';
 import { Verse } from './Verse';
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 import { usePassage } from '../../hooks/usePassage';
 
 export const Passage: React.FC = () => {
