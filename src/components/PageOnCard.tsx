@@ -97,7 +97,7 @@ export const PageOnCard: React.FC<Props> = ({
               <Flex
                 spaceBetween={true}
                 alignItems="center"
-                padding={{ lr: 16 }}
+                padding={{ lr: backTo && showBackButton ? 0 : 16 }}
               >
                 <Flex alignItems="center">
                   {backTo && showBackButton && (

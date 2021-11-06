@@ -36,8 +36,7 @@ export function normalizeErrors<MutationType extends ObjectBase, Values = {}>(
       const { messages = [] } = mutationResult || {};
 
       messages.forEach((error: MutationError) => {
-        if (error.field)
-          errorsMap[error.field] = error.message || UNKNOWN_ERROR;
+        errorsMap[error.field ?? 'base'] = error.message || UNKNOWN_ERROR;
       });
 
       return errorsMap;

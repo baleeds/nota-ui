@@ -73,6 +73,36 @@ export type AnnotationReplyEdge = {
   node?: Maybe<AnnotationReply>;
 };
 
+export type ChangeDisplayNameInput = {
+  firstName: Scalars['String'];
+  lastName: Scalars['String'];
+};
+
+export type ChangeDisplayNamePayload = {
+  __typename?: 'ChangeDisplayNamePayload';
+  /** A list of failed validations. May be blank or null if mutation succeeded. */
+  messages?: Maybe<Array<Maybe<ValidationMessage>>>;
+  /** The object created/updated/deleted by the mutation. May be null if mutation failed. */
+  result?: Maybe<User>;
+  /** Indicates if the mutation completed successfully or not.  */
+  successful: Scalars['Boolean'];
+};
+
+export type ChangePasswordInput = {
+  newPassword: Scalars['String'];
+  oldPassword: Scalars['String'];
+};
+
+export type ChangePasswordPayload = {
+  __typename?: 'ChangePasswordPayload';
+  /** A list of failed validations. May be blank or null if mutation succeeded. */
+  messages?: Maybe<Array<Maybe<ValidationMessage>>>;
+  /** The object created/updated/deleted by the mutation. May be null if mutation failed. */
+  result?: Maybe<Scalars['Boolean']>;
+  /** Indicates if the mutation completed successfully or not.  */
+  successful: Scalars['Boolean'];
+};
+
 export type CreateAccountInput = {
   email: Scalars['String'];
   firstName: Scalars['String'];
@@ -169,6 +199,8 @@ export type ResetPasswordPayload = {
 
 export type RootMutationType = {
   __typename?: 'RootMutationType';
+  changeDisplayName: ChangeDisplayNamePayload;
+  changePassword: ChangePasswordPayload;
   createAccount: CreateAccountPayload;
   deleteAnnotation: DeleteAnnotationPayload;
   deleteAnnotationReply: DeleteAnnotationReplyPayload;
@@ -182,6 +214,16 @@ export type RootMutationType = {
   signOut: SignOutPayload;
   signOutEverywhere: SignOutPayload;
   unfavoriteAnnotation: UnfavoriteAnnotationPayload;
+};
+
+
+export type RootMutationTypeChangeDisplayNameArgs = {
+  input: ChangeDisplayNameInput;
+};
+
+
+export type RootMutationTypeChangePasswordArgs = {
+  input: ChangePasswordInput;
 };
 
 
@@ -516,6 +558,40 @@ export type MeFragment = (
   & Pick<User, 'id' | 'email'>
 );
 
+export type ChangeDisplayNameMutationVariables = Exact<{
+  input: ChangeDisplayNameInput;
+}>;
+
+
+export type ChangeDisplayNameMutation = (
+  { __typename?: 'RootMutationType' }
+  & { changeDisplayName: (
+    { __typename?: 'ChangeDisplayNamePayload' }
+    & Pick<ChangeDisplayNamePayload, 'successful'>
+    & { result?: Maybe<(
+      { __typename?: 'User' }
+      & MeFragment
+    )> }
+  ) }
+);
+
+export type ChangePasswordMutationVariables = Exact<{
+  input: ChangePasswordInput;
+}>;
+
+
+export type ChangePasswordMutation = (
+  { __typename?: 'RootMutationType' }
+  & { changePassword: (
+    { __typename?: 'ChangePasswordPayload' }
+    & Pick<ChangePasswordPayload, 'successful'>
+    & { messages?: Maybe<Array<Maybe<(
+      { __typename?: 'ValidationMessage' }
+      & Pick<ValidationMessage, 'field' | 'message'>
+    )>>> }
+  ) }
+);
+
 export type CreateAccountMutationVariables = Exact<{
   input: CreateAccountInput;
 }>;
@@ -845,6 +921,77 @@ export const MeFragmentDoc = gql`
   email
 }
     `;
+export const ChangeDisplayNameDocument = gql`
+    mutation ChangeDisplayName($input: ChangeDisplayNameInput!) {
+  changeDisplayName(input: $input) {
+    successful
+    result {
+      ...Me
+    }
+  }
+}
+    ${MeFragmentDoc}`;
+export type ChangeDisplayNameMutationFn = ApolloReactCommon.MutationFunction<ChangeDisplayNameMutation, ChangeDisplayNameMutationVariables>;
+
+/**
+ * __useChangeDisplayNameMutation__
+ *
+ * To run a mutation, you first call `useChangeDisplayNameMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useChangeDisplayNameMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [changeDisplayNameMutation, { data, loading, error }] = useChangeDisplayNameMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useChangeDisplayNameMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<ChangeDisplayNameMutation, ChangeDisplayNameMutationVariables>) {
+        return ApolloReactHooks.useMutation<ChangeDisplayNameMutation, ChangeDisplayNameMutationVariables>(ChangeDisplayNameDocument, baseOptions);
+      }
+export type ChangeDisplayNameMutationHookResult = ReturnType<typeof useChangeDisplayNameMutation>;
+export type ChangeDisplayNameMutationResult = ApolloReactCommon.MutationResult<ChangeDisplayNameMutation>;
+export type ChangeDisplayNameMutationOptions = ApolloReactCommon.BaseMutationOptions<ChangeDisplayNameMutation, ChangeDisplayNameMutationVariables>;
+export const ChangePasswordDocument = gql`
+    mutation ChangePassword($input: ChangePasswordInput!) {
+  changePassword(input: $input) {
+    successful
+    messages {
+      field
+      message
+    }
+  }
+}
+    `;
+export type ChangePasswordMutationFn = ApolloReactCommon.MutationFunction<ChangePasswordMutation, ChangePasswordMutationVariables>;
+
+/**
+ * __useChangePasswordMutation__
+ *
+ * To run a mutation, you first call `useChangePasswordMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useChangePasswordMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [changePasswordMutation, { data, loading, error }] = useChangePasswordMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useChangePasswordMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<ChangePasswordMutation, ChangePasswordMutationVariables>) {
+        return ApolloReactHooks.useMutation<ChangePasswordMutation, ChangePasswordMutationVariables>(ChangePasswordDocument, baseOptions);
+      }
+export type ChangePasswordMutationHookResult = ReturnType<typeof useChangePasswordMutation>;
+export type ChangePasswordMutationResult = ApolloReactCommon.MutationResult<ChangePasswordMutation>;
+export type ChangePasswordMutationOptions = ApolloReactCommon.BaseMutationOptions<ChangePasswordMutation, ChangePasswordMutationVariables>;
 export const CreateAccountDocument = gql`
     mutation CreateAccount($input: CreateAccountInput!) {
   createAccount(input: $input) {

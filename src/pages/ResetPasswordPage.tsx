@@ -33,8 +33,8 @@ const isTokenValid = (token: ReturnType<typeof getToken>) =>
 
 const validationSchema = Yup.object().shape({
   password: Yup.string()
-    .min(1, ErrorMessages.minLength("password", 1))
-    .max(255, ErrorMessages.maxLength("password", 255))
+    .min(1, ErrorMessages.minLength('password', 1))
+    .max(255, ErrorMessages.maxLength('password', 255))
     .required(ErrorMessages.isRequired('password')),
   confirmPassword: Yup.string()
     .oneOf([Yup.ref('password'), ''], 'passwords should match')

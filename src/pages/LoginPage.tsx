@@ -63,10 +63,10 @@ export const LoginPage: React.FC = () => {
       })
     );
 
-    const { hasError, base, fields } = normalizeErrors<
-      SignInMutation,
-      Values
-    >(failure, result);
+    const { hasError, base, fields } = normalizeErrors<SignInMutation, Values>(
+      failure,
+      result
+    );
 
     const {
       accessToken = undefined,

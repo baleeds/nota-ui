@@ -77,13 +77,8 @@ export const routes = [
     component: ResetPasswordPage,
   },
   {
-    path: [
-      '/settings',
-      '/settings/password',
-      '/settings/email',
-      '/settings/display-name',
-    ],
-    exact: true,
+    path: ['/settings'],
+    exact: false,
     component: SettingsPage,
   },
   {
