@@ -17,6 +17,9 @@ export const theme = {
   maxEditorWidth: 680,
   navShadow: '0px 0px 6px 0px rgba(0, 0, 0, 0.15)',
   tabHeight: 48,
+  verseAnnotated: '#f8f8f8',
+  verseAnnotatedByMe: '#f4edff',
+  verseBookmarked: '#edf4ff',
 } as const;
 
 export type Theme = typeof theme;

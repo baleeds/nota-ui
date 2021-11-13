@@ -73,6 +73,20 @@ export type AnnotationReplyEdge = {
   node?: Maybe<AnnotationReply>;
 };
 
+export type BookmarkVerseInput = {
+  verseId: Scalars['ID'];
+};
+
+export type BookmarkVersePayload = {
+  __typename?: 'BookmarkVersePayload';
+  /** A list of failed validations. May be blank or null if mutation succeeded. */
+  messages?: Maybe<Array<Maybe<ValidationMessage>>>;
+  /** The object created/updated/deleted by the mutation. May be null if mutation failed. */
+  result?: Maybe<Verse>;
+  /** Indicates if the mutation completed successfully or not.  */
+  successful: Scalars['Boolean'];
+};
+
 export type ChangeDisplayNameInput = {
   firstName: Scalars['String'];
   lastName: Scalars['String'];
@@ -199,6 +213,7 @@ export type ResetPasswordPayload = {
 
 export type RootMutationType = {
   __typename?: 'RootMutationType';
+  bookmarkVerse: BookmarkVersePayload;
   changeDisplayName: ChangeDisplayNamePayload;
   changePassword: ChangePasswordPayload;
   createAccount: CreateAccountPayload;
@@ -213,7 +228,13 @@ export type RootMutationType = {
   signIn: SignInPayload;
   signOut: SignOutPayload;
   signOutEverywhere: SignOutPayload;
+  unbookmarkVerse: UnbookmarkVersePayload;
   unfavoriteAnnotation: UnfavoriteAnnotationPayload;
+};
+
+
+export type RootMutationTypeBookmarkVerseArgs = {
+  input: BookmarkVerseInput;
 };
 
 
@@ -279,6 +300,11 @@ export type RootMutationTypeSignInArgs = {
 
 export type RootMutationTypeSignOutArgs = {
   refreshToken: Scalars['String'];
+};
+
+
+export type RootMutationTypeUnbookmarkVerseArgs = {
+  input: UnbookmarkVerseInput;
 };
 
 
@@ -439,6 +465,20 @@ export type SignOutPayload = {
   successful: Scalars['Boolean'];
 };
 
+export type UnbookmarkVerseInput = {
+  verseId: Scalars['ID'];
+};
+
+export type UnbookmarkVersePayload = {
+  __typename?: 'UnbookmarkVersePayload';
+  /** A list of failed validations. May be blank or null if mutation succeeded. */
+  messages?: Maybe<Array<Maybe<ValidationMessage>>>;
+  /** The object created/updated/deleted by the mutation. May be null if mutation failed. */
+  result?: Maybe<Verse>;
+  /** Indicates if the mutation completed successfully or not.  */
+  successful: Scalars['Boolean'];
+};
+
 export type UnfavoriteAnnotationInput = {
   annotationId: Scalars['ID'];
 };
@@ -531,6 +571,9 @@ export type Verse = {
   bookNumber: Scalars['Int'];
   chapterNumber: Scalars['Int'];
   id: Scalars['ID'];
+  isAnnotated: Scalars['Boolean'];
+  isAnnotatedByMe: Scalars['Boolean'];
+  isBookmarked: Scalars['Boolean'];
   text: Scalars['String'];
   verseNumber: Scalars['Int'];
 };
@@ -556,6 +599,31 @@ export type AnnotationListFragment = (
 export type MeFragment = (
   { __typename?: 'User' }
   & Pick<User, 'id' | 'email'>
+);
+
+export type VerseFragment = (
+  { __typename?: 'Verse' }
+  & Pick<Verse, 'id' | 'isBookmarked' | 'isAnnotatedByMe' | 'isAnnotated'>
+);
+
+export type BookmarkVerseMutationVariables = Exact<{
+  input: BookmarkVerseInput;
+}>;
+
+
+export type BookmarkVerseMutation = (
+  { __typename?: 'RootMutationType' }
+  & { bookmarkVerse: (
+    { __typename?: 'BookmarkVersePayload' }
+    & Pick<BookmarkVersePayload, 'successful'>
+    & { result?: Maybe<(
+      { __typename?: 'Verse' }
+      & Pick<Verse, 'id' | 'isBookmarked'>
+    )>, messages?: Maybe<Array<Maybe<(
+      { __typename?: 'ValidationMessage' }
+      & Pick<ValidationMessage, 'field' | 'message'>
+    )>>> }
+  ) }
 );
 
 export type ChangeDisplayNameMutationVariables = Exact<{
@@ -726,6 +794,26 @@ export type SignOutMutation = (
   ) }
 );
 
+export type UnbookmarkVerseMutationVariables = Exact<{
+  input: UnbookmarkVerseInput;
+}>;
+
+
+export type UnbookmarkVerseMutation = (
+  { __typename?: 'RootMutationType' }
+  & { unbookmarkVerse: (
+    { __typename?: 'UnbookmarkVersePayload' }
+    & Pick<UnbookmarkVersePayload, 'successful'>
+    & { result?: Maybe<(
+      { __typename?: 'Verse' }
+      & Pick<Verse, 'id' | 'isBookmarked'>
+    )>, messages?: Maybe<Array<Maybe<(
+      { __typename?: 'ValidationMessage' }
+      & Pick<ValidationMessage, 'field' | 'message'>
+    )>>> }
+  ) }
+);
+
 export type UnfavoriteAnnotationMutationVariables = Exact<{
   input: UnfavoriteAnnotationInput;
 }>;
@@ -807,6 +895,19 @@ export type FavoriteAnnotationsQuery = (
   )> }
 );
 
+export type GetVerseQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+
+export type GetVerseQuery = (
+  { __typename?: 'RootQueryType' }
+  & { verse: (
+    { __typename?: 'Verse' }
+    & VerseFragment
+  ) }
+);
+
 export type MyCollectionAnnotationsQueryVariables = Exact<{
   first: Scalars['Int'];
   after?: Maybe<Scalars['String']>;
@@ -886,6 +987,20 @@ export type VerseAnnotationsQuery = (
   )> }
 );
 
+export type VersesForChapterQueryVariables = Exact<{
+  bookNumber: Scalars['Int'];
+  chapterNumber: Scalars['Int'];
+}>;
+
+
+export type VersesForChapterQuery = (
+  { __typename?: 'RootQueryType' }
+  & { verses?: Maybe<Array<(
+    { __typename?: 'Verse' }
+    & Pick<Verse, 'id' | 'isBookmarked' | 'isAnnotated' | 'isAnnotatedByMe'>
+  )>> }
+);
+
 export const AnnotationFragmentDoc = gql`
     fragment Annotation on Annotation {
   id
@@ -921,6 +1036,54 @@ export const MeFragmentDoc = gql`
   email
 }
     `;
+export const VerseFragmentDoc = gql`
+    fragment Verse on Verse {
+  id
+  isBookmarked
+  isAnnotatedByMe
+  isAnnotated
+}
+    `;
+export const BookmarkVerseDocument = gql`
+    mutation BookmarkVerse($input: BookmarkVerseInput!) {
+  bookmarkVerse(input: $input) {
+    successful
+    result {
+      id
+      isBookmarked
+    }
+    messages {
+      field
+      message
+    }
+  }
+}
+    `;
+export type BookmarkVerseMutationFn = ApolloReactCommon.MutationFunction<BookmarkVerseMutation, BookmarkVerseMutationVariables>;
+
+/**
+ * __useBookmarkVerseMutation__
+ *
+ * To run a mutation, you first call `useBookmarkVerseMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useBookmarkVerseMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [bookmarkVerseMutation, { data, loading, error }] = useBookmarkVerseMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useBookmarkVerseMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<BookmarkVerseMutation, BookmarkVerseMutationVariables>) {
+        return ApolloReactHooks.useMutation<BookmarkVerseMutation, BookmarkVerseMutationVariables>(BookmarkVerseDocument, baseOptions);
+      }
+export type BookmarkVerseMutationHookResult = ReturnType<typeof useBookmarkVerseMutation>;
+export type BookmarkVerseMutationResult = ApolloReactCommon.MutationResult<BookmarkVerseMutation>;
+export type BookmarkVerseMutationOptions = ApolloReactCommon.BaseMutationOptions<BookmarkVerseMutation, BookmarkVerseMutationVariables>;
 export const ChangeDisplayNameDocument = gql`
     mutation ChangeDisplayName($input: ChangeDisplayNameInput!) {
   changeDisplayName(input: $input) {
@@ -1261,6 +1424,46 @@ export function useSignOutMutation(baseOptions?: ApolloReactHooks.MutationHookOp
 export type SignOutMutationHookResult = ReturnType<typeof useSignOutMutation>;
 export type SignOutMutationResult = ApolloReactCommon.MutationResult<SignOutMutation>;
 export type SignOutMutationOptions = ApolloReactCommon.BaseMutationOptions<SignOutMutation, SignOutMutationVariables>;
+export const UnbookmarkVerseDocument = gql`
+    mutation UnbookmarkVerse($input: UnbookmarkVerseInput!) {
+  unbookmarkVerse(input: $input) {
+    successful
+    result {
+      id
+      isBookmarked
+    }
+    messages {
+      field
+      message
+    }
+  }
+}
+    `;
+export type UnbookmarkVerseMutationFn = ApolloReactCommon.MutationFunction<UnbookmarkVerseMutation, UnbookmarkVerseMutationVariables>;
+
+/**
+ * __useUnbookmarkVerseMutation__
+ *
+ * To run a mutation, you first call `useUnbookmarkVerseMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUnbookmarkVerseMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [unbookmarkVerseMutation, { data, loading, error }] = useUnbookmarkVerseMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useUnbookmarkVerseMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<UnbookmarkVerseMutation, UnbookmarkVerseMutationVariables>) {
+        return ApolloReactHooks.useMutation<UnbookmarkVerseMutation, UnbookmarkVerseMutationVariables>(UnbookmarkVerseDocument, baseOptions);
+      }
+export type UnbookmarkVerseMutationHookResult = ReturnType<typeof useUnbookmarkVerseMutation>;
+export type UnbookmarkVerseMutationResult = ApolloReactCommon.MutationResult<UnbookmarkVerseMutation>;
+export type UnbookmarkVerseMutationOptions = ApolloReactCommon.BaseMutationOptions<UnbookmarkVerseMutation, UnbookmarkVerseMutationVariables>;
 export const UnfavoriteAnnotationDocument = gql`
     mutation UnfavoriteAnnotation($input: UnfavoriteAnnotationInput!) {
   unfavoriteAnnotation(input: $input) {
@@ -1425,6 +1628,39 @@ export function useFavoriteAnnotationsLazyQuery(baseOptions?: ApolloReactHooks.L
 export type FavoriteAnnotationsQueryHookResult = ReturnType<typeof useFavoriteAnnotationsQuery>;
 export type FavoriteAnnotationsLazyQueryHookResult = ReturnType<typeof useFavoriteAnnotationsLazyQuery>;
 export type FavoriteAnnotationsQueryResult = ApolloReactCommon.QueryResult<FavoriteAnnotationsQuery, FavoriteAnnotationsQueryVariables>;
+export const GetVerseDocument = gql`
+    query GetVerse($id: ID!) {
+  verse(id: $id) {
+    ...Verse
+  }
+}
+    ${VerseFragmentDoc}`;
+
+/**
+ * __useGetVerseQuery__
+ *
+ * To run a query within a React component, call `useGetVerseQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetVerseQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetVerseQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetVerseQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<GetVerseQuery, GetVerseQueryVariables>) {
+        return ApolloReactHooks.useQuery<GetVerseQuery, GetVerseQueryVariables>(GetVerseDocument, baseOptions);
+      }
+export function useGetVerseLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<GetVerseQuery, GetVerseQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<GetVerseQuery, GetVerseQueryVariables>(GetVerseDocument, baseOptions);
+        }
+export type GetVerseQueryHookResult = ReturnType<typeof useGetVerseQuery>;
+export type GetVerseLazyQueryHookResult = ReturnType<typeof useGetVerseLazyQuery>;
+export type GetVerseQueryResult = ApolloReactCommon.QueryResult<GetVerseQuery, GetVerseQueryVariables>;
 export const MyCollectionAnnotationsDocument = gql`
     query MyCollectionAnnotations($first: Int!, $after: String) {
   myAnnotations(first: $first, after: $after) {
@@ -1586,3 +1822,40 @@ export function useVerseAnnotationsLazyQuery(baseOptions?: ApolloReactHooks.Lazy
 export type VerseAnnotationsQueryHookResult = ReturnType<typeof useVerseAnnotationsQuery>;
 export type VerseAnnotationsLazyQueryHookResult = ReturnType<typeof useVerseAnnotationsLazyQuery>;
 export type VerseAnnotationsQueryResult = ApolloReactCommon.QueryResult<VerseAnnotationsQuery, VerseAnnotationsQueryVariables>;
+export const VersesForChapterDocument = gql`
+    query VersesForChapter($bookNumber: Int!, $chapterNumber: Int!) {
+  verses(bookNumber: $bookNumber, chapterNumber: $chapterNumber) {
+    id
+    isBookmarked
+    isAnnotated
+    isAnnotatedByMe
+  }
+}
+    `;
+
+/**
+ * __useVersesForChapterQuery__
+ *
+ * To run a query within a React component, call `useVersesForChapterQuery` and pass it any options that fit your needs.
+ * When your component renders, `useVersesForChapterQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useVersesForChapterQuery({
+ *   variables: {
+ *      bookNumber: // value for 'bookNumber'
+ *      chapterNumber: // value for 'chapterNumber'
+ *   },
+ * });
+ */
+export function useVersesForChapterQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<VersesForChapterQuery, VersesForChapterQueryVariables>) {
+        return ApolloReactHooks.useQuery<VersesForChapterQuery, VersesForChapterQueryVariables>(VersesForChapterDocument, baseOptions);
+      }
+export function useVersesForChapterLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<VersesForChapterQuery, VersesForChapterQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<VersesForChapterQuery, VersesForChapterQueryVariables>(VersesForChapterDocument, baseOptions);
+        }
+export type VersesForChapterQueryHookResult = ReturnType<typeof useVersesForChapterQuery>;
+export type VersesForChapterLazyQueryHookResult = ReturnType<typeof useVersesForChapterLazyQuery>;
+export type VersesForChapterQueryResult = ApolloReactCommon.QueryResult<VersesForChapterQuery, VersesForChapterQueryVariables>;

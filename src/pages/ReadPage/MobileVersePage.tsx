@@ -14,6 +14,8 @@ import { BibleVerse } from '../../base/constants/bible';
 import { ReactComponent as QuoteIcon } from '../../icons/left-quote.svg';
 import { VerseDetailsContent } from './VerseDetailsContent';
 import { Separator } from '../../components/Separator';
+import { BookmarkButton } from '../../components/BookmarkButton';
+import { VerseLoader } from '../../components/VerseLoader';
 
 interface Props {
   bookName: string;
@@ -43,7 +45,7 @@ export const MobileVersePage: React.FC<Props> = ({
   verseId,
 }) => {
   const { title } = useBookNavigation();
-  const { verse } = usePassage();
+  const { verse, passageId } = usePassage();
 
   const verseText = buildVerseText(verse);
 
@@ -54,6 +56,12 @@ export const MobileVersePage: React.FC<Props> = ({
           <ChevronLeftIcon style={{ marginRight: 6 }} />
           {title}:{verseId}
         </MobileHeaderNavLink>
+
+        {passageId && (
+          <VerseLoader verseId={passageId}>
+            {({ verse }) => <BookmarkButton verse={verse} />}
+          </VerseLoader>
+        )}
       </MobileHeader>
       <Block style={{ paddingTop: 60, paddingBottom: 20 }}>
         <Quote />

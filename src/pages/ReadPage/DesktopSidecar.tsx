@@ -12,13 +12,21 @@ import { AnnotationDetails } from '../../components/Annotations/AnnotationDetail
 import { Separator } from '../../components/Separator';
 import { Box } from '../../components/layout/Box';
 import { Flex } from '../../components/layout/Flex';
+import { BookmarkButton } from '../../components/BookmarkButton';
+import { VerseLoader } from '../../components/VerseLoader';
 
 interface Props {
   passageKey: string;
 }
 
 export const DesktopSidecar: React.FC<Props> = ({ passageKey }) => {
-  const { bookName, chapterNumber, verseNumber, fullName } = usePassage();
+  const {
+    bookName,
+    chapterNumber,
+    verseNumber,
+    fullName,
+    passageId,
+  } = usePassage();
   const { annotationId } = useParams<RouteParams>();
   const top = useMemo(() => window.scrollY, [passageKey]); // eslint-disable-line
 
@@ -42,16 +50,23 @@ export const DesktopSidecar: React.FC<Props> = ({ passageKey }) => {
         </Link>
       );
     }
-    return <Title>{fullName}</Title>;
+
+    return (
+      <>
+        <Title>{fullName}</Title>
+
+        {passageId && (
+          <VerseLoader verseId={passageId}>
+            {({ verse }) => <BookmarkButton verse={verse} />}
+          </VerseLoader>
+        )}
+      </>
+    );
   };
 
   return (
     <Container style={{ transform: `translateY(${top}px)` }}>
-      <Block>
-        <Flex spaceBetween margin={{ tb: 28 }}>
-          {renderHeader()}
-        </Flex>
-      </Block>
+      <HeaderContainer>{renderHeader()}</HeaderContainer>
       <Separator />
       {annotationId ? (
         <Box margin={{ tb: 24 }} padding={{ lr: 16 }}>
@@ -72,6 +87,13 @@ const Container = styled.div`
   flex-direction: column;
   margin-bottom: 48px;
   transition: transform 0.1s ease-in-out;
+`;
+
+const HeaderContainer = styled(Block)`
+  height: 74px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 `;
 
 const Title = styled(H3)`
